@@ -1,5 +1,6 @@
 package fr.umontpellier.iut.rails.vues;
 
+import fr.umontpellier.iut.rails.ICarteTransport;
 import fr.umontpellier.iut.rails.IDestination;
 import fr.umontpellier.iut.rails.IJeu;
 import fr.umontpellier.iut.rails.IVille;
@@ -36,18 +37,35 @@ public class VueDuJeu extends HBox {
         plateau = new VuePlateau();
         vbox = new VBox();
 
+        /** init Label info action joueur*/
         Button passer = new Button("Passer");
         passer.setOnAction(actionEvent -> {
             getJeu().passerAEteChoisi();
         });
+
+        /** init console info sur le joueur courant*/
         jeu.joueurCourantProperty().addListener((observableValue, oldJoueur, newJoueur) -> {
-            for(IDestination d : newJoueur.getDestinations()){
-                for(String v : d.getVilles()){
-                    System.out.print(v + ",");
+
+            System.out.println("/---/ " + newJoueur.getNom() + " /---/");
+
+            if(!jeu.finDePartieProperty().get() && !jeu.jeuEnPreparationProperty().get()){
+                // destination
+                for(IDestination d : newJoueur.getDestinations()){
+                    System.out.print(" [ ");
+                    for(String v : d.getVilles()){
+                        System.out.print(v + ",");
+                    }
+                    System.out.print(" ] ");
                 }
-                System.out.print("  /  ");
+                System.out.println();
+
+                // cartes
+                for(ICarteTransport c : newJoueur.getCartesTransport()){
+                    System.out.print(c.toString());
+                }
             }
             System.out.println("\n");
+
         });
 
         Label instruction = new Label();

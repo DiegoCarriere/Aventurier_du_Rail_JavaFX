@@ -13,6 +13,8 @@ public interface ICarteTransport {
     boolean getAncre();
     boolean estDouble();
     String getStringCouleur();
+    String getNom();
+    String toString();
 
     static List<String> getCouleursSimples() {
         return Stream.of(Couleur.values()).filter(c -> c != Couleur.GRIS).map(Objects::toString).toList();

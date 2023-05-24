@@ -28,6 +28,10 @@ public final class CarteTransport implements Comparable<CarteTransport>, ICarteT
         this.ancre = ancre;
         this.nom = "C" + compteur++;
     }
+    @Override
+    public String toString(){
+        return " [ " + nom + "," +  type.toString() + " " + couleur.toString() + " ] ";
+    }
 
     @Override
     public int compareTo(CarteTransport o) {
