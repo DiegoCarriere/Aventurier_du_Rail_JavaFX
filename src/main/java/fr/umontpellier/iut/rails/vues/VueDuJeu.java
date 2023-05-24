@@ -40,8 +40,8 @@ public class VueDuJeu extends HBox {
     }
 
     public void creerBindings() {
-        plateau.prefWidthProperty().bind(getScene().widthProperty());
-        plateau.prefHeightProperty().bind(getScene().heightProperty());
+        plateau.prefWidthProperty().bind(getScene().widthProperty().multiply(0.7));
+        plateau.prefHeightProperty().bind(getScene().heightProperty().multiply(0.7));
         plateau.creerBindings();
     }
 
