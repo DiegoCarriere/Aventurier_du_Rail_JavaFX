@@ -31,10 +31,14 @@ public class VueDuJeu extends HBox {
 
     private VBox vbox;
 
+    private VBox vboxPlateau;
+
     public VueDuJeu(IJeu jeu) {
         this.jeu = jeu;
         plateau = new VuePlateau();
         vbox = new VBox();
+        HBox labelEtBouton = new HBox();
+
 
         Button passer = new Button("Passer");
         passer.setOnAction(actionEvent -> {
@@ -52,15 +56,18 @@ public class VueDuJeu extends HBox {
 
         Label instruction = new Label();
         instruction.textProperty().bind(jeu.instructionProperty());
-        vbox.getChildren().add(instruction);
-        vbox.getChildren().add(passer);
+        labelEtBouton.getChildren().add(instruction);
+        labelEtBouton.getChildren().add(passer);
 
         vbox.setAlignment(Pos.TOP_CENTER);
-        setAlignment(Pos.CENTER);
-        getChildren().addAll(plateau, vbox);
+        vboxPlateau = new VBox(plateau, labelEtBouton);
+        getChildren().addAll(vboxPlateau, vbox);
     }
 
     public void creerBindings() {
+        vboxPlateau.prefWidthProperty().bind(getScene().widthProperty().multiply(0.7));
+        vboxPlateau.prefHeightProperty().bind(getScene().heightProperty().multiply(0.7));
+
         plateau.prefWidthProperty().bind(getScene().widthProperty().multiply(0.7));
         plateau.prefHeightProperty().bind(getScene().heightProperty().multiply(0.7));
 
