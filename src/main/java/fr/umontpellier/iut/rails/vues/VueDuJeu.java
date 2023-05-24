@@ -32,6 +32,8 @@ public class VueDuJeu extends HBox {
         VBox vbox = new VBox();
 
         Button passer = new Button("Passer");
+        passer.setOnAction(actionEvent -> System.out.println("Passer"));
+
         passer.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
