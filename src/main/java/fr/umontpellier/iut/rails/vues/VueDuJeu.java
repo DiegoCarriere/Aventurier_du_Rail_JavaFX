@@ -43,10 +43,11 @@ public class VueDuJeu extends HBox {
         jeu.joueurCourantProperty().addListener((observableValue, oldJoueur, newJoueur) -> {
             for(IDestination d : newJoueur.getDestinations()){
                 for(String v : d.getVilles()){
-                    System.out.print(v + " / ");
+                    System.out.print(v + ",");
                 }
-                System.out.println("");
+                System.out.print("  /  ");
             }
+            System.out.println("\n");
         });
 
         Label instruction = new Label();
@@ -62,6 +63,7 @@ public class VueDuJeu extends HBox {
     public void creerBindings() {
         plateau.prefWidthProperty().bind(getScene().widthProperty().multiply(0.7));
         plateau.prefHeightProperty().bind(getScene().heightProperty().multiply(0.7));
+
         plateau.creerBindings();
 
         vbox.prefWidthProperty().bind(getScene().widthProperty().multiply(0.3));
