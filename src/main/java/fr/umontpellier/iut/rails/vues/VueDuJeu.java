@@ -1,6 +1,9 @@
 package fr.umontpellier.iut.rails.vues;
 
+import fr.umontpellier.iut.rails.IDestination;
 import fr.umontpellier.iut.rails.IJeu;
+import fr.umontpellier.iut.rails.IVille;
+import fr.umontpellier.iut.rails.mecanique.data.Destination;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -29,7 +32,17 @@ public class VueDuJeu extends HBox {
         plateau = new VuePlateau();
         VBox vbox = new VBox();
         Button passer = new Button("Passer");
-        passer.setOnAction(actionEvent -> System.out.println("Passer"));
+        passer.setOnAction(actionEvent -> {
+            getJeu().passerAEteChoisi();
+        });
+        jeu.joueurCourantProperty().addListener((observableValue, oldJoueur, newJoueur) -> {
+            for(IDestination d : newJoueur.getDestinations()){
+                for(String v : d.getVilles()){
+                    System.out.print(v + " / ");
+                }
+                System.out.println("");
+            }
+        });
 
         vbox.getChildren().add(passer);
         getChildren().addAll(plateau, passer);
