@@ -1,9 +1,14 @@
 package fr.umontpellier.iut.rails.vues;
 
 import fr.umontpellier.iut.rails.IJeu;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 /**
  * Cette classe correspond à la fenêtre principale de l'application.
@@ -14,7 +19,7 @@ import javafx.scene.layout.Pane;
  * (le joueur courant, les cartes Transport visibles, les destinations lors de l'étape d'initialisation de la partie, ...)
  * ainsi que les listeners à exécuter lorsque ces éléments changent
  */
-public class VueDuJeu extends Pane {
+public class VueDuJeu extends HBox {
 
     private final IJeu jeu;
     private VuePlateau plateau;
@@ -22,7 +27,16 @@ public class VueDuJeu extends Pane {
     public VueDuJeu(IJeu jeu) {
         this.jeu = jeu;
         plateau = new VuePlateau();
-        getChildren().add(plateau);
+        VBox vbox = new VBox();
+        Button passer = new Button("Passer");
+        passer.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                System.out.println("Passer");
+            }
+        });
+        vbox.getChildren().add(passer);
+        getChildren().addAll(plateau, passer);
     }
 
     public void creerBindings() {
