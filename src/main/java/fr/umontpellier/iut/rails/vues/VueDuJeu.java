@@ -47,7 +47,9 @@ public class VueDuJeu extends HBox {
             }
         });
 
-
+        Label instruction = new Label();
+        instruction.textProperty().bind(jeu.instructionProperty());
+        vbox.getChildren().add(instruction);
         vbox.getChildren().add(passer);
 
         vbox.setAlignment(Pos.CENTER);
