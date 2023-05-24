@@ -29,10 +29,12 @@ public class VueDuJeu extends HBox {
     private final IJeu jeu;
     private VuePlateau plateau;
 
+    private VBox vbox;
+
     public VueDuJeu(IJeu jeu) {
         this.jeu = jeu;
         plateau = new VuePlateau();
-        VBox vbox = new VBox();
+        vbox = new VBox();
 
         Button passer = new Button("Passer");
         passer.setOnAction(actionEvent -> {
@@ -63,6 +65,9 @@ public class VueDuJeu extends HBox {
         plateau.prefHeightProperty().bind(getScene().heightProperty().multiply(0.7));
 
         plateau.creerBindings();
+
+        vbox.prefWidthProperty().bind(getScene().widthProperty().multiply(0.3));
+        vbox.prefHeightProperty().bind(getScene().heightProperty().multiply(0.3));
     }
 
     public IJeu getJeu() {
