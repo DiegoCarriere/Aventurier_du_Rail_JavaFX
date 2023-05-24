@@ -47,16 +47,7 @@ public class VueDuJeu extends HBox {
             }
         });
 
-        passer.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                System.out.println("Passer");
-            }
-        });
 
-        Label instruction = new Label();
-        instruction.textProperty().bind(jeu.instructionProperty());
-        vbox.getChildren().add(instruction);
         vbox.getChildren().add(passer);
 
         vbox.setAlignment(Pos.CENTER);
