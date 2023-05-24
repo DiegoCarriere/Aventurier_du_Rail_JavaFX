@@ -44,6 +44,7 @@ public class VueDuJeu extends HBox {
             }
         });
 
+
         vbox.getChildren().add(passer);
         getChildren().addAll(plateau, passer);
     }
