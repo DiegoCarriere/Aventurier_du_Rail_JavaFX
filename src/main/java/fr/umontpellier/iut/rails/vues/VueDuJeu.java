@@ -3,8 +3,10 @@ package fr.umontpellier.iut.rails.vues;
 import fr.umontpellier.iut.rails.IJeu;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -28,6 +30,7 @@ public class VueDuJeu extends HBox {
         this.jeu = jeu;
         plateau = new VuePlateau();
         VBox vbox = new VBox();
+
         Button passer = new Button("Passer");
         passer.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -35,8 +38,15 @@ public class VueDuJeu extends HBox {
                 System.out.println("Passer");
             }
         });
+
+        Label instruction = new Label();
+        instruction.textProperty().bind(jeu.instructionProperty());
+        vbox.getChildren().add(instruction);
         vbox.getChildren().add(passer);
-        getChildren().addAll(plateau, passer);
+
+        vbox.setAlignment(Pos.CENTER);
+        setAlignment(Pos.CENTER);
+        getChildren().addAll(plateau, vbox);
     }
 
     public void creerBindings() {
