@@ -54,7 +54,7 @@ public class VueDuJeu extends HBox {
         vbox.getChildren().add(instruction);
         vbox.getChildren().add(passer);
 
-        vbox.setAlignment(Pos.CENTER);
+        vbox.setAlignment(Pos.TOP_CENTER);
         setAlignment(Pos.CENTER);
         getChildren().addAll(plateau, vbox);
     }
