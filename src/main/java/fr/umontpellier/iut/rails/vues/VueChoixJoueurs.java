@@ -1,9 +1,17 @@
 package fr.umontpellier.iut.rails.vues;
 
+import fr.umontpellier.iut.rails.IJoueur;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -24,6 +32,26 @@ public class VueChoixJoueurs extends Stage {
 
     public VueChoixJoueurs() {
         nomsJoueurs = FXCollections.observableArrayList();
+
+        /**choix des joueurs*/
+        GridPane choix = new GridPane();
+        for(int i = 0; i < 4; i++){
+            choix.add(new Label("joueur n°" + i),0,i);
+            choix.add(new TextField(),1,i);
+        }
+
+        /** bouton lancer */
+        Button boutonDemarrer = new Button("Jouer !");
+
+
+        HBox root = new HBox(choix,boutonDemarrer);
+
+        this.setScene(new Scene(root));
+
+
+
+
+
     }
 
     public List<String> getNomsJoueurs() {
