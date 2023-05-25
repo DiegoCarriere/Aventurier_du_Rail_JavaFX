@@ -83,6 +83,8 @@ public class VuePlateau extends Pane {
     private void bindRedimensionEtCentragePlateau() {
         mapMonde.fitWidthProperty().bind(widthProperty());
         mapMonde.fitHeightProperty().bind(heightProperty());
+        mapMonde.setX(0);
+        mapMonde.setY(0);
         mapMonde.layoutXProperty().bind(new DoubleBinding() { // Pour maintenir le plateau au centre
             {
                 super.bind(widthProperty(),heightProperty());
