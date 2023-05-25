@@ -47,13 +47,16 @@ public class VueDuJeu extends BorderPane {
 
         /** init Label info action joueur*/
         Button passer = new Button("Passer");
-        passer.setStyle("-fx-font-family: Arial; -fx-font-size: 16px; -fx-font-weight: bold;");
+        passer.setStyle("-fx-font-family: Arial ;  -fx-font-size: 16px; -fx-font-weight: bold");
         passer.setOnAction(actionEvent -> {
             getJeu().passerAEteChoisi();
         });
 
         /** init console info sur le joueur courant*/
         jeu.joueurCourantProperty().addListener((observableValue, oldJoueur, newJoueur) -> {
+
+            vbox = new VueJoueurCourant(newJoueur);
+            setRight(vbox);
 
             System.out.println("/---/ " + newJoueur.getNom() + " /---/");
 
@@ -78,8 +81,8 @@ public class VueDuJeu extends BorderPane {
         });
 
         Label instruction = new Label();
-        instruction.setStyle("-fx-font-family: Arial; -fx-font-size: 16px; -fx-font-weight: bold;");
         instruction.textProperty().bind(jeu.instructionProperty());
+        instruction.setStyle("-fx-font-family: Arial ;  -fx-font-size: 16px; -fx-font-weight: bold");
         labelEtBouton.setLeft(instruction);
         labelEtBouton.setRight(passer);
         labelEtBouton.setMaxWidth(600);
