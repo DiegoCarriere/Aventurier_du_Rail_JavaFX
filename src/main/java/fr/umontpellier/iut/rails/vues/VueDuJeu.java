@@ -7,14 +7,14 @@ import fr.umontpellier.iut.rails.IVille;
 import fr.umontpellier.iut.rails.mecanique.data.Destination;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 
 /**
  * Cette classe correspond à la fenêtre principale de l'application.
@@ -25,24 +25,28 @@ import javafx.scene.layout.VBox;
  * (le joueur courant, les cartes Transport visibles, les destinations lors de l'étape d'initialisation de la partie, ...)
  * ainsi que les listeners à exécuter lorsque ces éléments changent
  */
-public class VueDuJeu extends HBox {
+public class VueDuJeu extends BorderPane {
 
     private final IJeu jeu;
     private VuePlateau plateau;
 
     private VBox vbox;
 
-    private VBox vboxPlateau;
+    private VBox vboxplateau;
+
+    private BorderPane labelEtBouton;
+
 
     public VueDuJeu(IJeu jeu) {
         this.jeu = jeu;
         plateau = new VuePlateau();
         vbox = new VBox();
-        HBox labelEtBouton = new HBox();
+        labelEtBouton = new BorderPane();
 
 
         /** init Label info action joueur*/
         Button passer = new Button("Passer");
+        passer.setStyle("-fx-font-family: Arial; -fx-font-size: 16px; -fx-font-weight: bold;");
         passer.setOnAction(actionEvent -> {
             getJeu().passerAEteChoisi();
         });
@@ -73,19 +77,23 @@ public class VueDuJeu extends HBox {
         });
 
         Label instruction = new Label();
+        instruction.setStyle("-fx-font-family: Arial; -fx-font-size: 16px; -fx-font-weight: bold;");
         instruction.textProperty().bind(jeu.instructionProperty());
-        labelEtBouton.getChildren().add(instruction);
-        labelEtBouton.getChildren().add(passer);
+        labelEtBouton.setLeft(instruction);
+        labelEtBouton.setRight(passer);
+        labelEtBouton.setMaxWidth(600);
 
         vbox.setAlignment(Pos.TOP_CENTER);
-        vboxPlateau = new VBox(plateau, labelEtBouton);
-        getChildren().addAll(vboxPlateau, vbox);
+
+        setCenter(plateau);
+        setBottom(labelEtBouton);
+        setRight(vbox);
+        BorderPane.setMargin(labelEtBouton, new Insets(20, 10, 400, 100));
     }
 
     public void creerBindings() {
-        vboxPlateau.prefWidthProperty().bind(getScene().widthProperty().multiply(0.7));
-        vboxPlateau.prefHeightProperty().bind(getScene().heightProperty().multiply(0.7));
-
+        plateau.setLayoutX(0);
+        plateau.setLayoutY(0);
         plateau.prefWidthProperty().bind(getScene().widthProperty().multiply(0.7));
         plateau.prefHeightProperty().bind(getScene().heightProperty().multiply(0.7));
 
@@ -93,6 +101,9 @@ public class VueDuJeu extends HBox {
 
         vbox.prefWidthProperty().bind(getScene().widthProperty().multiply(0.3));
         vbox.prefHeightProperty().bind(getScene().heightProperty().multiply(0.3));
+
+        //labelEtBouton.prefWidthProperty().bind(getScene().widthProperty().multiply(0.7));
+        //labelEtBouton.prefHeightProperty().bind(getScene().heightProperty().multiply(0.7));
     }
 
     public IJeu getJeu() {
