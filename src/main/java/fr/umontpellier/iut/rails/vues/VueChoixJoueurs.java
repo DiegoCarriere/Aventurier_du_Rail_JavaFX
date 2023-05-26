@@ -36,7 +36,7 @@ public class VueChoixJoueurs extends Stage {
         /**choix des joueurs*/
         GridPane choix = new GridPane();
         for(int i = 0; i < 4; i++){
-            choix.add(new Label("joueur n°" + i),0,i);
+            choix.add(new Label("Joueur n° " + i),0,i);
             choix.add(new TextField(),1,i);
         }
 
