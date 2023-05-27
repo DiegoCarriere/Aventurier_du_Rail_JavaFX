@@ -1,5 +1,6 @@
 package fr.umontpellier.iut.rails.vues;
 
+import fr.umontpellier.iut.rails.IJeu;
 import fr.umontpellier.iut.rails.IRoute;
 import javafx.beans.binding.DoubleBinding;
 import javafx.event.EventHandler;

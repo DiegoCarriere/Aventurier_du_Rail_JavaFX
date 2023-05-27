@@ -5,11 +5,11 @@ import fr.umontpellier.iut.rails.IJoueur;
 import fr.umontpellier.iut.rails.mecanique.Joueur;
 import fr.umontpellier.iut.rails.mecanique.data.Couleur;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 /**
@@ -22,12 +22,14 @@ public class VueJoueurCourant extends VBox {
     private Label nomJoueur;
     private IJoueur j;
     private IJoueur.CouleurJoueur couleur;
+    private Label score;
+    private ImageView avatar;
 
     public VueJoueurCourant(IJoueur joueur){
         j = joueur;
         if (j != null) {
             nomJoueur = new Label(j.getNom().toString());
-            nomJoueur.setPadding(new Insets(10,400,10,10));
+            nomJoueur.setPadding(new Insets(20,400,10,0));
             nomJoueur.setStyle("-fx-font-family: Arial ;  -fx-font-size: 16px; -fx-font-weight: bold");
             couleur = j.getCouleur();
 
@@ -55,11 +57,55 @@ public class VueJoueurCourant extends VBox {
             }
 
             setBackground(new Background(new BackgroundFill(couleurFX, null, null)));
-            getChildren().add(nomJoueur);
+            HBox hbox = new HBox();
+            hbox.setSpacing(10);
+
+            // avatar
+            avatar = new ImageView();
+            avatar.setFitWidth(70);
+            avatar.setFitHeight(70);
+            String chemin = "/images/cartesWagons/avatar-" + couleurJoueur.toString() + ".png";
+            Image avatarImage = new Image(getClass().getResourceAsStream(chemin));
+            avatar.setImage(avatarImage);
+
+            // score
+            score = new Label("Score: " + j.getScore());
+            score.setStyle("-fx-font-family: Arial; -fx-font-size: 14px;");
+            score.setPadding(new Insets(10,10,10,0));
+            hbox.getChildren().addAll(avatar, nomJoueur, score);
+
+            getChildren().add(hbox);
+
+            // infos pions et ports
+            HBox pionsWagonHBox = creerInfosPions("/images/bouton-pions-wagon.png", String.valueOf(j.getNbPionsWagon()));
+            HBox pionsBateauHBox = creerInfosPions("/images/bouton-pions-bateau.png", String.valueOf(j.getNbPionsBateau()));
+            HBox portsRestantsHBox = creerInfosPions("/images/port.png", String.valueOf(j.getNbPorts()));
+
+            HBox infoHBox = new HBox(pionsWagonHBox, pionsBateauHBox, portsRestantsHBox);
+            infoHBox.setAlignment(Pos.BOTTOM_CENTER);
+            infoHBox.setPadding(new Insets(300,0,0,0));
+            infoHBox.setSpacing(10);
+            getChildren().add(infoHBox);
         }
 
 
+    }
 
+    private HBox creerInfosPions(String chemin, String text) {
+        HBox hbox = new HBox();
+        hbox.setAlignment(Pos.CENTER);
+        hbox.setSpacing(10);
+
+        ImageView iconImageView = new ImageView(new Image(getClass().getResourceAsStream(chemin)));
+        iconImageView.setFitWidth(30);
+        iconImageView.setFitHeight(30);
+
+        Label label = new Label(text);
+        label.setStyle("-fx-font-family: Arial; -fx-font-size: 14px;");
+
+        hbox.getChildren().addAll(iconImageView, label);
+
+        return hbox;
     }
 
 }
