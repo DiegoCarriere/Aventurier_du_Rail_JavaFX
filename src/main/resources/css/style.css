@@ -1,11 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&display=swap');
 
+
 Circle {
-    -fx-fill: "transparent";
-    -fx-stroke: "transparent";
+    -fx-fill: transparent;
+    -fx-stroke: transparent;
 }
 
 Rectangle {
-    -fx-fill: "transparent";
-    -fx-stroke: "transparent";
+    -fx-fill: transparent;
+    -fx-stroke: transparent;
+}
+
+.label {
+    -fx-font-family: 'IM Fell English SC';
+    -fx-text-fill: black;
+    -fx-font-size: 18px;
+
+}
+
+.button {
+    -fx-font-family: 'IM Fell English SC';
+    -fx-text-fill: black;
+    -fx-background-color: #7A1A22;
 }

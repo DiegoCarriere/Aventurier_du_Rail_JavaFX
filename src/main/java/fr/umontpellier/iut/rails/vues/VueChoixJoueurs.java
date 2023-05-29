@@ -1,20 +1,28 @@
 package fr.umontpellier.iut.rails.vues;
 
 import fr.umontpellier.iut.rails.IJoueur;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.TextFieldListCell;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -29,39 +37,88 @@ public class VueChoixJoueurs extends Stage {
     public ObservableList<String> nomsJoueursProperty() {
         return nomsJoueurs;
     }
+    private ListView<String> listeJoueurs;
+    private SimpleStringProperty nbJoueurStringProperty;
 
     public VueChoixJoueurs() {
         nomsJoueurs = FXCollections.observableArrayList();
 
-        /**choix des joueurs*/
-        GridPane choix = new GridPane();
-        for(int i = 0; i < 4; i++){
-            choix.add(new Label("Joueur n° " + i),0,i);
-            choix.add(new TextField(),1,i);
-        }
+        listeJoueurs = new ListView<>();
 
-        /** bouton lancer */
         Button boutonDemarrer = new Button("Jouer !");
 
+        Menu menuNbJoueurs = new Menu();
+        Label nbJoueurLabel = new Label("nombre de joueurs : ");
+        HBox nbJoueursBox = new HBox(nbJoueurLabel,new MenuBar(menuNbJoueurs));
 
-        HBox root = new HBox(choix,boutonDemarrer);
+        VBox lancerEtNbJoueurs = new VBox(nbJoueursBox, boutonDemarrer);
 
-        this.setScene(new Scene(root));
+        HBox root = new HBox(listeJoueurs,lancerEtNbJoueurs);
+        Scene scene = new Scene(root,640,320);
+
+        try {
+            File file = new File("src/main/resources/css/style.css");
+            scene.getStylesheets().add(file.toURI().toURL().toExternalForm());
+        } catch (MalformedURLException e){
+            System.out.println(e.getMessage() + "bug");
+        }
+
+        this.setScene(scene);
 
 
+        /**choix des joueurs*/
 
+        listeJoueurs.getItems().addAll(Arrays.asList("Guybrush","Largo","LeChuck","Elaine"));
+        listeJoueurs.setEditable(true);
+        listeJoueurs.setCellFactory(TextFieldListCell.forListView());
 
+        /** bouton lancer */
+        boutonDemarrer.setStyle("-fx-font-size: 30px;");
+        boutonDemarrer.prefHeightProperty().bind(getScene().heightProperty().divide(2));
+        boutonDemarrer.prefWidthProperty().bind(getScene().widthProperty().divide(2));
+
+        boutonDemarrer.setOnAction(actionEvent -> setListeDesNomsDeJoueurs());
+
+        /**lancer*/
+        root.setSpacing(50);
+        root.setAlignment(Pos.CENTER);
+
+        /**nbJoueurs*/
+        nbJoueurStringProperty = new SimpleStringProperty("4");
+        menuNbJoueurs.textProperty().bind(nbJoueurStringProperty);
+        for(int i = 2; i < 6; i++){
+            MenuItem m = new MenuItem(String.valueOf(i));
+            int finalI = i;
+
+            m.setOnAction(actionEvent -> {
+               if(listeJoueurs.getItems().size() > Integer.parseInt( m.getText())){
+                   listeJoueurs.getItems().remove(finalI,listeJoueurs.getItems().size());
+               }
+               else if(listeJoueurs.getItems().size() < Integer.parseInt( m.getText())) {
+                   while (listeJoueurs.getItems().size() < finalI){
+                       listeJoueurs.getItems().add("joueur" + (listeJoueurs.getItems().size()+1) );
+                       listeJoueurs.refresh();
+                   }
+               }
+                nbJoueurStringProperty.setValue(String.valueOf(listeJoueurs.getItems().size()));
+            });
+
+          menuNbJoueurs.getItems().add(m);
+        }
+        lancerEtNbJoueurs.spacingProperty().bind(getScene().heightProperty().divide(5));
 
     }
 
     public List<String> getNomsJoueurs() {
-        return nomsJoueurs;
+        return listeJoueurs.getItems();
     }
 
     /**
      * Définit l'action à exécuter lorsque la liste des participants est correctement initialisée
      */
-    public void setNomsDesJoueursDefinisListener(ListChangeListener<String> quandLesNomsDesJoueursSontDefinis) {}
+    public void setNomsDesJoueursDefinisListener(ListChangeListener<String> quandLesNomsDesJoueursSontDefinis) {
+        nomsJoueurs.addListener(quandLesNomsDesJoueursSontDefinis);
+    }
 
     /**
      * Définit l'action à exécuter lorsque le nombre de participants change
@@ -74,7 +131,7 @@ public class VueChoixJoueurs extends Stage {
      */
     protected void setListeDesNomsDeJoueurs() {
         ArrayList<String> tempNamesList = new ArrayList<>();
-        for (int i = 1; i <= getNombreDeJoueurs() ; i++) {
+        for (int i = 1; i < getNombreDeJoueurs() ; i++) {
             String name = getJoueurParNumero(i);
             if (name == null || name.equals("")) {
                 tempNamesList.clear();
@@ -94,7 +151,7 @@ public class VueChoixJoueurs extends Stage {
      * Retourne le nombre de participants à la partie que l'utilisateur a renseigné
      */
     protected int getNombreDeJoueurs() {
-        throw new RuntimeException("Methode à implémenter");
+        return listeJoueurs.getItems().size();
     }
 
     /**
@@ -102,7 +159,7 @@ public class VueChoixJoueurs extends Stage {
      * @param playerNumber : le numéro du participant
      */
     protected String getJoueurParNumero(int playerNumber) {
-        throw new RuntimeException("Methode à implémenter");
+        return listeJoueurs.getItems().get(playerNumber);
     }
 
 }
