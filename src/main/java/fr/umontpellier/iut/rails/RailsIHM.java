@@ -13,6 +13,7 @@ import javafx.scene.control.ButtonType;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +57,15 @@ public class RailsIHM extends Application {
         jeu = new Jeu(nomsJoueurs.toArray(new String[0]));
         VueDuJeu vueDuJeu = new VueDuJeu(jeu);
         Scene scene = new Scene(vueDuJeu, Screen.getPrimary().getBounds().getWidth() * DonneesGraphiques.pourcentageEcran, Screen.getPrimary().getBounds().getHeight() * DonneesGraphiques.pourcentageEcran); // la scene doit être créée avant de mettre en place les bindings
+
+        /**ajout du CSS*/
+        try {
+            File file = new File("src/main/resources/css/style.css");
+            scene.getStylesheets().add(file.toURI().toURL().toExternalForm());
+        } catch (MalformedURLException e){
+            System.out.println(e.getMessage() + "bug");
+        }
+
         vueDuJeu.creerBindings();
         jeu.run(); // le jeu doit être démarré après que les bindings ont été mis en place
         primaryStage.setMinWidth(Screen.getPrimary().getBounds().getWidth() / 2);

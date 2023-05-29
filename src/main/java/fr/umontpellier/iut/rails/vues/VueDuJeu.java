@@ -37,6 +37,7 @@ public class VueDuJeu extends BorderPane {
 
 
     public VueDuJeu(IJeu jeu) {
+
         this.jeu = jeu;
         plateau = new VuePlateau();
         vbox = new VBox();
@@ -82,7 +83,7 @@ public class VueDuJeu extends BorderPane {
         instruction.setPadding(new Insets(10,0,0,10));
         instruction.setAlignment(Pos.TOP_CENTER);
         instruction.textProperty().bind(jeu.instructionProperty());
-        instruction.setStyle("-fx-font-family: Arial ;  -fx-font-size: 16px; -fx-font-weight: bold");
+        //instruction.setStyle("-fx-font-family: Arial ;  -fx-font-size: 16px; -fx-font-weight: bold");
         labelEtBouton.setTop(instruction);
 
         vbox.setAlignment(Pos.TOP_CENTER);
