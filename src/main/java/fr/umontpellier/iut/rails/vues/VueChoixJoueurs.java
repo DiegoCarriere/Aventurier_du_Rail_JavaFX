@@ -65,7 +65,6 @@ public class VueChoixJoueurs extends Stage {
 
         this.setScene(scene);
 
-
         /**choix des joueurs*/
 
         listeJoueurs.getItems().addAll(Arrays.asList("Guybrush","Largo","LeChuck","Elaine"));
