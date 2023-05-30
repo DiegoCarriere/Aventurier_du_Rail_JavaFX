@@ -63,6 +63,7 @@ public class VueDuJeu extends BorderPane {
             if (jeu.jeuEnPreparationProperty().get()){
                 Joueur joueurCourant = (Joueur) newJoueur;
                 joueurCourant.preparation();
+
             }
 
             System.out.println("/---/ " + newJoueur.getNom() + " /---/");
