@@ -8,7 +8,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -33,32 +32,31 @@ public class VueDuJeu extends BorderPane {
     private final IJeu jeu;
     private VuePlateau plateau;
 
-    private VBox vbox;
+    private VBox joueurCourantVBox;
 
-    private BorderPane labelEtBouton;
+    private BorderPane instructionAutreJoueursCarteVisible;
 
 
     public VueDuJeu(IJeu jeu) {
 
         this.jeu = jeu;
         plateau = new VuePlateau();
-        vbox = new VBox();
-        labelEtBouton = new BorderPane();
-
+        joueurCourantVBox = new VBox();
+        instructionAutreJoueursCarteVisible = new BorderPane();
 
 
         /** init console info sur le joueur courant*/
         jeu.joueurCourantProperty().addListener((observableValue, oldJoueur, newJoueur) -> {
 
             // joueur courant
-            vbox = new VueJoueurCourant(newJoueur);
-            setRight(vbox);
+            joueurCourantVBox = new VueJoueurCourant(newJoueur);
+            setRight(joueurCourantVBox);
 
             // autres joueurs
             List<IJoueur> liste = new ArrayList<>();
             liste.addAll(jeu.getJoueurs());
             liste.remove(newJoueur);
-            labelEtBouton.setRight(new VueAutresJoueurs(liste, jeu));
+            instructionAutreJoueursCarteVisible.setRight(new VueAutresJoueurs(liste, jeu));
 
             if (jeu.jeuEnPreparationProperty().get()){
                 Joueur joueurCourant = (Joueur) newJoueur;
@@ -93,13 +91,15 @@ public class VueDuJeu extends BorderPane {
         instruction.setAlignment(Pos.TOP_CENTER);
         instruction.textProperty().bind(jeu.instructionProperty());
         //instruction.setStyle("-fx-font-family: Arial ;  -fx-font-size: 16px; -fx-font-weight: bold");
-        labelEtBouton.setTop(instruction);
+        instructionAutreJoueursCarteVisible.setTop(instruction);
 
-        vbox.setAlignment(Pos.TOP_CENTER);
+        //instructionAutreJoueursCarteVisible.setBottom(new VueCarteTransport(joueurCourantVBox.));
+
+        joueurCourantVBox.setAlignment(Pos.TOP_CENTER);
 
         setCenter(plateau);
-        setBottom(labelEtBouton);
-        setRight(vbox);
+        setBottom(instructionAutreJoueursCarteVisible);
+        setRight(joueurCourantVBox);
         //BorderPane.setMargin(labelEtBouton, new Insets(20, 10, 400, 100));
     }
 
@@ -111,8 +111,8 @@ public class VueDuJeu extends BorderPane {
 
         plateau.creerBindings();
 
-        vbox.prefWidthProperty().bind(getScene().widthProperty().multiply(0.3));
-        vbox.prefHeightProperty().bind(getScene().heightProperty().multiply(0.3));
+        joueurCourantVBox.prefWidthProperty().bind(getScene().widthProperty().multiply(0.3));
+        joueurCourantVBox.prefHeightProperty().bind(getScene().heightProperty().multiply(0.3));
 
     }
 
