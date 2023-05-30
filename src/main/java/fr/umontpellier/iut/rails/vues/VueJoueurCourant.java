@@ -1,5 +1,6 @@
 package fr.umontpellier.iut.rails.vues;
 
+import fr.umontpellier.iut.rails.ICarteTransport;
 import fr.umontpellier.iut.rails.IDestination;
 import fr.umontpellier.iut.rails.IJeu;
 import fr.umontpellier.iut.rails.IJoueur;
@@ -14,8 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Cette classe présente les éléments appartenant au joueur courant.
@@ -31,6 +31,7 @@ public class VueJoueurCourant extends VBox {
     private ImageView avatar;
     private Menu destinations;
     private Label infoLabel;
+    private GridPane cartesTransportGrid;
 
     public VueJoueurCourant(IJoueur joueur){
         j = joueur;
@@ -107,9 +108,58 @@ public class VueJoueurCourant extends VBox {
             HBox pionsBateauHBox = creerInfosPions("/images/bouton-pions-bateau.png", String.valueOf(j.getNbPionsBateau()));
             HBox portsRestantsHBox = creerInfosPions("/images/port.png", String.valueOf(j.getNbPorts()));
 
+            // cartes transport
+            cartesTransportGrid = new GridPane();
+            cartesTransportGrid.setHgap(10);
+            cartesTransportGrid.setVgap(10);
+
+            List<? extends ICarteTransport> cartesTransport = joueur.getCartesTransport();
+            Map<ICarteTransport, Integer> cartesParCarte = new TreeMap<>();
+
+            for (ICarteTransport carte : cartesTransport) {
+                if (!carte.estJoker()) {
+                    // vérifie si la carte existe déjà dans la map
+                    boolean existe = false;
+                    for (Map.Entry<ICarteTransport, Integer> entry : cartesParCarte.entrySet()) {
+                        ICarteTransport carteExistante = entry.getKey();
+                        if (carteExistante.equals(carte)) {
+                            // la carte existe on incrémente
+                            int nbCartes = entry.getValue();
+                            entry.setValue(nbCartes + 1);
+                            existe = true;
+                            break;
+                        }
+                    }
+
+                    if (!existe) {
+                        // si elle y est pas deja, on ajoute
+                        cartesParCarte.put(carte, 1);
+                    }
+                }
+            }
+
+            int col = 0;
+            int row = 0;
+            for (Map.Entry<ICarteTransport, Integer> entree : cartesParCarte.entrySet()) {
+                ICarteTransport carte = entree.getKey();
+                int nbCartes = entree.getValue();
+
+                VueCarteTransport vueCarte = new VueCarteTransport(carte, nbCartes);
+                cartesTransportGrid.add(vueCarte, col, row);
+
+                col++;
+                if (col >= 3) {
+                    col = 0;
+                    row++;
+                }
+            }
+
+            getChildren().add(cartesTransportGrid);
+
+
             HBox infoHBox = new HBox(pionsWagonHBox, pionsBateauHBox, portsRestantsHBox);
             infoHBox.setAlignment(Pos.BOTTOM_CENTER);
-            infoHBox.setPadding(new Insets(300,0,0,0));
+            //infoHBox.setPadding(new Insets(300,0,0,0));
             infoHBox.setSpacing(10);
             getChildren().add(infoHBox);
             getChildren().add(new MenuBar(destinations));
@@ -135,35 +185,5 @@ public class VueJoueurCourant extends VBox {
         return hbox;
     }
 
-    private void afficherInfos(double mouseX, double mouseY, IJoueur joueur) {
-        infoLabel = new Label();
-        String destinationsALaLigne = "";
-        for (IDestination d : joueur.getDestinations()) {
-            StringBuilder nomVilles = new StringBuilder();
-            int nbVille = d.getVilles().size();
-
-            for (int i = 0; i < nbVille; i++) {
-                nomVilles.append(d.getVilles().get(i));
-                if (i < nbVille - 1) {
-                    nomVilles.append(" / ");
-                }
-            }
-            destinationsALaLigne += nomVilles + "\n";
-
-        }
-        infoLabel.setText(destinationsALaLigne);
-        infoLabel.setPadding(new Insets(5));
-
-        // position des infos
-        infoLabel.setLayoutX(mouseX);
-        infoLabel.setLayoutY(mouseY);
-
-    }
-
-    private void masquerInfos() {
-        if (getChildren().contains(infoLabel)){
-            getChildren().remove(infoLabel);
-        }
-    }
 
 }
