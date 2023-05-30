@@ -1,12 +1,14 @@
 package fr.umontpellier.iut.rails.vues;
 
 import fr.umontpellier.iut.rails.*;
+import fr.umontpellier.iut.rails.mecanique.Joueur;
 import fr.umontpellier.iut.rails.mecanique.data.Destination;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -44,6 +46,7 @@ public class VueDuJeu extends BorderPane {
         labelEtBouton = new BorderPane();
 
 
+
         /** init console info sur le joueur courant*/
         jeu.joueurCourantProperty().addListener((observableValue, oldJoueur, newJoueur) -> {
 
@@ -56,6 +59,11 @@ public class VueDuJeu extends BorderPane {
             liste.addAll(jeu.getJoueurs());
             liste.remove(newJoueur);
             labelEtBouton.setRight(new VueAutresJoueurs(liste, jeu));
+
+            if (jeu.jeuEnPreparationProperty().get()){
+                Joueur joueurCourant = (Joueur) newJoueur;
+                joueurCourant.preparation();
+            }
 
             System.out.println("/---/ " + newJoueur.getNom() + " /---/");
 
