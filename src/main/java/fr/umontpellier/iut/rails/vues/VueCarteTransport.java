@@ -1,20 +1,21 @@
 package fr.umontpellier.iut.rails.vues;
 
 import fr.umontpellier.iut.rails.ICarteTransport;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 
 /**
  * Cette classe représente la vue d'une carte Transport.
  *
  * On y définit le listener à exécuter lorsque cette carte a été choisie par l'utilisateur
  */
-public class VueCarteTransport extends Pane {
+public class VueCarteTransport extends StackPane {
 
     private final ICarteTransport carteTransport;
-    private Image imageCarteFace;
-    private Image imageCartePile;
 
     public VueCarteTransport(ICarteTransport carteT, int nbCartes) {
         this.carteTransport = carteT;
@@ -36,10 +37,17 @@ public class VueCarteTransport extends Pane {
 
         System.out.println(nom.toString());
 
-        imageCarteFace = new Image(getClass().getResource("images/cartesWagons/" + nom.toString() + ".png").toExternalForm());
+        Image imageCarteFace = new Image(getClass().getResource("images/cartesWagons/" + nom.toString() + ".png").toExternalForm());
+
         ImageView imageView = new ImageView(imageCarteFace);
 
         this.getChildren().add(imageView);
+
+        Label nbCarteLabel = new Label(String.valueOf(nbCartes));
+        nbCarteLabel.setAlignment(Pos.TOP_RIGHT);
+        this.getChildren().add(nbCarteLabel);
+
+
     }
 
     public ICarteTransport getCarteTransport() {

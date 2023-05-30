@@ -1,6 +1,9 @@
 package fr.umontpellier.iut.rails.vues;
 
 import fr.umontpellier.iut.rails.IDestination;
+import fr.umontpellier.iut.rails.mecanique.data.Ville;
+import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
 
 /**
@@ -12,8 +15,26 @@ public class VueDestination extends Pane {
 
     private final IDestination destination;
 
-    public VueDestination(IDestination destination) {
-        this.destination = destination;
+    public VueDestination(IDestination dest) {
+        this.destination = dest;
+
+        StringBuilder nomVilles = new StringBuilder();
+        int nbVille = destination.getVilles().size();
+
+        for (int i = 0; i < nbVille; i++) {
+            nomVilles.append(destination.getVilles().get(i));
+            if(i <nbVille-1){
+                nomVilles.append(" / ");
+            }
+        }
+
+        Button boutonchoisir = new Button(nomVilles.toString());
+        this.getChildren().add(boutonchoisir);
+
+        boutonchoisir.setOnAction(event -> {
+           // ((VueDuJeu) getScene().getRoot()).getJeu()
+        });
+
     }
 
     public IDestination getDestination() {

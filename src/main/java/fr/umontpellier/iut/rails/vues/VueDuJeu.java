@@ -3,6 +3,8 @@ package fr.umontpellier.iut.rails.vues;
 import fr.umontpellier.iut.rails.*;
 import fr.umontpellier.iut.rails.mecanique.Joueur;
 import fr.umontpellier.iut.rails.mecanique.data.Destination;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -34,6 +36,7 @@ public class VueDuJeu extends BorderPane {
     private VuePlateau plateau;
 
     private VBox joueurCourantVBox;
+    private HBox carteVisibleHBox;
 
     private BorderPane instructionAutreJoueursCarteVisible;
 
@@ -43,13 +46,14 @@ public class VueDuJeu extends BorderPane {
         this.jeu = jeu;
         plateau = new VuePlateau();
         joueurCourantVBox = new VBox();
+        carteVisibleHBox = new HBox();
         instructionAutreJoueursCarteVisible = new BorderPane();
 
 
         /** init console info sur le joueur courant*/
         jeu.joueurCourantProperty().addListener((observableValue, oldJoueur, newJoueur) -> {
 
-            // joueur courant
+            /** joueur courant*/
             joueurCourantVBox = new VueJoueurCourant(newJoueur);
             setRight(joueurCourantVBox);
 
@@ -60,6 +64,7 @@ public class VueDuJeu extends BorderPane {
             instructionAutreJoueursCarteVisible.setRight(new VueAutresJoueurs(liste, jeu));
 
             if (jeu.jeuEnPreparationProperty().get()){
+
                 HBox destinationsHbox = new HBox();
                 Joueur joueurCourant = (Joueur) newJoueur;
                 List<IDestination> listeD = new ArrayList<>(jeu.destinationsInitialesProperty());
@@ -68,6 +73,7 @@ public class VueDuJeu extends BorderPane {
             }
 
 
+            /**info courant*/
             System.out.println("/---/ " + newJoueur.getNom() + " /---/");
 
             if(!jeu.finDePartieProperty().get() && !jeu.jeuEnPreparationProperty().get()){
@@ -94,10 +100,31 @@ public class VueDuJeu extends BorderPane {
         instruction.setPadding(new Insets(10,0,0,10));
         instruction.setAlignment(Pos.TOP_CENTER);
         instruction.textProperty().bind(jeu.instructionProperty());
-        //instruction.setStyle("-fx-font-family: Arial ;  -fx-font-size: 16px; -fx-font-weight: bold");
         instructionAutreJoueursCarteVisible.setTop(instruction);
 
-        //instructionAutreJoueursCarteVisible.setBottom(new VueCarteTransport(joueurCourantVBox.));
+
+        jeu.jeuEnPreparationProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println("test");
+            if (newValue.equals(false)){
+                System.out.println("test2");
+                //marche pas
+                for(ICarteTransport c : jeu.cartesTransportVisiblesProperty()){
+
+                    carteVisibleHBox.getChildren().add(new VueCarteTransport(c,1));
+                }
+
+            }
+        });
+        //jeu.cartesTransportVisiblesProperty().addListener(observable-> System.out.println("cc"));
+        //jeu.destinationsInitialesProperty().addListener(observable -> {
+
+        });
+
+
+
+
+
+
 
         joueurCourantVBox.setAlignment(Pos.TOP_CENTER);
 
