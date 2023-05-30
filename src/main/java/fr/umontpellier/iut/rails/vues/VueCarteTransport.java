@@ -20,7 +20,8 @@ public class VueCarteTransport extends StackPane {
     public VueCarteTransport(ICarteTransport carteT, int nbCartes) {
         this.carteTransport = carteT;
 
-        StringBuilder nom = new StringBuilder("carte-");
+        /**trouver le chemin de la carte*/
+        StringBuilder nom = new StringBuilder("/images/cartesWagons/carte-");
         if(carteTransport.estBateau()){
             if(carteTransport.estDouble()){
                 nom.append("DOUBLE-");
@@ -34,19 +35,22 @@ public class VueCarteTransport extends StackPane {
             nom.append("JOKER-");
         }
         nom.append(carteTransport.getStringCouleur());
+        nom.append(".png");
+        String reelNom = nom.toString();
 
-        System.out.println(nom.toString());
-
-        Image imageCarteFace = new Image(getClass().getResource("images/cartesWagons/" + nom.toString() + ".png").toExternalForm());
-
+        /** création de l'image*/
+        Image imageCarteFace = new Image(getClass().getResource(reelNom).toExternalForm());
         ImageView imageView = new ImageView(imageCarteFace);
+
+
+        //imageView.scaleXProperty().bind(imageView.scaleXProperty().multiply(0.1));
+        //imageView.scaleYProperty().bind(imageView.scaleYProperty().multiply(0.1));
 
         this.getChildren().add(imageView);
 
         Label nbCarteLabel = new Label(String.valueOf(nbCartes));
         nbCarteLabel.setAlignment(Pos.TOP_RIGHT);
         this.getChildren().add(nbCarteLabel);
-
 
     }
 

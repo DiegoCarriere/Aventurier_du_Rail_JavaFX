@@ -37,7 +37,7 @@ public class VueJoueurCourant extends VBox {
         if (j != null) {
             nomJoueur = new Label(j.getNom().toString());
             nomJoueur.setPadding(new Insets(20,400,10,0));
-            nomJoueur.setStyle("-fx-font-family: Arial ;  -fx-font-size: 16px; -fx-font-weight: bold");
+            nomJoueur.setStyle("-fx-font-size: 16px; -fx-font-weight: bold");
             couleur = j.getCouleur();
 
             IJoueur.CouleurJoueur couleurJoueur = couleur;
