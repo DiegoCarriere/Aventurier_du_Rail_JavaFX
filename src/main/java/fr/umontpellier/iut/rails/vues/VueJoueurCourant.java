@@ -1,5 +1,6 @@
 package fr.umontpellier.iut.rails.vues;
 
+import fr.umontpellier.iut.rails.IDestination;
 import fr.umontpellier.iut.rails.IJeu;
 import fr.umontpellier.iut.rails.IJoueur;
 import fr.umontpellier.iut.rails.mecanique.Joueur;
@@ -11,6 +12,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+
+import java.util.List;
 
 /**
  * Cette classe présente les éléments appartenant au joueur courant.
@@ -24,6 +27,7 @@ public class VueJoueurCourant extends VBox {
     private IJoueur.CouleurJoueur couleur;
     private Label score;
     private ImageView avatar;
+    private Label destinations;
 
     public VueJoueurCourant(IJoueur joueur){
         j = joueur;
@@ -76,6 +80,16 @@ public class VueJoueurCourant extends VBox {
 
             getChildren().add(hbox);
 
+            // destinations
+            destinations = new Label("Destinations");
+            destinations.setOnMouseEntered(event -> {
+                afficherInfos(event.getX(), event.getY(), joueur);
+            });
+
+            destinations.setOnMouseExited(event -> {
+                masquerInfos();
+            });
+
             // infos pions et ports
             HBox pionsWagonHBox = creerInfosPions("/images/bouton-pions-wagon.png", String.valueOf(j.getNbPionsWagon()));
             HBox pionsBateauHBox = creerInfosPions("/images/bouton-pions-bateau.png", String.valueOf(j.getNbPionsBateau()));
@@ -106,6 +120,30 @@ public class VueJoueurCourant extends VBox {
         hbox.getChildren().addAll(iconImageView, label);
 
         return hbox;
+    }
+
+    private void afficherInfos(double mouseX, double mouseY, IJoueur joueur) {
+        List<? extends IDestination> liste = joueur.getDestinations();
+
+        /*Label infoLabel = new Label("Score: " + score +
+                "\nNombre de pions bateau: " + nbPionsBateau +
+                "\nNombre de pions wagon: " + nbPionsWagon +
+                "\nNombre de destinations: " + nbDestinations +
+                "\nNombre de cartes transport: " + nbCartesTransport);
+        infoLabel.setStyle("-fx-font-family: Arial; -fx-font-size: 12px;");
+        infoLabel.setBackground(new Background(new BackgroundFill(tradCouleur(joueur.getCouleur()), CornerRadii.EMPTY, Insets.EMPTY)));
+        infoLabel.setPadding(new Insets(5));
+
+        // position des infos
+        infoLabel.setLayoutX(mouseX);
+        infoLabel.setLayoutY(mouseY + 10);
+
+
+        getChildren().add(infoLabel);*/
+    }
+
+    private void masquerInfos() {
+        getChildren().removeIf(node -> node instanceof Label);
     }
 
 }

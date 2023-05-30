@@ -39,6 +39,7 @@ public class VueDuJeu extends BorderPane {
     private HBox carteVisibleHBox;
 
     private BorderPane instructionAutreJoueursCarteVisible;
+    private HBox destinationsHbox;
 
 
     public VueDuJeu(IJeu jeu) {
@@ -48,6 +49,7 @@ public class VueDuJeu extends BorderPane {
         joueurCourantVBox = new VBox();
         carteVisibleHBox = new HBox();
         instructionAutreJoueursCarteVisible = new BorderPane();
+        destinationsHbox = new HBox();
 
 
         /** init console info sur le joueur courant*/
@@ -63,7 +65,11 @@ public class VueDuJeu extends BorderPane {
             liste.remove(newJoueur);
             instructionAutreJoueursCarteVisible.setRight(new VueAutresJoueurs(liste, jeu));
 
-
+            if (!jeu.jeuEnPreparationProperty().get()){
+                if (instructionAutreJoueursCarteVisible.getChildren().contains(destinationsHbox)){
+                    instructionAutreJoueursCarteVisible.getChildren().remove(destinationsHbox);
+                }
+            }
 
             /**info courant*/
             System.out.println("/---/ " + newJoueur.getNom() + " /---/");
@@ -92,7 +98,7 @@ public class VueDuJeu extends BorderPane {
             while (change.next()) {
                 if (change.wasAdded()) {
                     List<? extends IDestination> addedDestinations = jeu.destinationsInitialesProperty();
-                    HBox destinationsHbox = new HBox();
+                    destinationsHbox = new HBox();
                     for (IDestination destination : addedDestinations) {
                         if (jeu.jeuEnPreparationProperty().get()){
                             destinationsHbox.getChildren().add( new VueDestination(destination));
