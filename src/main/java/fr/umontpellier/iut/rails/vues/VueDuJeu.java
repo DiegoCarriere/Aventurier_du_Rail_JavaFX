@@ -59,10 +59,11 @@ public class VueDuJeu extends BorderPane {
             instructionAutreJoueursCarteVisible.setRight(new VueAutresJoueurs(liste, jeu));
 
             if (jeu.jeuEnPreparationProperty().get()){
+                HBox destinationsHbox = new HBox();
                 Joueur joueurCourant = (Joueur) newJoueur;
-                joueurCourant.preparation();
-
+                instructionAutreJoueursCarteVisible.setBottom(destinationsHbox);
             }
+
 
             System.out.println("/---/ " + newJoueur.getNom() + " /---/");
 
