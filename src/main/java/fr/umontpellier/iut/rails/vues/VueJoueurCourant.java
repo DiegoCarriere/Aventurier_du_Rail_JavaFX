@@ -77,7 +77,7 @@ public class VueJoueurCourant extends VBox {
 
             // score
             score = new Label("Score: " + j.getScore());
-            score.setStyle("-fx-font-family: Arial; -fx-font-size: 14px;");
+            score.setStyle("-fx-font-size: 14px;");
             score.setPadding(new Insets(10,10,10,0));
             hbox.getChildren().addAll(avatar, nomJoueur, score);
 

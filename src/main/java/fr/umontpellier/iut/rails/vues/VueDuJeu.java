@@ -41,6 +41,8 @@ public class VueDuJeu extends BorderPane {
         carteVisibleHBox = new HBox();
         instructionAutreJoueursCarteVisible = new BorderPane();
         clickableHbox = new HBox();
+        clickableHbox.setAlignment(Pos.CENTER);
+        clickableHbox.setSpacing(10);
         instructionAutreJoueursCarteVisible.setLeft(clickableHbox);
 
 

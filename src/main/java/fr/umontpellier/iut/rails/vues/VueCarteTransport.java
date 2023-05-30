@@ -41,6 +41,8 @@ public class VueCarteTransport extends StackPane {
         /** création de l'image*/
         Image imageCarteFace = new Image(getClass().getResource(reelNom).toExternalForm());
         ImageView imageView = new ImageView(imageCarteFace);
+        imageView.setFitWidth(150);
+        imageView.setFitHeight(100);
 
 
         //imageView.scaleXProperty().bind(imageView.scaleXProperty().multiply(0.1));
