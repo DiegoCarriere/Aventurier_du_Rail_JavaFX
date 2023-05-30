@@ -85,7 +85,6 @@ public class RailsIHM extends Application {
     private final ListChangeListener<String> quandLesNomsJoueursSontDefinis = change -> {
         if (!vueChoixJoueurs.getNomsJoueurs().isEmpty())
             demarrerPartie();
-        System.out.println("cc");
     };
 
     public void arreterJeu() {
