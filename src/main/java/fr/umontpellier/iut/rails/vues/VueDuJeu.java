@@ -4,6 +4,7 @@ import fr.umontpellier.iut.rails.*;
 import fr.umontpellier.iut.rails.mecanique.Joueur;
 import fr.umontpellier.iut.rails.mecanique.data.Destination;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -61,6 +62,8 @@ public class VueDuJeu extends BorderPane {
             if (jeu.jeuEnPreparationProperty().get()){
                 HBox destinationsHbox = new HBox();
                 Joueur joueurCourant = (Joueur) newJoueur;
+                List<IDestination> listeD = new ArrayList<>(jeu.destinationsInitialesProperty());
+                destinationsHbox.getChildren().add( new VueDestination(listeD.get(0)));
                 instructionAutreJoueursCarteVisible.setBottom(destinationsHbox);
             }
 
