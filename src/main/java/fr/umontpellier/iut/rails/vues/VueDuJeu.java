@@ -63,14 +63,6 @@ public class VueDuJeu extends BorderPane {
             liste.remove(newJoueur);
             instructionAutreJoueursCarteVisible.setRight(new VueAutresJoueurs(liste, jeu));
 
-            if (jeu.jeuEnPreparationProperty().get()){
-
-                HBox destinationsHbox = new HBox();
-                Joueur joueurCourant = (Joueur) newJoueur;
-                List<IDestination> listeD = new ArrayList<>(jeu.destinationsInitialesProperty());
-                destinationsHbox.getChildren().add( new VueDestination(listeD.get(0)));
-                instructionAutreJoueursCarteVisible.setBottom(destinationsHbox);
-            }
 
 
             /**info courant*/
@@ -96,6 +88,24 @@ public class VueDuJeu extends BorderPane {
 
         });
 
+        jeu.destinationsInitialesProperty().addListener((ListChangeListener<IDestination>) change -> {
+            while (change.next()) {
+                if (change.wasAdded()) {
+                    List<? extends IDestination> addedDestinations = jeu.destinationsInitialesProperty();
+                    HBox destinationsHbox = new HBox();
+                    for (IDestination destination : addedDestinations) {
+                        if (jeu.jeuEnPreparationProperty().get()){
+                            destinationsHbox.getChildren().add( new VueDestination(destination));
+                            instructionAutreJoueursCarteVisible.setBottom(destinationsHbox);
+                        }
+                    }
+                }
+
+            }
+        });
+
+
+
         Label instruction = new Label();
         instruction.setPadding(new Insets(10,0,0,10));
         instruction.setAlignment(Pos.TOP_CENTER);
@@ -118,7 +128,7 @@ public class VueDuJeu extends BorderPane {
         //jeu.cartesTransportVisiblesProperty().addListener(observable-> System.out.println("cc"));
         //jeu.destinationsInitialesProperty().addListener(observable -> {
 
-        });
+
 
 
 
