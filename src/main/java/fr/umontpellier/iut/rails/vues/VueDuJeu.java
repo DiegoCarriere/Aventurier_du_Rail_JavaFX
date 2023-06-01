@@ -6,6 +6,8 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
@@ -128,7 +130,36 @@ public class VueDuJeu extends BorderPane {
         instruction.textProperty().bind(jeu.instructionProperty());
         instructionAutreJoueursCarteVisible.setTop(instruction);
 
+        // pioches
+        ImageView piocheCartesBateau = new ImageView(new Image("images/cartesWagons/dos-BATEAU.png"));
+        ImageView piocheCartesWagons = new ImageView(new Image("images/cartesWagons/dos-WAGON.png"));
+        ImageView piocheDestinations = new ImageView(new Image("images/cartesWagons/destinations.png"));
+        ImageView piochePionsBateau = new ImageView(new Image("images/bouton-pions-bateau.png"));
+        ImageView piochePionsWagon = new ImageView(new Image("images/bouton-pions-wagon.png"));
 
+        piocheCartesBateau.setFitWidth(70);
+        piocheCartesBateau.setFitHeight(100);
+        piocheCartesWagons.setFitWidth(70);
+        piocheCartesWagons.setFitHeight(100);
+        piocheDestinations.setFitWidth(100);
+        piocheDestinations.setFitHeight(70);
+        piochePionsBateau.setFitWidth(50);
+        piochePionsBateau.setFitHeight(50);
+        piochePionsWagon.setFitWidth(50);
+        piochePionsWagon.setFitHeight(50);
+
+
+        VBox piochesBox = new VBox(10);
+        piochesBox.setPadding(new Insets(10));
+        piochesBox.getChildren().addAll(
+                piocheCartesBateau,
+                piocheCartesWagons,
+                piocheDestinations,
+                piochePionsBateau,
+                piochePionsWagon
+        );
+
+        setLeft(piochesBox);
 
 
         joueurCourantVBox.setAlignment(Pos.TOP_CENTER);

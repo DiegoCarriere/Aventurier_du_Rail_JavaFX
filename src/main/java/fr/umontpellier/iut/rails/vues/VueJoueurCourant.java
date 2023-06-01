@@ -122,7 +122,10 @@ public class VueJoueurCourant extends VBox {
                     boolean existe = false;
                     for (Map.Entry<ICarteTransport, Integer> entry : cartesParCarte.entrySet()) {
                         ICarteTransport carteExistante = entry.getKey();
-                        if (carteExistante.equals(carte)) {
+                        if ((carteExistante.getStringCouleur().equals(carte.getStringCouleur()) &&
+                                ( (carteExistante.estBateau() && carte.estBateau()) || (carteExistante.estWagon() && carte.estWagon()) && !carteExistante.estDouble() && !carte.estDouble()))
+                        || (carteExistante.getStringCouleur().equals(carte.getStringCouleur()) &&
+                                ( (carteExistante.estBateau() && carte.estBateau()) || (carteExistante.estWagon() && carte.estWagon()) && carteExistante.estDouble() && carte.estDouble()))) {
                             // la carte existe on incrémente
                             int nbCartes = entry.getValue();
                             entry.setValue(nbCartes + 1);
@@ -159,7 +162,13 @@ public class VueJoueurCourant extends VBox {
 
             HBox infoHBox = new HBox(pionsWagonHBox, pionsBateauHBox, portsRestantsHBox);
             infoHBox.setAlignment(Pos.BOTTOM_CENTER);
-            //infoHBox.setPadding(new Insets(300,0,0,0));
+            if (cartesTransportGrid.getRowCount() < 1) {
+                infoHBox.setPadding(new Insets(300, 0, 0, 0));
+            } else if (cartesTransportGrid.getRowCount() <= 2){
+                infoHBox.setPadding(new Insets(100, 0, 0, 0));
+            } else {
+                infoHBox.setPadding(new Insets(0, 0, 0, 0));
+            }
             infoHBox.setSpacing(10);
             getChildren().add(infoHBox);
             getChildren().add(new MenuBar(destinations));

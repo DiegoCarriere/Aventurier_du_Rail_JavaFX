@@ -5,8 +5,8 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 
 /**
  * Cette classe représente la vue d'une carte Transport.
@@ -51,6 +51,18 @@ public class VueCarteTransport extends StackPane {
         this.getChildren().add(imageView);
 
         Label nbCarteLabel = new Label(String.valueOf(nbCartes));
+        nbCarteLabel.setStyle(
+                        "-fx-text-fill: black;" +
+                        "-fx-padding: 6px;" +
+                        "-fx-font-size: 16px;" +
+                        "-fx-font-weight: bold;"
+        );
+
+        CornerRadii cornerRadii = new CornerRadii(30);
+        BackgroundFill backgroundFill = new BackgroundFill(Color.WHITE, cornerRadii, null);
+        Background background = new Background(backgroundFill);
+        nbCarteLabel.setBackground(background);
+
         nbCarteLabel.setAlignment(Pos.TOP_RIGHT);
         this.getChildren().add(nbCarteLabel);
 
