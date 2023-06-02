@@ -24,24 +24,20 @@ import java.util.*;
  */
 public class VueJoueurCourant extends VBox {
 
-    private Label nomJoueur;
     private IJoueur j;
-    private IJoueur.CouleurJoueur couleur;
     private Label score;
-    private ImageView avatar;
     private Menu destinations;
-    private Label infoLabel;
     private GridPane cartesTransportGrid;
 
     public VueJoueurCourant(IJoueur joueur){
         j = joueur;
         if (j != null) {
-            nomJoueur = new Label(j.getNom().toString());
+            Label nomJoueur = new Label(j.getNom().toString());
+            System.out.println(j.getNom().toString());
             nomJoueur.setPadding(new Insets(20,400,10,0));
             nomJoueur.setStyle("-fx-font-size: 16px; -fx-font-weight: bold");
-            couleur = j.getCouleur();
 
-            IJoueur.CouleurJoueur couleurJoueur = couleur;
+            IJoueur.CouleurJoueur couleurJoueur = j.getCouleur();
             Color couleurFX;
 
             switch (couleurJoueur) {
@@ -65,11 +61,10 @@ public class VueJoueurCourant extends VBox {
             }
 
             setBackground(new Background(new BackgroundFill(couleurFX, null, null)));
-            HBox hbox = new HBox();
-            hbox.setSpacing(10);
+            StackPane stackPane = new StackPane();
 
             // avatar
-            avatar = new ImageView();
+            ImageView avatar = new ImageView();
             avatar.setFitWidth(70);
             avatar.setFitHeight(70);
             String chemin = "/images/cartesWagons/avatar-" + couleurJoueur.toString() + ".png";
@@ -79,15 +74,15 @@ public class VueJoueurCourant extends VBox {
             // score
             score = new Label("Score: " + j.getScore());
             score.setStyle("-fx-font-size: 14px;");
-            score.setPadding(new Insets(5,5,5,0));
-            hbox.getChildren().addAll(avatar, nomJoueur, score);
+            score.setPadding(new Insets(5,5,5,300));
+            stackPane.getChildren().addAll(avatar, nomJoueur, score);
 
-            getChildren().add(hbox);
+            getChildren().add(stackPane);
 
             // destinations
             destinations = new Menu("Destinations");
 
-            infoLabel = new Label();
+            //Label infoLabel = new Label();
             for (IDestination d : joueur.getDestinations()) {
                 StringBuilder nomVilles = new StringBuilder();
                 int nbVille = d.getVilles().size();
@@ -188,7 +183,7 @@ public class VueJoueurCourant extends VBox {
         iconImageView.setFitHeight(30);
 
         Label label = new Label(text);
-        label.setStyle("-fx-font-family: Arial; -fx-font-size: 14px;");
+        label.setStyle("-fx-font-size: 14px;");
 
         hbox.getChildren().addAll(iconImageView, label);
 

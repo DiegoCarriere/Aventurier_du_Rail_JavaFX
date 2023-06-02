@@ -75,7 +75,6 @@ public class VueDuJeu extends BorderPane {
                 new HBox(piochePionsBateau, piochePionsWagon)
         );
 
-
         /** init console info sur le joueur courant*/
         jeu.joueurCourantProperty().addListener((observableValue, oldJoueur, newJoueur) -> {
 
@@ -147,16 +146,9 @@ public class VueDuJeu extends BorderPane {
         instructionAutreJoueursCarteVisible.setTop(instruction);
 
 
-
-
-
-
-
-
-
         joueurCourantVBox.setAlignment(Pos.TOP_CENTER);
 
-        setCenter(plateau);
+        setLeft(plateau);
         setBottom(instructionAutreJoueursCarteVisible);
         setRight(joueurCourantVBox);
         BorderPane.setAlignment(joueurCourantVBox,Pos.CENTER_LEFT);
@@ -171,7 +163,7 @@ public class VueDuJeu extends BorderPane {
 
         plateau.creerBindings();
 
-        joueurCourantVBox.prefWidthProperty().bind(getScene().widthProperty().multiply(0.3));
+        joueurCourantVBox.prefWidthProperty().bind(getScene().widthProperty().subtract(plateau.widthProperty()));
         joueurCourantVBox.prefHeightProperty().bind(plateau.heightProperty());
 
         clickableHbox.prefWidthProperty().bind(plateau.widthProperty());
