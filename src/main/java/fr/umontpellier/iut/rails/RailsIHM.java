@@ -68,8 +68,8 @@ public class RailsIHM extends Application {
 
         vueDuJeu.creerBindings();
         jeu.run(); // le jeu doit être démarré après que les bindings ont été mis en place
-        primaryStage.setMinWidth(Screen.getPrimary().getBounds().getWidth() * 0.75);
-        primaryStage.setMinHeight(Screen.getPrimary().getBounds().getHeight() * 0.75);
+        primaryStage.setMinWidth(Screen.getPrimary().getBounds().getWidth() * 0.7);
+        primaryStage.setMinHeight(Screen.getPrimary().getBounds().getHeight() * 0.8);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Rails");
         primaryStage.centerOnScreen();

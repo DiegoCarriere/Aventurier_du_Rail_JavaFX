@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Box;
 
 import java.util.*;
 
@@ -34,7 +35,7 @@ public class VueJoueurCourant extends VBox {
         if (j != null) {
             Label nomJoueur = new Label(j.getNom().toString());
             System.out.println(j.getNom().toString());
-            nomJoueur.setPadding(new Insets(20,400,10,0));
+            nomJoueur.setPadding(new Insets(20,300,10,0));
             nomJoueur.setStyle("-fx-font-size: 16px; -fx-font-weight: bold");
 
             IJoueur.CouleurJoueur couleurJoueur = j.getCouleur();
@@ -74,8 +75,12 @@ public class VueJoueurCourant extends VBox {
             // score
             score = new Label("Score: " + j.getScore());
             score.setStyle("-fx-font-size: 14px;");
-            score.setPadding(new Insets(5,5,5,300));
+            score.setPadding(new Insets(5,5,5,500));
             stackPane.getChildren().addAll(avatar, nomJoueur, score);
+
+            StackPane.setAlignment(avatar,Pos.CENTER);
+            StackPane.setAlignment(nomJoueur,Pos.CENTER_LEFT);
+            StackPane.setAlignment(score,Pos.CENTER_RIGHT);
 
             getChildren().add(stackPane);
 
@@ -95,6 +100,7 @@ public class VueJoueurCourant extends VBox {
                 }
                 destinations.getItems().add(new MenuItem(nomVilles.toString()));
             }
+            if(joueur.getDestinations().isEmpty()) destinations.getItems().add(new MenuItem("Vide"));
 
 
 
@@ -159,15 +165,16 @@ public class VueJoueurCourant extends VBox {
             HBox infoHBox = new HBox(pionsWagonHBox, pionsBateauHBox, portsRestantsHBox);
             infoHBox.setAlignment(Pos.BOTTOM_CENTER);
             if (cartesTransportGrid.getRowCount() < 1) {
-                infoHBox.setPadding(new Insets(300, 0, 0, 0));
+                infoHBox.setPadding(new Insets(400, 150, 0, 150));
             } else if (cartesTransportGrid.getRowCount() <= 2){
-                infoHBox.setPadding(new Insets(100, 0, 0, 0));
+                infoHBox.setPadding(new Insets(0, 150, 0, 150));
             } else {
-                infoHBox.setPadding(new Insets(0, 0, 0, 0));
+                infoHBox.setPadding(new Insets(0, 150, 0, 150));
             }
-            infoHBox.setSpacing(10);
+            infoHBox.setSpacing(20);
+            this.setSpacing(10);
             getChildren().add(infoHBox);
-            getChildren().add(new MenuBar(destinations));
+            getChildren().add(new Pane(new MenuBar(destinations)));
         }
 
 
