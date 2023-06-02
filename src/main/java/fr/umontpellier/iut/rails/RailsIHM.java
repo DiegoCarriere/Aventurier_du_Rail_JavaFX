@@ -63,7 +63,7 @@ public class RailsIHM extends Application {
             File file = new File("src/main/resources/css/style.css");
             scene.getStylesheets().add(file.toURI().toURL().toExternalForm());
         } catch (MalformedURLException e){
-            System.out.println(e.getMessage() + "bug");
+            System.out.println(e.getMessage() + "bug1234");
         }
 
         vueDuJeu.creerBindings();

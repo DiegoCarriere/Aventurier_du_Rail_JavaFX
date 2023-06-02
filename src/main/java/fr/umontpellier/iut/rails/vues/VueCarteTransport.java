@@ -2,6 +2,7 @@ package fr.umontpellier.iut.rails.vues;
 
 import fr.umontpellier.iut.rails.ICarteTransport;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -16,6 +17,7 @@ import javafx.scene.paint.Color;
 public class VueCarteTransport extends StackPane {
 
     private final ICarteTransport carteTransport;
+    private Label nbCarteLabel;
 
     public VueCarteTransport(ICarteTransport carteT, int nbCartes) {
         this.carteTransport = carteT;
@@ -44,15 +46,11 @@ public class VueCarteTransport extends StackPane {
         imageView.setFitWidth(150);
         imageView.setFitHeight(100);
 
-
-        //imageView.scaleXProperty().bind(imageView.scaleXProperty().multiply(0.1));
-        //imageView.scaleYProperty().bind(imageView.scaleYProperty().multiply(0.1));
-
         this.getChildren().add(imageView);
 
-        Label nbCarteLabel = new Label(String.valueOf(nbCartes));
+        nbCarteLabel = new Label(String.valueOf(nbCartes));
         nbCarteLabel.setStyle(
-                        "-fx-text-fill: black;" +
+                "-fx-text-fill: black;" +
                         "-fx-padding: 6px;" +
                         "-fx-font-size: 16px;" +
                         "-fx-font-weight: bold;"
@@ -63,13 +61,17 @@ public class VueCarteTransport extends StackPane {
         Background background = new Background(backgroundFill);
         nbCarteLabel.setBackground(background);
 
-        nbCarteLabel.setAlignment(Pos.TOP_RIGHT);
+        nbCarteLabel.setVisible(false);
         this.getChildren().add(nbCarteLabel);
-
+        StackPane.setAlignment(nbCarteLabel,Pos.TOP_RIGHT);
     }
 
     public ICarteTransport getCarteTransport() {
         return carteTransport;
+    }
+
+    public void setNbCartesLabel(){
+        nbCarteLabel.setVisible(true);
     }
 
 

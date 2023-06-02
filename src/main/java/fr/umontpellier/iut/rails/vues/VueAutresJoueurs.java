@@ -45,7 +45,7 @@ public class VueAutresJoueurs extends Pane {
 
         // bouton passer
         Button passer = new Button("Passer");
-        passer.setStyle("-fx-font-family: Arial ;  -fx-font-size: 16px; -fx-font-weight: bold");
+        passer.setStyle("-fx-font-size: 16px; -fx-font-weight: bold");
         passer.setOnAction(actionEvent -> {
             jeu.passerAEteChoisi();
         });
@@ -70,7 +70,7 @@ public class VueAutresJoueurs extends Pane {
         avatarImageView.setImage(avatarImage);
 
         Label nomLabel = new Label(joueur.getNom());
-        nomLabel.setStyle("-fx-font-family: Arial; -fx-font-size: 16px; -fx-font-weight: bold");
+        nomLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold");
         hbox.setBackground(new Background(new BackgroundFill(couleurFX, CornerRadii.EMPTY, Insets.EMPTY)));
 
         hbox.getChildren().addAll(avatarImageView, nomLabel);
@@ -98,7 +98,7 @@ public class VueAutresJoueurs extends Pane {
                 "\nNombre de pions wagon: " + nbPionsWagon +
                 "\nNombre de destinations: " + nbDestinations +
                 "\nNombre de cartes transport: " + nbCartesTransport);
-        infoLabel.setStyle("-fx-font-family: Arial; -fx-font-size: 12px;");
+        infoLabel.setStyle(" -fx-font-size: 12px;");
         infoLabel.setBackground(new Background(new BackgroundFill(tradCouleur(joueur.getCouleur()), CornerRadii.EMPTY, Insets.EMPTY)));
         infoLabel.setPadding(new Insets(5));
 

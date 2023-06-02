@@ -79,7 +79,7 @@ public class VueJoueurCourant extends VBox {
             // score
             score = new Label("Score: " + j.getScore());
             score.setStyle("-fx-font-size: 14px;");
-            score.setPadding(new Insets(10,10,10,0));
+            score.setPadding(new Insets(5,5,5,0));
             hbox.getChildren().addAll(avatar, nomJoueur, score);
 
             getChildren().add(hbox);
@@ -148,6 +148,7 @@ public class VueJoueurCourant extends VBox {
                 int nbCartes = entree.getValue();
 
                 VueCarteTransport vueCarte = new VueCarteTransport(carte, nbCartes);
+                vueCarte.setNbCartesLabel();
                 cartesTransportGrid.add(vueCarte, col, row);
 
                 col++;

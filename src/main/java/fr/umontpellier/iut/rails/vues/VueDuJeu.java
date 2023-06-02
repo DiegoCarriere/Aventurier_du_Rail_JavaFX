@@ -89,16 +89,6 @@ public class VueDuJeu extends BorderPane {
 
         });
 
-        jeu.jeuEnPreparationProperty().addListener((observable, oldValue, newValue) -> {
-           /* if (!newValue){ //si on est plus en preparation
-                instructionAutreJoueursCarteVisible.getChildren().remove(clickableHbox);
-
-            }
-
-            */
-
-        });
-
 
 
         jeu.destinationsInitialesProperty().addListener((ListChangeListener<IDestination>) change -> {
@@ -181,7 +171,10 @@ public class VueDuJeu extends BorderPane {
         joueurCourantVBox.prefWidthProperty().bind(getScene().widthProperty().multiply(0.3));
         joueurCourantVBox.prefHeightProperty().bind(getScene().heightProperty().multiply(0.3));
 
-        clickableHbox.prefWidthProperty().bind(getScene().widthProperty().multiply(0.8));
+        clickableHbox.prefWidthProperty().bind(plateau.widthProperty().add(getLeft().getLayoutX()));
+
+
+
 
 
 
