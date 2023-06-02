@@ -160,6 +160,7 @@ public class VueDuJeu extends BorderPane {
         setCenter(plateau);
         setBottom(instructionAutreJoueursCarteVisible);
         setRight(joueurCourantVBox);
+        BorderPane.setAlignment(joueurCourantVBox,Pos.CENTER_LEFT);
         //BorderPane.setMargin(labelEtBouton, new Insets(20, 10, 400, 100));
     }
 
@@ -172,9 +173,11 @@ public class VueDuJeu extends BorderPane {
         plateau.creerBindings();
 
         joueurCourantVBox.prefWidthProperty().bind(getScene().widthProperty().multiply(0.3));
-        joueurCourantVBox.prefHeightProperty().bind(getScene().heightProperty().multiply(0.3));
+        joueurCourantVBox.prefHeightProperty().bind(plateau.heightProperty());
 
         clickableHbox.prefWidthProperty().bind(plateau.widthProperty().add(getLeft().getLayoutX()));
+
+
 
 
 
