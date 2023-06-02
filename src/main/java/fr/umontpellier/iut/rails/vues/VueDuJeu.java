@@ -2,7 +2,6 @@ package fr.umontpellier.iut.rails.vues;
 
 import fr.umontpellier.iut.rails.*;
 import javafx.collections.ListChangeListener;
-import javafx.css.Size;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -33,6 +32,7 @@ public class VueDuJeu extends BorderPane {
     private HBox carteVisibleHBox;
 
     private BorderPane instructionAutreJoueursCarteVisible;
+    private Pane vueAutresJoueurs;
     private HBox clickableHbox;
 
 
@@ -48,7 +48,32 @@ public class VueDuJeu extends BorderPane {
         clickableHbox.setSpacing(10);
         instructionAutreJoueursCarteVisible.setLeft(clickableHbox);
 
+        // pioches
+        ImageView piocheCartesBateau = new ImageView(new Image("images/cartesWagons/dos-BATEAU.png"));
+        ImageView piocheCartesWagons = new ImageView(new Image("images/cartesWagons/dos-WAGON.png"));
+        ImageView piocheDestinations = new ImageView(new Image("images/cartesWagons/destinations.png"));
+        ImageView piochePionsBateau = new ImageView(new Image("images/bouton-pions-bateau.png"));
+        ImageView piochePionsWagon = new ImageView(new Image("images/bouton-pions-wagon.png"));
 
+        piocheCartesBateau.setFitWidth(70);
+        piocheCartesBateau.setFitHeight(100);
+        piocheCartesWagons.setFitWidth(70);
+        piocheCartesWagons.setFitHeight(100);
+        piocheDestinations.setFitWidth(100);
+        piocheDestinations.setFitHeight(70);
+        piochePionsBateau.setFitWidth(50);
+        piochePionsBateau.setFitHeight(50);
+        piochePionsWagon.setFitWidth(50);
+        piochePionsWagon.setFitHeight(50);
+
+
+        VBox piochesBox = new VBox(10);
+        piochesBox.setPadding(new Insets(10));
+        piochesBox.getChildren().addAll(
+                new HBox(piocheCartesBateau, piocheCartesWagons),
+                piocheDestinations,
+                new HBox(piochePionsBateau, piochePionsWagon)
+        );
 
 
         /** init console info sur le joueur courant*/
@@ -62,10 +87,8 @@ public class VueDuJeu extends BorderPane {
             List<IJoueur> liste = new ArrayList<>();
             liste.addAll(jeu.getJoueurs());
             liste.remove(newJoueur);
-            VueAutresJoueurs vueAutresJoueurs = new VueAutresJoueurs(liste, jeu);
-            vueAutresJoueurs.prefWidthProperty().bind(joueurCourantVBox.widthProperty().divide(2));
-            instructionAutreJoueursCarteVisible.setRight(vueAutresJoueurs);
-
+            vueAutresJoueurs = new VueAutresJoueurs(liste, jeu);
+            instructionAutreJoueursCarteVisible.setRight(new HBox(vueAutresJoueurs,piochesBox));
 
 
 
@@ -123,36 +146,12 @@ public class VueDuJeu extends BorderPane {
         instruction.textProperty().bind(jeu.instructionProperty());
         instructionAutreJoueursCarteVisible.setTop(instruction);
 
-        // pioches
-        ImageView piocheCartesBateau = new ImageView(new Image("images/cartesWagons/dos-BATEAU.png"));
-        ImageView piocheCartesWagons = new ImageView(new Image("images/cartesWagons/dos-WAGON.png"));
-        ImageView piocheDestinations = new ImageView(new Image("images/cartesWagons/destinations.png"));
-        ImageView piochePionsBateau = new ImageView(new Image("images/bouton-pions-bateau.png"));
-        ImageView piochePionsWagon = new ImageView(new Image("images/bouton-pions-wagon.png"));
-
-        piocheCartesBateau.setFitWidth(70);
-        piocheCartesBateau.setFitHeight(100);
-        piocheCartesWagons.setFitWidth(70);
-        piocheCartesWagons.setFitHeight(100);
-        piocheDestinations.setFitWidth(100);
-        piocheDestinations.setFitHeight(70);
-        piochePionsBateau.setFitWidth(50);
-        piochePionsBateau.setFitHeight(50);
-        piochePionsWagon.setFitWidth(50);
-        piochePionsWagon.setFitHeight(50);
 
 
-        VBox piochesBox = new VBox(10);
-        piochesBox.setPadding(new Insets(10));
-        piochesBox.getChildren().addAll(
-                piocheCartesBateau,
-                piocheCartesWagons,
-                piocheDestinations,
-                piochePionsBateau,
-                piochePionsWagon
-        );
 
-        setLeft(piochesBox);
+
+
+
 
 
         joueurCourantVBox.setAlignment(Pos.TOP_CENTER);
@@ -175,7 +174,7 @@ public class VueDuJeu extends BorderPane {
         joueurCourantVBox.prefWidthProperty().bind(getScene().widthProperty().multiply(0.3));
         joueurCourantVBox.prefHeightProperty().bind(plateau.heightProperty());
 
-        clickableHbox.prefWidthProperty().bind(plateau.widthProperty().add(getLeft().getLayoutX()));
+        clickableHbox.prefWidthProperty().bind(plateau.widthProperty());
 
 
 
