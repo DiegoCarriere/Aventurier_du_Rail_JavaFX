@@ -76,7 +76,7 @@ public class VueAutresJoueurs extends Pane {
         hbox.getChildren().addAll(avatarImageView, nomLabel);
 
         hbox.setOnMouseEntered(event -> {
-            afficherInfos(event.getX(), event.getY(), joueur);
+            afficherInfos(joueur);
         });
 
         hbox.setOnMouseExited(event -> {
@@ -86,28 +86,22 @@ public class VueAutresJoueurs extends Pane {
         return hbox;
     }
 
-    private void afficherInfos(double mouseX, double mouseY, IJoueur joueur) {
-        int score = joueur.getScore();
-        int nbPionsBateau = joueur.getNbPionsBateau();
-        int nbPionsWagon = joueur.getNbPionsWagon();
-        int nbDestinations = joueur.getDestinations().size();
-        int nbCartesTransport = joueur.getCartesTransport().size();
+    private void afficherInfos(IJoueur joueur) {
 
-        Label infoLabel = new Label("Score: " + score +
-                "\nNombre de pions bateau: " + nbPionsBateau +
-                "\nNombre de pions wagon: " + nbPionsWagon +
-                "\nNombre de destinations: " + nbDestinations +
-                "\nNombre de cartes transport: " + nbCartesTransport);
-        infoLabel.setStyle(" -fx-font-size: 12px;");
+        Label infoLabel = new Label("Score: " + joueur.getScore() +
+                "\nNombre de pions bateau: " + joueur.getNbPionsBateau() +
+                "\nNombre de pions wagon: " + joueur.getNbPionsWagon() +
+                "\nNombre de destinations: " + joueur.getDestinations().size() +
+                "\nNombre de cartes transport: " + joueur.getCartesTransport().size());
+        infoLabel.setStyle(" -fx-font-size: 15px;");
         infoLabel.setBackground(new Background(new BackgroundFill(tradCouleur(joueur.getCouleur()), CornerRadii.EMPTY, Insets.EMPTY)));
         infoLabel.setPadding(new Insets(5));
 
         // position des infos
-        infoLabel.setLayoutX(mouseX);
-        infoLabel.setLayoutY(mouseY + 10);
-
+        infoLabel.setLayoutX(-210);
 
         getChildren().add(infoLabel);
+
     }
 
     private void masquerInfos() {

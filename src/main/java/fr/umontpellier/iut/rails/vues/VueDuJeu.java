@@ -2,6 +2,7 @@ package fr.umontpellier.iut.rails.vues;
 
 import fr.umontpellier.iut.rails.*;
 import javafx.collections.ListChangeListener;
+import javafx.css.Size;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -61,7 +62,9 @@ public class VueDuJeu extends BorderPane {
             List<IJoueur> liste = new ArrayList<>();
             liste.addAll(jeu.getJoueurs());
             liste.remove(newJoueur);
-            instructionAutreJoueursCarteVisible.setRight(new VueAutresJoueurs(liste, jeu));
+            VueAutresJoueurs vueAutresJoueurs = new VueAutresJoueurs(liste, jeu);
+            vueAutresJoueurs.prefWidthProperty().bind(joueurCourantVBox.widthProperty().divide(2));
+            instructionAutreJoueursCarteVisible.setRight(vueAutresJoueurs);
 
 
 
@@ -172,6 +175,7 @@ public class VueDuJeu extends BorderPane {
         joueurCourantVBox.prefHeightProperty().bind(getScene().heightProperty().multiply(0.3));
 
         clickableHbox.prefWidthProperty().bind(plateau.widthProperty().add(getLeft().getLayoutX()));
+
 
 
 
