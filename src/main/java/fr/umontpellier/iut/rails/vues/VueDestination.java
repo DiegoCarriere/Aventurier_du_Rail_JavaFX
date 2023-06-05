@@ -32,7 +32,7 @@ public class VueDestination extends Pane {
         this.getChildren().add(boutonchoisir);
 
         boutonchoisir.setOnAction(event -> {
-           // ((VueDuJeu) getScene().getRoot()).getJeu()
+            ((VueDuJeu) getScene().getRoot()).getJeu().uneDestinationAEteChoisie(destination);
         });
 
     }

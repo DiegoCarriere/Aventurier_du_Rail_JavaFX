@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
@@ -45,6 +46,9 @@ public class VueCarteTransport extends StackPane {
         ImageView imageView = new ImageView(imageCarteFace);
         imageView.setFitWidth(150);
         imageView.setFitHeight(100);
+        imageView.setOnMouseClicked((MouseEvent e) -> {
+            ((VueDuJeu) getScene().getRoot()).getJeu().uneCarteTransportAEteChoisie(carteTransport);
+        });
 
         this.getChildren().add(imageView);
 
