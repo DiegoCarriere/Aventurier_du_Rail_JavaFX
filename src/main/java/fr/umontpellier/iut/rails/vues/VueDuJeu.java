@@ -50,10 +50,25 @@ public class VueDuJeu extends BorderPane {
 
         // pioches
         ImageView piocheCartesBateau = new ImageView(new Image("images/cartesWagons/dos-BATEAU.png"));
+        piocheCartesBateau.setOnMouseClicked((MouseEvent e) -> {
+            ((VueDuJeu) getScene().getRoot()).getJeu().uneCarteBateauAEtePiochee();
+        });
         ImageView piocheCartesWagons = new ImageView(new Image("images/cartesWagons/dos-WAGON.png"));
+        piocheCartesWagons.setOnMouseClicked((MouseEvent e) -> {
+            ((VueDuJeu) getScene().getRoot()).getJeu().uneCarteWagonAEtePiochee();
+        });
         ImageView piocheDestinations = new ImageView(new Image("images/cartesWagons/destinations.png"));
+        piocheDestinations.setOnMouseClicked((MouseEvent e) -> {
+            ((VueDuJeu) getScene().getRoot()).getJeu().nouvelleDestinationDemandee();
+        });
         ImageView piochePionsBateau = new ImageView(new Image("images/bouton-pions-bateau.png"));
+        piochePionsBateau.setOnMouseClicked((MouseEvent e) -> {
+            ((VueDuJeu) getScene().getRoot()).getJeu().nouveauxPionsBateauxDemandes();
+        });
         ImageView piochePionsWagon = new ImageView(new Image("images/bouton-pions-wagon.png"));
+        piochePionsWagon.setOnMouseClicked((MouseEvent e) -> {
+            ((VueDuJeu) getScene().getRoot()).getJeu().nouveauxPionsWagonsDemandes();
+        });
 
         piocheCartesBateau.setFitWidth(70);
         piocheCartesBateau.setFitHeight(100);
@@ -131,7 +146,7 @@ public class VueDuJeu extends BorderPane {
                 if(change.wasAdded()) {
                     clickableHbox.getChildren().clear();
                     for(ICarteTransport carteTransport : jeu.cartesTransportVisiblesProperty()){
-                        clickableHbox.getChildren().add(new VueCarteTransport(carteTransport,1));
+                        clickableHbox.getChildren().add(new VueCarteTransport(carteTransport,1, true, false));
                     }
                 }
             }

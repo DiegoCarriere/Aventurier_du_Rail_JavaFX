@@ -20,7 +20,7 @@ public class VueCarteTransport extends StackPane {
     private final ICarteTransport carteTransport;
     private Label nbCarteLabel;
 
-    public VueCarteTransport(ICarteTransport carteT, int nbCartes) {
+    public VueCarteTransport(ICarteTransport carteT, int nbCartes, boolean clickablePioche, boolean clickableJoue) {
         this.carteTransport = carteT;
 
         /**trouver le chemin de la carte*/
@@ -46,9 +46,16 @@ public class VueCarteTransport extends StackPane {
         ImageView imageView = new ImageView(imageCarteFace);
         imageView.setFitWidth(150);
         imageView.setFitHeight(100);
-        imageView.setOnMouseClicked((MouseEvent e) -> {
-            ((VueDuJeu) getScene().getRoot()).getJeu().uneCarteTransportAEteChoisie(carteTransport);
-        });
+        if (clickablePioche) {
+            imageView.setOnMouseClicked((MouseEvent e) -> {
+                ((VueDuJeu) getScene().getRoot()).getJeu().uneCarteTransportAEteChoisie(carteTransport);
+            });
+        }
+        if (clickableJoue) {
+            imageView.setOnMouseClicked((MouseEvent e) -> {
+                ((VueDuJeu) getScene().getRoot()).getJeu().uneCarteDuJoueurEstJouee(carteTransport);
+            });
+        }
 
         this.getChildren().add(imageView);
 
