@@ -29,7 +29,6 @@ public class VueDuJeu extends BorderPane {
     private VuePlateau plateau;
 
     private VBox joueurCourantVBox;
-    private HBox carteVisibleHBox;
 
     private BorderPane instructionAutreJoueursCarteVisible;
     private Pane vueAutresJoueurs;
@@ -41,7 +40,6 @@ public class VueDuJeu extends BorderPane {
         this.jeu = jeu;
         plateau = new VuePlateau();
         joueurCourantVBox = new VBox();
-        carteVisibleHBox = new HBox();
         instructionAutreJoueursCarteVisible = new BorderPane();
         clickableHbox = new HBox();
         clickableHbox.setAlignment(Pos.CENTER);
@@ -154,6 +152,7 @@ public class VueDuJeu extends BorderPane {
 
 
 
+
         Label instruction = new Label();
         instruction.setPadding(new Insets(10,0,0,10));
         instruction.setAlignment(Pos.TOP_CENTER);
@@ -193,6 +192,6 @@ public class VueDuJeu extends BorderPane {
         return jeu;
     }
 
-    EventHandler<? super MouseEvent> actionPasserParDefaut = (mouseEvent -> getJeu().passerAEteChoisi());
+    //EventHandler<? super MouseEvent> actionPasserParDefaut = (mouseEvent -> getJeu().passerAEteChoisi());
 
 }

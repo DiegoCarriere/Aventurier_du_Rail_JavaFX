@@ -46,16 +46,19 @@ public class VueCarteTransport extends StackPane {
         ImageView imageView = new ImageView(imageCarteFace);
         imageView.setFitWidth(150);
         imageView.setFitHeight(100);
-        if (clickablePioche) {
-            imageView.setOnMouseClicked((MouseEvent e) -> {
+
+        imageView.setOnMouseClicked((MouseEvent e) -> {
+            if (clickablePioche) {
                 ((VueDuJeu) getScene().getRoot()).getJeu().uneCarteTransportAEteChoisie(carteTransport);
-            });
-        }
-        if (clickableJoue) {
-            imageView.setOnMouseClicked((MouseEvent e) -> {
+            }
+        });
+
+        imageView.setOnMouseClicked((MouseEvent e) -> {
+            if (clickableJoue) {
                 ((VueDuJeu) getScene().getRoot()).getJeu().uneCarteDuJoueurEstJouee(carteTransport);
-            });
-        }
+            }
+        });
+
 
         this.getChildren().add(imageView);
 
