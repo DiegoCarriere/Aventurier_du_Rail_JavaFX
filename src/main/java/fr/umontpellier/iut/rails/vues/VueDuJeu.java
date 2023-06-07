@@ -86,8 +86,11 @@ public class VueDuJeu extends BorderPane {
 
         VBox piochesBox = new VBox(10);
         piochesBox.setPadding(new Insets(10));
+        HBox piocheCartes = new HBox(piocheCartesBateau, piocheCartesWagons);
+        piocheCartes.setSpacing(10);
+        piochesBox.setAlignment(Pos.CENTER);
         piochesBox.getChildren().addAll(
-                new HBox(piocheCartesBateau, piocheCartesWagons),
+                piocheCartes,
                 piocheDestinations,
                 new HBox(piochePionsBateau, piochePionsWagon)
         );

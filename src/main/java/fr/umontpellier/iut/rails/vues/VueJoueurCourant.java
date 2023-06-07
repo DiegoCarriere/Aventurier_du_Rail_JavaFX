@@ -36,7 +36,7 @@ public class VueJoueurCourant extends VBox {
             Label nomJoueur = new Label(j.getNom().toString());
             System.out.println(j.getNom().toString());
             nomJoueur.setPadding(new Insets(20,300,10,0));
-            nomJoueur.setStyle("-fx-font-size: 16px; -fx-font-weight: bold");
+            nomJoueur.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
 
             IJoueur.CouleurJoueur couleurJoueur = j.getCouleur();
             Color couleurFX;
@@ -74,7 +74,7 @@ public class VueJoueurCourant extends VBox {
 
             // score
             score = new Label("Score: " + j.getScore());
-            score.setStyle("-fx-font-size: 14px;");
+            score.setStyle("-fx-font-size: 18px;");
             score.setPadding(new Insets(5,5,5,500));
             stackPane.getChildren().addAll(avatar, nomJoueur, score);
 
@@ -113,6 +113,7 @@ public class VueJoueurCourant extends VBox {
             cartesTransportGrid = new GridPane();
             cartesTransportGrid.setHgap(10);
             cartesTransportGrid.setVgap(10);
+            cartesTransportGrid.setAlignment(Pos.CENTER);
 
             List<? extends ICarteTransport> cartesTransport = joueur.getCartesTransport();
             Map<ICarteTransport, Integer> cartesParCarte = new TreeMap<>();
