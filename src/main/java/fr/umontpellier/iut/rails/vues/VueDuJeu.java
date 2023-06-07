@@ -15,6 +15,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -70,6 +71,8 @@ public class VueDuJeu extends BorderPane {
         piochePionsWagon.setOnMouseClicked((MouseEvent e) -> {
             ((VueDuJeu) getScene().getRoot()).getJeu().nouveauxPionsWagonsDemandes();
         });
+
+        effetHoverShadow(Arrays.asList(piocheCartesBateau,piocheCartesWagons,piocheDestinations,piochePionsBateau,piochePionsWagon));
 
         piocheCartesBateau.setFitWidth(70);
         piocheCartesBateau.setFitHeight(100);
@@ -135,12 +138,6 @@ public class VueDuJeu extends BorderPane {
                             ((VueDuJeu) getScene().getRoot()).getJeu().uneDestinationAEteChoisie(destination);
                             clickableHbox.getChildren().remove(vueDestination);
                         });
-                        vueDestination.setOnMouseEntered(mouseEvent -> {
-                            shadowOn(vueDestination);
-                        });
-                        vueDestination.setOnMouseExited(mouseEvent -> {
-                            shadowOff(vueDestination);
-                        });
                     }
                 }
             }
@@ -165,12 +162,6 @@ public class VueDuJeu extends BorderPane {
                             for(Node vueCarteTransport1 : clickableHbox.getChildren()) {
                                 vueCarteTransport1.setDisable(true);
                             }
-                        });
-                        vueCarteTransport.setOnMouseEntered(mouseEvent -> {
-                            shadowOn(vueCarteTransport);
-                        });
-                        vueCarteTransport.setOnMouseExited(mouseEvent -> {
-                            shadowOff(vueCarteTransport);
                         });
                     }
                 }
@@ -270,15 +261,34 @@ public class VueDuJeu extends BorderPane {
         System.out.println(infos + "\n");
     }
 
-    private static void shadowOn(Node n){
-        DropShadow ds = new DropShadow();
-        ds.setOffsetY(3.0f);
-        ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
+    protected static void effetHoverShadow(List<Node> listeN){
+        for(Node n : listeN){
+            n.setOnMouseEntered(mouseEvent -> {
+                DropShadow ds = new DropShadow();
+                ds.setOffsetY(3.0f);
+                ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
 
-        n.setEffect(ds);
+                n.setEffect(ds);
+            });
+            n.setOnMouseExited(mouseEvent -> {
+                n.setEffect(null);
+            });
+        }
     }
-    private static void shadowOff(Node n){
-        n.setEffect(null);
+
+    protected static void effetHoverShadow(Node n){
+        n.setOnMouseEntered(mouseEvent -> {
+            DropShadow ds = new DropShadow();
+            ds.setOffsetY(3.0f);
+            ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
+
+            n.setEffect(ds);
+        });
+        n.setOnMouseExited(mouseEvent -> {
+            n.setEffect(null);
+        });
     }
+
+
 
 }
