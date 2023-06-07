@@ -101,7 +101,7 @@ public class VueDuJeu extends BorderPane {
             newJoueur.cartesTransportProperty().addListener((ListChangeListener<ICarteTransport>) change -> {
                 while (change.next()){
                     if(change.wasAdded()) {
-                        System.out.println("fefefe");
+                        System.out.println("Faut actualiser DIRECT"); //TODO
                     }
                 }
             });
@@ -155,17 +155,6 @@ public class VueDuJeu extends BorderPane {
             }
         });
 
-
-
-        /*
-        imageView.setOnMouseClicked((MouseEvent e) -> {
-            if (clickableJoue) {
-                ((VueDuJeu) getScene().getRoot()).getJeu().uneCarteDuJoueurEstJouee(carteTransport);
-            }
-        });
-
-         */
-
         TextField textfield = new TextField();
         jeu.saisieNbPionsWagonAutoriseeProperty().addListener((observableValue, ancienneValeur, nouvelleValeur) -> {
             if (nouvelleValeur){
@@ -192,8 +181,6 @@ public class VueDuJeu extends BorderPane {
             }
 
         });
-
-
 
 
         Label instruction = new Label();

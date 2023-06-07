@@ -4,6 +4,7 @@ import fr.umontpellier.iut.rails.mecanique.Jeu;
 import fr.umontpellier.iut.rails.vues.DonneesGraphiques;
 import fr.umontpellier.iut.rails.vues.VueChoixJoueurs;
 import fr.umontpellier.iut.rails.vues.VueDuJeu;
+import fr.umontpellier.iut.rails.vues.VueResultats;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
@@ -129,6 +130,12 @@ public class RailsIHM extends Application {
             event.consume();
         });
         primaryStage.initStyle(StageStyle.TRANSPARENT);
+
+        jeu.finDePartieProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue){
+                primaryStage.setScene(new Scene(new VueResultats(this)));
+            }
+        });
         primaryStage.show();
     }
 
