@@ -178,6 +178,7 @@ public class VueJoueurCourant extends BorderPane {
             });
 
             HBox bottomAll = new HBox(new MenuBar(destinations), passer,infoHBox);
+            bottomAll.setSpacing(10);
 
             this.setBottom(bottomAll);
 
