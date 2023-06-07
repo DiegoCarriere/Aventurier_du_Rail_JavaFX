@@ -8,6 +8,7 @@ import fr.umontpellier.iut.rails.mecanique.Joueur;
 import fr.umontpellier.iut.rails.mecanique.data.CarteTransport;
 import fr.umontpellier.iut.rails.mecanique.data.Couleur;
 import fr.umontpellier.iut.rails.mecanique.data.Destination;
+import javafx.beans.InvalidationListener;
 import javafx.collections.ListChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -29,9 +30,11 @@ import java.util.*;
  */
 public class VueJoueurCourant extends BorderPane {
 
+    private IJoueur joueur;
+    private GridPane cartesTransportGrid;
 
-
-    public VueJoueurCourant(IJoueur joueur){
+    public VueJoueurCourant(IJoueur j){
+        this.joueur = j;
         if (joueur != null) {
             Label nomJoueur = new Label(joueur.getNom().toString());
             System.out.println(joueur.getNom().toString());
@@ -107,62 +110,21 @@ public class VueJoueurCourant extends BorderPane {
             HBox pionsBateauHBox = creerInfosPions("/images/bouton-pions-bateau.png", String.valueOf(joueur.getNbPionsBateau()));
             HBox portsRestantsHBox = creerInfosPions("/images/port.png", String.valueOf(joueur.getNbPorts()));
 
+
             // cartes transport
-            GridPane cartesTransportGrid = new GridPane();
-            cartesTransportGrid.setHgap(10);
-            cartesTransportGrid.setVgap(10);
-            cartesTransportGrid.setAlignment(Pos.CENTER);
-
-            List<? extends ICarteTransport> cartesTransport = joueur.getCartesTransport();
-            Map<ICarteTransport, Integer> cartesParCarte = new TreeMap<>();
-
-            for (ICarteTransport carte : cartesTransport) {
-                if (!carte.estJoker()) {
-                    // vérifie si la carte existe déjà dans la map
-                    boolean existe = false;
-                    for (Map.Entry<ICarteTransport, Integer> entry : cartesParCarte.entrySet()) {
-                        ICarteTransport carteExistante = entry.getKey();
-                        if ((carteExistante.getStringCouleur().equals(carte.getStringCouleur()) &&
-                                ( (carteExistante.estBateau() && carte.estBateau()) || (carteExistante.estWagon() && carte.estWagon()) && !carteExistante.estDouble() && !carte.estDouble()))
-                        || (carteExistante.getStringCouleur().equals(carte.getStringCouleur()) &&
-                                ( (carteExistante.estBateau() && carte.estBateau()) || (carteExistante.estWagon() && carte.estWagon()) && carteExistante.estDouble() && carte.estDouble()))) {
-                            // la carte existe on incrémente
-                            int nbCartes = entry.getValue();
-                            entry.setValue(nbCartes + 1);
-                            existe = true;
-                            break;
-                        }
-                    }
-
-                    if (!existe) {
-                        // si elle y est pas deja, on ajoute
-                        cartesParCarte.put(carte, 1);
-                    }
-                }
-            }
-
-            int col = 0;
-            int row = 0;
-            for (Map.Entry<ICarteTransport, Integer> entree : cartesParCarte.entrySet()) {
-                ICarteTransport carte = entree.getKey();
-                int nbCartes = entree.getValue();
-
-                VueCarteTransport vueCarte = new VueCarteTransport(carte, nbCartes);
-                vueCarte.setNbCartesLabel();
-                cartesTransportGrid.add(vueCarte, col, row);
-
-                vueCarte.setOnMouseClicked((MouseEvent e) -> {
-                    ((VueDuJeu) getScene().getRoot()).getJeu().uneCarteDuJoueurEstJouee(vueCarte.getCarteTransport());
-                });
-
-                col++;
-                if (col >= 3) {
-                    col = 0;
-                    row++;
-                }
-            }
-
+            cartesTransportGrid = initCartes(joueur.getCartesTransport());
             this.setCenter(cartesTransportGrid);
+
+            joueur.cartesTransportProperty().addListener((ListChangeListener<ICarteTransport>) change -> {
+                while (change.next()){
+                    if(change.wasAdded()){
+                        cartesTransportGrid = initCartes(change.getList());
+                        this.setCenter(cartesTransportGrid);
+                    }
+                }
+            });
+
+
 
             HBox infoHBox = new HBox(pionsWagonHBox, pionsBateauHBox, portsRestantsHBox);
 
@@ -179,15 +141,7 @@ public class VueJoueurCourant extends BorderPane {
             bottomAll.setSpacing(10);
 
             this.setBottom(bottomAll);
-
-            if (cartesTransportGrid.getRowCount() < 1) {
-                bottomAll.setPadding(new Insets(400, 30, 0, 30));
-            } else if (cartesTransportGrid.getRowCount() <= 2){
-                bottomAll.setPadding(new Insets(0, 30, 0, 30));
-            } else {
-                bottomAll.setPadding(new Insets(0, 30, 0, 30));
-            }
-
+            bottomAll.setPadding(new Insets(0, 30, 0, 30));
 
             infoHBox.setSpacing(20);
 
@@ -209,6 +163,62 @@ public class VueJoueurCourant extends BorderPane {
         hbox.getChildren().addAll(iconImageView, label);
 
         return hbox;
+    }
+
+    private GridPane initCartes(List<? extends ICarteTransport> cartesTransport){
+        GridPane cartesTransportGrid = new GridPane();
+        cartesTransportGrid.setHgap(10);
+        cartesTransportGrid.setVgap(10);
+        cartesTransportGrid.setAlignment(Pos.CENTER);
+
+        Map<ICarteTransport, Integer> cartesParCarte = new TreeMap<>();
+
+        for (ICarteTransport carte : cartesTransport) {
+            if (!carte.estJoker()) {
+                // vérifie si la carte existe déjà dans la map
+                boolean existe = false;
+                for (Map.Entry<ICarteTransport, Integer> entry : cartesParCarte.entrySet()) {
+                    ICarteTransport carteExistante = entry.getKey();
+                    if ((carteExistante.getStringCouleur().equals(carte.getStringCouleur()) &&
+                            ( (carteExistante.estBateau() && carte.estBateau()) || (carteExistante.estWagon() && carte.estWagon()) && !carteExistante.estDouble() && !carte.estDouble()))
+                            || (carteExistante.getStringCouleur().equals(carte.getStringCouleur()) &&
+                            ( (carteExistante.estBateau() && carte.estBateau()) || (carteExistante.estWagon() && carte.estWagon()) && carteExistante.estDouble() && carte.estDouble()))) {
+                        // la carte existe on incrémente
+                        int nbCartes = entry.getValue();
+                        entry.setValue(nbCartes + 1);
+                        existe = true;
+                        break;
+                    }
+                }
+
+                if (!existe) {
+                    // si elle y est pas deja, on ajoute
+                    cartesParCarte.put(carte, 1);
+                }
+            }
+        }
+
+        int col = 0;
+        int row = 0;
+        for (Map.Entry<ICarteTransport, Integer> entree : cartesParCarte.entrySet()) {
+            ICarteTransport carte = entree.getKey();
+            int nbCartes = entree.getValue();
+
+            VueCarteTransport vueCarte = new VueCarteTransport(carte, nbCartes);
+            vueCarte.setNbCartesLabel();
+            cartesTransportGrid.add(vueCarte, col, row);
+
+            vueCarte.setOnMouseClicked((MouseEvent e) -> {
+                ((VueDuJeu) getScene().getRoot()).getJeu().uneCarteDuJoueurEstJouee(vueCarte.getCarteTransport());
+            });
+
+            col++;
+            if (col >= 3) {
+                col = 0;
+                row++;
+            }
+        }
+        return cartesTransportGrid;
     }
 
 

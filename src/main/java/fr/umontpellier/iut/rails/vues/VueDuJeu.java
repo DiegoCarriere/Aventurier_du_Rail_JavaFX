@@ -50,6 +50,7 @@ public class VueDuJeu extends BorderPane {
         this.jeu = jeu;
         plateau = new VuePlateau();
         joueurCourant = new BorderPane();
+        setRight(joueurCourant);
         instructionAutreJoueursCarteVisible = new BorderPane();
         clickableHbox = new FlowPane();
         clickableHbox.setAlignment(Pos.CENTER);
@@ -110,14 +111,6 @@ public class VueDuJeu extends BorderPane {
 
             joueurCourant = new VueJoueurCourant(newJoueur);
             setRight(joueurCourant);
-
-            newJoueur.cartesTransportProperty().addListener((ListChangeListener<ICarteTransport>) change -> {
-                while (change.next()){
-                    if(change.wasAdded()) {
-                        System.out.println("Faut actualiser DIRECT"); //TODO
-                    }
-                }
-            });
 
             // autres joueurs
             List<IJoueur> liste = new ArrayList<>(jeu.getJoueurs());
@@ -193,10 +186,12 @@ public class VueDuJeu extends BorderPane {
                         if (nombrePions >= 10 && nombrePions <= 25) {
                             String nbPionsChoisis = Integer.toString(nombrePions);
                             jeu.leNombreDePionsSouhaiteAEteRenseigne(nbPionsChoisis);
-                        } else {
-                            textfield.clear();
                         }
-                    } catch (NumberFormatException e) {
+
+                    } catch (NumberFormatException e){
+                        System.out.println(e.getMessage());
+                    }
+                    finally {
                         textfield.clear();
                     }
                 });
