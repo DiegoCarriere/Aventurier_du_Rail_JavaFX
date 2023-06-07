@@ -72,6 +72,7 @@ public class VueChoixJoueurs extends Stage {
 
         // Création du bouton "Croix"
         Button closeButton = new Button("❌");
+        closeButton.setStyle("-fx-font-size: 15px;");
         closeButton.setOnAction(e -> {
             // Code à exécuter lorsque le bouton "Croix" est cliqué
             close();
@@ -79,6 +80,7 @@ public class VueChoixJoueurs extends Stage {
 
         // Création du bouton "Plein écran"
         Button fullscreenButton = new Button("⬛");
+        fullscreenButton.setStyle("-fx-font-size: 15px;");
         fullscreenButton.setOnAction(e -> {
             // Code à exécuter lorsque le bouton "Plein écran" est cliqué
             if (isFullScreen()) {
@@ -91,6 +93,7 @@ public class VueChoixJoueurs extends Stage {
 
         // Création du bouton "Réduire"
         Button minimizeButton = new Button("_");
+        minimizeButton.setStyle("-fx-font-size: 15px;");
         minimizeButton.setOnAction(e -> {
             // Code à exécuter lorsque le bouton "Réduire" est cliqué
             setIconified(true);
