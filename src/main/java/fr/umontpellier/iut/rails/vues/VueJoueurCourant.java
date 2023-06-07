@@ -185,7 +185,7 @@ public class VueJoueurCourant extends BorderPane {
             if (cartesTransportGrid.getRowCount() < 1) {
                 bottomAll.setPadding(new Insets(400, 30, 0, 30));
             } else if (cartesTransportGrid.getRowCount() <= 2){
-                bottomAll.setPadding(new Insets(0, 30, 0, 50));
+                bottomAll.setPadding(new Insets(0, 30, 0, 30));
             } else {
                 bottomAll.setPadding(new Insets(0, 30, 0, 30));
             }
