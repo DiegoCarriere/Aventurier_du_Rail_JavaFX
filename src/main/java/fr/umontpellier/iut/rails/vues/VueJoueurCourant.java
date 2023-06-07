@@ -67,7 +67,6 @@ public class VueJoueurCourant extends VBox {
             StackPane stackPane = new StackPane();
             stackPane.setBackground(new Background(new BackgroundFill(couleurFX, new CornerRadii(10), null)));
 
-
             // avatar
             ImageView avatar = new ImageView();
             avatar.setFitWidth(70);
