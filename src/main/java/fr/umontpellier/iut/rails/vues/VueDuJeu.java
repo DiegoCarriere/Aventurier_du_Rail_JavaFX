@@ -72,7 +72,7 @@ public class VueDuJeu extends BorderPane {
             ((VueDuJeu) getScene().getRoot()).getJeu().nouveauxPionsWagonsDemandes();
         });
 
-        effetHoverShadow(Arrays.asList(piocheCartesBateau,piocheCartesWagons,piocheDestinations,piochePionsBateau,piochePionsWagon));
+        effetHover(Arrays.asList(piocheCartesBateau,piocheCartesWagons,piocheDestinations,piochePionsBateau,piochePionsWagon));
 
         piocheCartesBateau.setFitWidth(70);
         piocheCartesBateau.setFitHeight(100);
@@ -261,22 +261,13 @@ public class VueDuJeu extends BorderPane {
         System.out.println(infos + "\n");
     }
 
-    protected static void effetHoverShadow(List<Node> listeN){
+    protected static void effetHover(List<Node> listeN){
         for(Node n : listeN){
-            n.setOnMouseEntered(mouseEvent -> {
-                DropShadow ds = new DropShadow();
-                ds.setOffsetY(3.0f);
-                ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
-
-                n.setEffect(ds);
-            });
-            n.setOnMouseExited(mouseEvent -> {
-                n.setEffect(null);
-            });
+            effetHover(n);
         }
     }
 
-    protected static void effetHoverShadow(Node n){
+    protected static void effetHover(Node n){
         n.setOnMouseEntered(mouseEvent -> {
             DropShadow ds = new DropShadow();
             ds.setOffsetY(3.0f);
