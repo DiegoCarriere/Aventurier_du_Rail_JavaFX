@@ -39,7 +39,7 @@ public class VueDuJeu extends BorderPane {
 
     private BorderPane instructionAutreJoueursCarteVisible;
     private Pane vueAutresJoueurs;
-    private HBox clickableHbox;
+    private FlowPane clickableHbox;
 
 
     public VueDuJeu(IJeu jeu) {
@@ -48,9 +48,11 @@ public class VueDuJeu extends BorderPane {
         plateau = new VuePlateau();
         joueurCourantVBox = new VBox();
         instructionAutreJoueursCarteVisible = new BorderPane();
-        clickableHbox = new HBox();
+        clickableHbox = new FlowPane();
         clickableHbox.setAlignment(Pos.CENTER);
-        clickableHbox.setSpacing(10);
+        //clickableHbox.setSpacing(10);
+        clickableHbox.setVgap(10);
+        clickableHbox.setHgap(10);
         clickableHbox.setPadding(new Insets(0,0,90,0));
         instructionAutreJoueursCarteVisible.setLeft(clickableHbox);
 
