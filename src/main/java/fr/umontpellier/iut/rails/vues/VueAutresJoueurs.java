@@ -33,7 +33,6 @@ public class VueAutresJoueurs extends Pane {
         setPadding(new Insets(10));
         setPrefWidth(200);
         setPrefHeight(400);
-        //setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
 
         vbox = new VBox();
         vbox.setSpacing(10);
@@ -42,6 +41,7 @@ public class VueAutresJoueurs extends Pane {
         for (IJoueur joueur : joueurs) {
             if (joueur != null ) {
                 HBox hbox = createJoueurHBox(joueur);
+                VueDuJeu.effetHoverShadow(hbox);
                 vbox.getChildren().add(hbox);
                 hbox.setPadding(new Insets(10,10,10,10));
             }
@@ -79,19 +79,6 @@ public class VueAutresJoueurs extends Pane {
         hbox.setBackground(new Background(new BackgroundFill(couleurFX, CornerRadii.EMPTY, Insets.EMPTY)));
 
         hbox.getChildren().addAll(avatarImageView, nomLabel);
-
-        hbox.setOnMouseEntered(event -> {
-            afficherInfos(joueur);
-            DropShadow ds = new DropShadow();
-            ds.setOffsetY(3.0f);
-            ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
-            hbox.setEffect(ds);
-        });
-
-        hbox.setOnMouseExited(event -> {
-            masquerInfos();
-            hbox.setEffect(null);
-        });
 
 
         return hbox;
