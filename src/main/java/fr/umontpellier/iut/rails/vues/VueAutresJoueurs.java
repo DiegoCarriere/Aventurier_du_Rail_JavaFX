@@ -4,14 +4,18 @@ import fr.umontpellier.iut.rails.IJeu;
 import fr.umontpellier.iut.rails.IJoueur;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -45,6 +49,7 @@ public class VueAutresJoueurs extends Pane {
 
         // bouton passer
         Button passer = new Button("Passer");
+        VueDuJeu.effetHoverShadow(passer);
         passer.setStyle("-fx-font-size: 16px; -fx-font-weight: bold");
         passer.setOnAction(actionEvent -> {
             jeu.passerAEteChoisi();
@@ -77,11 +82,17 @@ public class VueAutresJoueurs extends Pane {
 
         hbox.setOnMouseEntered(event -> {
             afficherInfos(joueur);
+            DropShadow ds = new DropShadow();
+            ds.setOffsetY(3.0f);
+            ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
+            hbox.setEffect(ds);
         });
 
         hbox.setOnMouseExited(event -> {
             masquerInfos();
+            hbox.setEffect(null);
         });
+
 
         return hbox;
     }

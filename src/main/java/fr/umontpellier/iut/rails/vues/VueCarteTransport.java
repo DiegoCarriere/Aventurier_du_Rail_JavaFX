@@ -4,6 +4,7 @@ import fr.umontpellier.iut.rails.ICarteTransport;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -66,6 +67,18 @@ public class VueCarteTransport extends StackPane {
         nbCarteLabel.setVisible(false);
         this.getChildren().add(nbCarteLabel);
         StackPane.setAlignment(nbCarteLabel,Pos.TOP_RIGHT);
+
+        this.setOnMouseEntered(mouseEvent -> {
+            DropShadow ds = new DropShadow();
+            ds.setOffsetY(3.0f);
+            ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
+
+            this.setEffect(ds);
+        });
+        this.setOnMouseExited(mouseEvent -> {
+            this.setEffect(null);
+        });
+
     }
 
     public ICarteTransport getCarteTransport() {
