@@ -4,10 +4,13 @@ import fr.umontpellier.iut.rails.*;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
 import javafx.collections.ListChangeListener;
+import javafx.event.EventTarget;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -289,7 +292,4 @@ public class VueDuJeu extends BorderPane {
             n.setEffect(null);
         });
     }
-
-
-
 }

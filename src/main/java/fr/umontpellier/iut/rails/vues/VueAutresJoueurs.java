@@ -70,7 +70,7 @@ public class VueAutresJoueurs extends Pane {
         });
 
         Label nomLabel = new Label(joueur.getNom());
-        hbox.setBackground(new Background(new BackgroundFill(couleurFX, CornerRadii.EMPTY, Insets.EMPTY)));
+        hbox.setBackground(new Background(new BackgroundFill(couleurFX, new CornerRadii(10), Insets.EMPTY)));
 
         hbox.getChildren().addAll(avatarImageView, nomLabel);
 

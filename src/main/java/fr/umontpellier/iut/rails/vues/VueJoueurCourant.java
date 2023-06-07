@@ -29,19 +29,15 @@ import java.util.*;
  */
 public class VueJoueurCourant extends BorderPane {
 
-    private IJoueur j;
-    private Label score;
-    private Menu destinations;
-    private GridPane cartesTransportGrid;
+
 
     public VueJoueurCourant(IJoueur joueur){
-        j = joueur;
-        if (j != null) {
-            Label nomJoueur = new Label(j.getNom().toString());
-            System.out.println(j.getNom().toString());
+        if (joueur != null) {
+            Label nomJoueur = new Label(joueur.getNom().toString());
+            System.out.println(joueur.getNom().toString());
             nomJoueur.setPadding(new Insets(5,0,5,10));
 
-            IJoueur.CouleurJoueur couleurJoueur = j.getCouleur();
+            IJoueur.CouleurJoueur couleurJoueur = joueur.getCouleur();
             Color couleurFX;
 
             switch (couleurJoueur) {
@@ -75,7 +71,7 @@ public class VueJoueurCourant extends BorderPane {
             avatar.setImage(avatarImage);
 
             // score
-            score = new Label("Score: " + j.getScore());
+            Label score = new Label("Score: " + joueur.getScore());
 
             score.setPadding(new Insets(5,10,5,0));
             stackPane.getChildren().addAll(avatar, nomJoueur, score);
@@ -87,7 +83,7 @@ public class VueJoueurCourant extends BorderPane {
             this.setTop(stackPane);
 
             // destinations
-            destinations = new Menu("Destinations");
+            Menu destinations = new Menu("Destinations");
 
             //Label infoLabel = new Label();
             for (IDestination d : joueur.getDestinations()) {
@@ -107,12 +103,12 @@ public class VueJoueurCourant extends BorderPane {
 
 
             // infos pions et ports
-            HBox pionsWagonHBox = creerInfosPions("/images/bouton-pions-wagon.png", String.valueOf(j.getNbPionsWagon()));
-            HBox pionsBateauHBox = creerInfosPions("/images/bouton-pions-bateau.png", String.valueOf(j.getNbPionsBateau()));
-            HBox portsRestantsHBox = creerInfosPions("/images/port.png", String.valueOf(j.getNbPorts()));
+            HBox pionsWagonHBox = creerInfosPions("/images/bouton-pions-wagon.png", String.valueOf(joueur.getNbPionsWagon()));
+            HBox pionsBateauHBox = creerInfosPions("/images/bouton-pions-bateau.png", String.valueOf(joueur.getNbPionsBateau()));
+            HBox portsRestantsHBox = creerInfosPions("/images/port.png", String.valueOf(joueur.getNbPorts()));
 
             // cartes transport
-            cartesTransportGrid = new GridPane();
+            GridPane cartesTransportGrid = new GridPane();
             cartesTransportGrid.setHgap(10);
             cartesTransportGrid.setVgap(10);
             cartesTransportGrid.setAlignment(Pos.CENTER);
@@ -177,7 +173,9 @@ public class VueJoueurCourant extends BorderPane {
                 ((VueDuJeu) getScene().getRoot()).getJeu().passerAEteChoisi();
             });
 
-            HBox bottomAll = new HBox(new MenuBar(destinations), passer,infoHBox);
+            MenuBar menuBar = new MenuBar(destinations);
+            VueDuJeu.effetHover(menuBar);
+            HBox bottomAll = new HBox(menuBar, passer,infoHBox);
             bottomAll.setSpacing(10);
 
             this.setBottom(bottomAll);
@@ -193,12 +191,7 @@ public class VueJoueurCourant extends BorderPane {
 
             infoHBox.setSpacing(20);
 
-
-
-
         }
-
-
     }
 
     private HBox creerInfosPions(String chemin, String text) {
