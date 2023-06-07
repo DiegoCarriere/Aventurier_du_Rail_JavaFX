@@ -151,6 +151,7 @@ public class VueDuJeu extends BorderPane {
         TextField textfield = new TextField();
         jeu.saisieNbPionsWagonAutoriseeProperty().addListener((observableValue, ancienneValeur, nouvelleValeur) -> {
             if (nouvelleValeur){
+                clickableHbox.getChildren().clear();
                 clickableHbox.getChildren().add(textfield);
                 textfield.setOnAction(event -> {
                     String entree = textfield.getText();
