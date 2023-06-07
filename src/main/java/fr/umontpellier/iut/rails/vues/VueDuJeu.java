@@ -32,7 +32,7 @@ public class VueDuJeu extends BorderPane {
     private final IJeu jeu;
     private VuePlateau plateau;
 
-    private VBox joueurCourantVBox;
+    private BorderPane joueurCourant;
 
     private BorderPane instructionAutreJoueursCarteVisible;
     private Pane vueAutresJoueurs;
@@ -43,7 +43,7 @@ public class VueDuJeu extends BorderPane {
 
         this.jeu = jeu;
         plateau = new VuePlateau();
-        joueurCourantVBox = new VBox();
+        joueurCourant = new BorderPane();
         instructionAutreJoueursCarteVisible = new BorderPane();
         clickableHbox = new HBox();
         clickableHbox.setAlignment(Pos.CENTER);
@@ -100,8 +100,8 @@ public class VueDuJeu extends BorderPane {
 
         jeu.joueurCourantProperty().addListener((observableValue, oldJoueur, newJoueur) -> {
 
-            joueurCourantVBox = new VueJoueurCourant(newJoueur);
-            setRight(joueurCourantVBox);
+            joueurCourant = new VueJoueurCourant(newJoueur);
+            setRight(joueurCourant);
 
             newJoueur.cartesTransportProperty().addListener((ListChangeListener<ICarteTransport>) change -> {
                 while (change.next()){
@@ -203,14 +203,12 @@ public class VueDuJeu extends BorderPane {
         instructionAutreJoueursCarteVisible.setTop(instruction);
 
 
-        joueurCourantVBox.setAlignment(Pos.TOP_CENTER);
-
         // Création des marges
         setPadding(new Insets(30,50,0,40));
 
         setCenter(plateau);
         setBottom(instructionAutreJoueursCarteVisible);
-        BorderPane.setAlignment(joueurCourantVBox,Pos.CENTER_LEFT);
+        BorderPane.setAlignment(joueurCourant,Pos.CENTER_LEFT);
         //BorderPane.setMargin(labelEtBouton, new Insets(20, 10, 400, 100));
     }
 
@@ -222,10 +220,10 @@ public class VueDuJeu extends BorderPane {
 
         plateau.creerBindings();
 
-        joueurCourantVBox.prefWidthProperty().bind(getScene().widthProperty().subtract(plateau.widthProperty()));
-        joueurCourantVBox.prefHeightProperty().bind(plateau.heightProperty());
+        joueurCourant.prefWidthProperty().bind(getScene().widthProperty().subtract(plateau.widthProperty()));
+        joueurCourant.prefHeightProperty().bind(plateau.heightProperty());
 
-        joueurCourantVBox.maxHeightProperty().bind(plateau.heightProperty());
+        joueurCourant.maxHeightProperty().bind(plateau.heightProperty());
 
         clickableHbox.prefWidthProperty().bind(plateau.widthProperty());
 

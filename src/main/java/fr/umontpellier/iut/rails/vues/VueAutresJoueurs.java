@@ -22,8 +22,10 @@ import java.util.List;
 public class VueAutresJoueurs extends Pane {
     private List<IJoueur> joueurs;
     private VBox vbox;
+    private boolean infoEstAffiche;
 
     public VueAutresJoueurs(List<IJoueur> joueurs, IJeu jeu) {
+        infoEstAffiche = false;
         this.joueurs = joueurs;
         setPadding(new Insets(10));
         setPrefWidth(200);
@@ -60,12 +62,21 @@ public class VueAutresJoueurs extends Pane {
         Image avatarImage = new Image(getClass().getResourceAsStream(imagePath));
         avatarImageView.setImage(avatarImage);
 
+        hbox.setOnMouseClicked(mouseEvent -> {
+           if(!infoEstAffiche){
+               afficherInfos(joueur);
+               infoEstAffiche = false;
+           } else {
+               masquerInfos();
+               infoEstAffiche = true;
+           }
+        });
+
         Label nomLabel = new Label(joueur.getNom());
         nomLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold");
         hbox.setBackground(new Background(new BackgroundFill(couleurFX, CornerRadii.EMPTY, Insets.EMPTY)));
 
         hbox.getChildren().addAll(avatarImageView, nomLabel);
-
 
         return hbox;
     }

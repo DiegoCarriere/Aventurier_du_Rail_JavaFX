@@ -27,7 +27,7 @@ import java.util.*;
  *
  * On y définit les bindings sur le joueur courant, ainsi que le listener à exécuter lorsque ce joueur change
  */
-public class VueJoueurCourant extends VBox {
+public class VueJoueurCourant extends BorderPane {
 
     private IJoueur j;
     private Label score;
@@ -39,8 +39,7 @@ public class VueJoueurCourant extends VBox {
         if (j != null) {
             Label nomJoueur = new Label(j.getNom().toString());
             System.out.println(j.getNom().toString());
-            nomJoueur.setPadding(new Insets(20,300,10,5));
-            nomJoueur.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
+            nomJoueur.setPadding(new Insets(5,0,5,10));
 
             IJoueur.CouleurJoueur couleurJoueur = j.getCouleur();
             Color couleurFX;
@@ -77,15 +76,15 @@ public class VueJoueurCourant extends VBox {
 
             // score
             score = new Label("Score: " + j.getScore());
-            score.setStyle("-fx-font-size: 18px;");
-            score.setPadding(new Insets(5,10,5,300));
+
+            score.setPadding(new Insets(5,10,5,0));
             stackPane.getChildren().addAll(avatar, nomJoueur, score);
 
             StackPane.setAlignment(avatar,Pos.CENTER);
             StackPane.setAlignment(nomJoueur,Pos.CENTER_LEFT);
             StackPane.setAlignment(score,Pos.CENTER_RIGHT);
 
-            getChildren().add(stackPane);
+            this.setTop(stackPane);
 
             // destinations
             destinations = new Menu("Destinations");
@@ -167,20 +166,9 @@ public class VueJoueurCourant extends VBox {
                 }
             }
 
-            getChildren().add(cartesTransportGrid);
+            this.setCenter(cartesTransportGrid);
 
             HBox infoHBox = new HBox(pionsWagonHBox, pionsBateauHBox, portsRestantsHBox);
-            infoHBox.setAlignment(Pos.BOTTOM_CENTER);
-            if (cartesTransportGrid.getRowCount() < 1) {
-                infoHBox.setPadding(new Insets(400, 150, 0, 150));
-            } else if (cartesTransportGrid.getRowCount() <= 2){
-                infoHBox.setPadding(new Insets(0, 150, 0, 150));
-            } else {
-                infoHBox.setPadding(new Insets(0, 150, 0, 150));
-            }
-            infoHBox.setSpacing(20);
-            this.setSpacing(10);
-            getChildren().add(infoHBox);
 
             // bouton passer
             Button passer = new Button("Passer");
@@ -189,7 +177,24 @@ public class VueJoueurCourant extends VBox {
                 ((VueDuJeu) getScene().getRoot()).getJeu().passerAEteChoisi();
             });
 
-            getChildren().add(new HBox(new MenuBar(destinations), passer));
+            HBox bottomAll = new HBox(new MenuBar(destinations), passer,infoHBox);
+
+            this.setBottom(bottomAll);
+
+            if (cartesTransportGrid.getRowCount() < 1) {
+                bottomAll.setPadding(new Insets(400, 30, 0, 30));
+            } else if (cartesTransportGrid.getRowCount() <= 2){
+                bottomAll.setPadding(new Insets(0, 30, 0, 50));
+            } else {
+                bottomAll.setPadding(new Insets(0, 30, 0, 30));
+            }
+
+
+            infoHBox.setSpacing(20);
+
+
+
+
         }
 
 
