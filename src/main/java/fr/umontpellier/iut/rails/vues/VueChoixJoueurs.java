@@ -7,16 +7,20 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -54,8 +58,55 @@ public class VueChoixJoueurs extends Stage {
         VBox lancerEtNbJoueurs = new VBox(nbJoueursBox, boutonDemarrer);
 
         HBox root = new HBox(listeJoueurs,lancerEtNbJoueurs);
-        Scene scene = new Scene(root,640,320);
+        BorderPane root2 = new BorderPane();
+        root2.setCenter(root);
+        Scene scene = new Scene(root2,640,356);
+        scene.setFill(Color.TRANSPARENT);
 
+        /** icones bar */
+        // Création de la HBox pour les boutons
+        HBox buttonsBox = new HBox();
+        buttonsBox.setAlignment(Pos.TOP_RIGHT);
+        buttonsBox.setSpacing(10);
+
+
+        // Création du bouton "Croix"
+        Button closeButton = new Button("❌");
+        closeButton.setOnAction(e -> {
+            // Code à exécuter lorsque le bouton "Croix" est cliqué
+            close();
+        });
+
+        // Création du bouton "Plein écran"
+        Button fullscreenButton = new Button("⬛");
+        fullscreenButton.setOnAction(e -> {
+            // Code à exécuter lorsque le bouton "Plein écran" est cliqué
+            if (isFullScreen()) {
+                setFullScreen(false);
+            } else {
+                setFullScreen(true);
+            }
+        });
+
+
+        // Création du bouton "Réduire"
+        Button minimizeButton = new Button("_");
+        minimizeButton.setOnAction(e -> {
+            // Code à exécuter lorsque le bouton "Réduire" est cliqué
+            setIconified(true);
+        });
+
+        // Ajout des boutons à la HBox
+        buttonsBox.setPadding(new Insets(0,0,5,0));
+        buttonsBox.getChildren().addAll(minimizeButton, fullscreenButton, closeButton);
+
+        // Ajout de la HBox à la vue du jeu
+        buttonsBox.setPadding(new Insets(0,0,20,0));
+        root2.setTop(buttonsBox);
+        initStyle(StageStyle.TRANSPARENT);
+        root2.setPadding(new Insets(20));
+
+        //
         try {
             File file = new File("src/main/resources/css/style.css");
             scene.getStylesheets().add(file.toURI().toURL().toExternalForm());
@@ -73,8 +124,8 @@ public class VueChoixJoueurs extends Stage {
 
         /** bouton lancer */
         boutonDemarrer.setStyle("-fx-font-size: 30px;");
-        boutonDemarrer.prefHeightProperty().bind(getScene().heightProperty().divide(2));
-        boutonDemarrer.prefWidthProperty().bind(getScene().widthProperty().divide(2));
+        boutonDemarrer.prefHeightProperty().bind(getScene().heightProperty().divide(3));
+        boutonDemarrer.prefWidthProperty().bind(getScene().widthProperty().divide(3));
 
         boutonDemarrer.setOnAction(actionEvent -> setListeDesNomsDeJoueurs());
 
