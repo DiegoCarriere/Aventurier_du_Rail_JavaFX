@@ -11,7 +11,7 @@ import javafx.scene.layout.Pane;
  *
  * On y définit le listener à exécuter lorsque cette carte a été choisie par l'utilisateur
  */
-public class VueDestination extends Pane {
+public class VueDestination extends Button {
 
     private final IDestination destination;
 
@@ -28,13 +28,7 @@ public class VueDestination extends Pane {
             }
         }
 
-        Button boutonchoisir = new Button(nomVilles.toString());
-        this.getChildren().add(boutonchoisir);
-
-        boutonchoisir.setOnAction(event -> {
-            ((VueDuJeu) getScene().getRoot()).getJeu().uneDestinationAEteChoisie(destination);
-        });
-
+        this.setText(nomVilles.toString());
     }
 
     public IDestination getDestination() {

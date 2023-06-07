@@ -34,6 +34,7 @@ public class RailsIHM extends Application {
     private Jeu jeu;
 
     private final boolean avecVueChoixJoueurs = false;
+    private final boolean avecResultat = false;
 
     @Override
     public void start(Stage primaryStage) {
@@ -151,10 +152,13 @@ public class RailsIHM extends Application {
         alert.setContentText("On arrête de jouer ?");
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            primaryStage.close();
-            primaryStage = new Stage();
-            primaryStage.setScene(new Scene(new VueResultats(this)));
-            primaryStage.show();
+            if(avecResultat){
+                primaryStage.close();
+                primaryStage = new Stage();
+                primaryStage.setScene(new Scene(new VueResultats(this)));
+                primaryStage.show();
+            }
+            Platform.exit();
         }
     }
 
