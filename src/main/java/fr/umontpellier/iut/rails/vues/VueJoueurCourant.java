@@ -39,7 +39,7 @@ public class VueJoueurCourant extends VBox {
         if (j != null) {
             Label nomJoueur = new Label(j.getNom().toString());
             System.out.println(j.getNom().toString());
-            nomJoueur.setPadding(new Insets(20,300,10,0));
+            nomJoueur.setPadding(new Insets(20,300,10,5));
             nomJoueur.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
 
             IJoueur.CouleurJoueur couleurJoueur = j.getCouleur();
@@ -78,7 +78,7 @@ public class VueJoueurCourant extends VBox {
             // score
             score = new Label("Score: " + j.getScore());
             score.setStyle("-fx-font-size: 18px;");
-            score.setPadding(new Insets(5,5,5,300));
+            score.setPadding(new Insets(5,10,5,300));
             stackPane.getChildren().addAll(avatar, nomJoueur, score);
 
             StackPane.setAlignment(avatar,Pos.CENTER);
