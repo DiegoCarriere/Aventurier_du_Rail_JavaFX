@@ -44,6 +44,11 @@ Rectangle {
     -fx-font-size: 20px;
 }
 
+.menu {
+    -fx-background-color: transparent;
+    -fx-fill: transparent;
+}
+
 
 
 
