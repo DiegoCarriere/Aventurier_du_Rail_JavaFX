@@ -7,11 +7,18 @@ import fr.umontpellier.iut.rails.vues.VueDuJeu;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -58,6 +65,41 @@ public class RailsIHM extends Application {
         VueDuJeu vueDuJeu = new VueDuJeu(jeu);
         Scene scene = new Scene(vueDuJeu, Screen.getPrimary().getBounds().getWidth() * DonneesGraphiques.pourcentageEcran, Screen.getPrimary().getBounds().getHeight() * DonneesGraphiques.pourcentageEcran); // la scene doit être créée avant de mettre en place les bindings
 
+        scene.setFill(Color.TRANSPARENT);
+
+        /** icones bar */
+        // Création de la HBox pour les boutons
+        HBox buttonsBox = new HBox();
+        buttonsBox.setAlignment(Pos.TOP_RIGHT);
+        buttonsBox.setSpacing(10);
+
+        // Création du bouton "Croix"
+        Button closeButton = new Button("Croix");
+        closeButton.setOnAction(e -> {
+            // Code à exécuter lorsque le bouton "Croix" est cliqué
+            arreterJeu();
+        });
+
+        // Création du bouton "Plein écran"
+        Button fullscreenButton = new Button("Plein écran");
+        fullscreenButton.setOnAction(e -> {
+            // Code à exécuter lorsque le bouton "Plein écran" est cliqué
+            primaryStage.setFullScreen(true);
+        });
+
+        // Création du bouton "Réduire"
+        Button minimizeButton = new Button("Réduire");
+        minimizeButton.setOnAction(e -> {
+            // Code à exécuter lorsque le bouton "Réduire" est cliqué
+            primaryStage.setIconified(true);
+        });
+
+        // Ajout des boutons à la HBox
+        buttonsBox.getChildren().addAll(closeButton, fullscreenButton, minimizeButton);
+
+        // Ajout de la HBox à la vue du jeu
+        vueDuJeu.setTop(buttonsBox);
+
         /**ajout du CSS*/
         try {
             File file = new File("src/main/resources/css/style.css");
@@ -79,6 +121,7 @@ public class RailsIHM extends Application {
             this.arreterJeu();
             event.consume();
         });
+        primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.show();
     }
 

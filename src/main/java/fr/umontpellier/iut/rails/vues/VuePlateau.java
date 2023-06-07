@@ -2,6 +2,7 @@ package fr.umontpellier.iut.rails.vues;
 
 import fr.umontpellier.iut.rails.IJeu;
 import fr.umontpellier.iut.rails.IRoute;
+import fr.umontpellier.iut.rails.mecanique.Route;
 import javafx.beans.binding.DoubleBinding;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -41,7 +42,8 @@ public class VuePlateau extends Pane {
     }
 
     EventHandler<MouseEvent> choixRoute = event -> {
-        System.out.println("On a cliqué sur une route");
+        Route r = (Route) event.getSource();
+        ((VueDuJeu) getScene().getRoot()).getJeu().uneRouteAEteChoisie(r.getNom());
     };
 
     EventHandler<MouseEvent> choixPort = event -> {
