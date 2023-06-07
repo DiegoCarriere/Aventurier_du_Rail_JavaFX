@@ -150,9 +150,10 @@ public class RailsIHM extends Application {
         alert.setContentText("On arrête de jouer ?");
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-
+            primaryStage.close();
             primaryStage = new Stage();
             primaryStage.setScene(new Scene(new VueResultats(this)));
+            primaryStage.show();
         }
     }
 
