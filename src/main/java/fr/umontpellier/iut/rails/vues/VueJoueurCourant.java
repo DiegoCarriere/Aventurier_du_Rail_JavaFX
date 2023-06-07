@@ -148,7 +148,7 @@ public class VueJoueurCourant extends VBox {
                 ICarteTransport carte = entree.getKey();
                 int nbCartes = entree.getValue();
 
-                VueCarteTransport vueCarte = new VueCarteTransport(carte, nbCartes, false, true);
+                VueCarteTransport vueCarte = new VueCarteTransport(carte, nbCartes);
                 vueCarte.setNbCartesLabel();
                 cartesTransportGrid.add(vueCarte, col, row);
 

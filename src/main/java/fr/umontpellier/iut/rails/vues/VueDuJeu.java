@@ -1,6 +1,7 @@
 package fr.umontpellier.iut.rails.vues;
 
 import fr.umontpellier.iut.rails.*;
+import fr.umontpellier.iut.rails.mecanique.Joueur;
 import javafx.collections.ListChangeListener;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -46,7 +47,7 @@ public class VueDuJeu extends BorderPane {
         clickableHbox.setSpacing(10);
         instructionAutreJoueursCarteVisible.setLeft(clickableHbox);
 
-        // pioches
+        /** pioches */
         ImageView piocheCartesBateau = new ImageView(new Image("images/cartesWagons/dos-BATEAU.png"));
         piocheCartesBateau.setOnMouseClicked((MouseEvent e) -> {
             ((VueDuJeu) getScene().getRoot()).getJeu().uneCarteBateauAEtePiochee();
@@ -88,42 +89,19 @@ public class VueDuJeu extends BorderPane {
                 new HBox(piochePionsBateau, piochePionsWagon)
         );
 
-        /** init console info sur le joueur courant*/
+
         jeu.joueurCourantProperty().addListener((observableValue, oldJoueur, newJoueur) -> {
 
-            /** joueur courant*/
             joueurCourantVBox = new VueJoueurCourant(newJoueur);
             setRight(joueurCourantVBox);
 
             // autres joueurs
-            List<IJoueur> liste = new ArrayList<>();
-            liste.addAll(jeu.getJoueurs());
+            List<IJoueur> liste = new ArrayList<>(jeu.getJoueurs());
             liste.remove(newJoueur);
             vueAutresJoueurs = new VueAutresJoueurs(liste, jeu);
             instructionAutreJoueursCarteVisible.setRight(new HBox(vueAutresJoueurs,piochesBox));
 
-
-
-            /**info courant*/
-            System.out.println("/---/ " + newJoueur.getNom() + " /---/");
-
-            if(!jeu.finDePartieProperty().get() && !jeu.jeuEnPreparationProperty().get()){
-                // destination
-                for(IDestination d : newJoueur.getDestinations()){
-                    System.out.print(" [ ");
-                    for(String v : d.getVilles()){
-                        System.out.print(v + ",");
-                    }
-                    System.out.print(" ] ");
-                }
-                System.out.println();
-
-                // cartes
-                for(ICarteTransport c : newJoueur.getCartesTransport()){
-                    System.out.print(c.toString());
-                }
-            }
-            System.out.println("\n");
+            consolInfo(newJoueur);
 
         });
 
@@ -139,16 +117,35 @@ public class VueDuJeu extends BorderPane {
                 }
             }
         });
+
         jeu.cartesTransportVisiblesProperty().addListener((ListChangeListener<ICarteTransport>) change -> {
             while (change.next()) {
-                if(change.wasAdded()) {
+                if (change.wasAdded()) {
                     clickableHbox.getChildren().clear();
-                    for(ICarteTransport carteTransport : jeu.cartesTransportVisiblesProperty()){
-                        clickableHbox.getChildren().add(new VueCarteTransport(carteTransport,1, true, false));
+                    for (ICarteTransport carteTransport : jeu.cartesTransportVisiblesProperty()) {
+
+                        //on l'ajoute aux carteVisible
+                        VueCarteTransport vueCarteTransport = new VueCarteTransport(carteTransport, 1);
+                        clickableHbox.getChildren().add(vueCarteTransport);
+
+
+                        //init de si elle est choisie
+                        vueCarteTransport.setOnMouseClicked((MouseEvent e) -> {
+                            ((VueDuJeu) getScene().getRoot()).getJeu().uneCarteTransportAEteChoisie(carteTransport);
+                        });
                     }
                 }
             }
         });
+
+        /*
+        imageView.setOnMouseClicked((MouseEvent e) -> {
+            if (clickableJoue) {
+                ((VueDuJeu) getScene().getRoot()).getJeu().uneCarteDuJoueurEstJouee(carteTransport);
+            }
+        });
+
+         */
 
 
 
@@ -164,7 +161,6 @@ public class VueDuJeu extends BorderPane {
 
         setCenter(plateau);
         setBottom(instructionAutreJoueursCarteVisible);
-        setRight(joueurCourantVBox);
         BorderPane.setAlignment(joueurCourantVBox,Pos.CENTER_LEFT);
         //BorderPane.setMargin(labelEtBouton, new Insets(20, 10, 400, 100));
     }
@@ -193,5 +189,27 @@ public class VueDuJeu extends BorderPane {
     }
 
     //EventHandler<? super MouseEvent> actionPasserParDefaut = (mouseEvent -> getJeu().passerAEteChoisi());
+
+    private void consolInfo(IJoueur newJoueur){
+        StringBuilder infos = new StringBuilder("/---/ " + newJoueur.getNom() + " /---/\n");
+
+        if(!jeu.finDePartieProperty().get() && !jeu.jeuEnPreparationProperty().get()){
+            // destination
+            for(IDestination d : newJoueur.getDestinations()){
+                infos.append('[');
+                for(String v : d.getVilles()){
+                    infos.append(v + " ");
+                }
+                infos.append(']');
+            }
+            infos.append('\n');
+
+            // cartes
+            for(ICarteTransport c : newJoueur.getCartesTransport()){
+                infos.append(c.toString());
+            }
+        }
+        System.out.println(infos + "\n");
+    }
 
 }
