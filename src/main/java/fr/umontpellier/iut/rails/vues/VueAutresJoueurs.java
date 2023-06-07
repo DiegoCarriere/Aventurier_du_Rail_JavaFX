@@ -42,15 +42,6 @@ public class VueAutresJoueurs extends Pane {
             }
         }
 
-        // bouton passer
-        Button passer = new Button("Passer");
-        VueDuJeu.effetHover(passer);
-        passer.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
-        passer.setOnAction(actionEvent -> {
-            jeu.passerAEteChoisi();
-        });
-        vbox.getChildren().add(passer);
-
         getChildren().add(vbox);
     }
 

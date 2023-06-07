@@ -181,7 +181,15 @@ public class VueJoueurCourant extends VBox {
             infoHBox.setSpacing(20);
             this.setSpacing(10);
             getChildren().add(infoHBox);
-            getChildren().add(new Pane(new MenuBar(destinations)));
+
+            // bouton passer
+            Button passer = new Button("Passer");
+            VueDuJeu.effetHover(passer);
+            passer.setOnAction(actionEvent -> {
+                ((VueDuJeu) getScene().getRoot()).getJeu().passerAEteChoisi();
+            });
+
+            getChildren().add(new HBox(new MenuBar(destinations), passer));
         }
 
 

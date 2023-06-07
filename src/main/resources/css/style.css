@@ -38,9 +38,10 @@ Rectangle {
 
 .menu-bar {
     -fx-background-color: transparent;
-    -fx-fill: transparent;
     -fx-border-color: black;
     -fx-border-width: 2;
+    -fx-border-radius: 5;
+    -fx-font-size: 20px;
 }
 
 
