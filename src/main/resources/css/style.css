@@ -36,6 +36,14 @@ Rectangle {
     -fx-background-color: transparent;
 }
 
+.menu-bar {
+    -fx-background-color: transparent;
+    -fx-fill: transparent;
+}
+
+
+
+
 
 
 
