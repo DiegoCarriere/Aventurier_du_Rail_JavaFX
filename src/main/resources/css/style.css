@@ -21,7 +21,7 @@ Rectangle {
 .button {
     -fx-font-family: 'IM Fell English SC';
     -fx-text-fill: black;
-    -fx-background-color: #afa1a2;
+    -fx-background-color: #dad0d1;
 }
 
 .root {

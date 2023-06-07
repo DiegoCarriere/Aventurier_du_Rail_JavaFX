@@ -102,6 +102,7 @@ public class RailsIHM extends Application {
         });
 
         // Ajout des boutons à la HBox
+        buttonsBox.setPadding(new Insets(0,0,5,0));
         buttonsBox.getChildren().addAll(minimizeButton, fullscreenButton, closeButton);
 
         // Ajout de la HBox à la vue du jeu
