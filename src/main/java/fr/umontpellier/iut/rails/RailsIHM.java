@@ -75,31 +75,37 @@ public class RailsIHM extends Application {
 
 
         // Création du bouton "Croix"
-        Button closeButton = new Button("Croix");
+        Button closeButton = new Button("❌");
         closeButton.setOnAction(e -> {
             // Code à exécuter lorsque le bouton "Croix" est cliqué
             arreterJeu();
         });
 
         // Création du bouton "Plein écran"
-        Button fullscreenButton = new Button("Plein écran");
+        Button fullscreenButton = new Button("⬛");
         fullscreenButton.setOnAction(e -> {
             // Code à exécuter lorsque le bouton "Plein écran" est cliqué
-            primaryStage.setFullScreen(true);
+            if (primaryStage.isFullScreen()) {
+                primaryStage.setFullScreen(false);
+            } else {
+                primaryStage.setFullScreen(true);
+            }
         });
 
+
         // Création du bouton "Réduire"
-        Button minimizeButton = new Button("Réduire");
+        Button minimizeButton = new Button("_");
         minimizeButton.setOnAction(e -> {
             // Code à exécuter lorsque le bouton "Réduire" est cliqué
             primaryStage.setIconified(true);
         });
 
         // Ajout des boutons à la HBox
-        buttonsBox.getChildren().addAll(closeButton, fullscreenButton, minimizeButton);
+        buttonsBox.getChildren().addAll(minimizeButton, fullscreenButton, closeButton);
 
         // Ajout de la HBox à la vue du jeu
         vueDuJeu.setTop(buttonsBox);
+
 
         /**ajout du CSS*/
         try {

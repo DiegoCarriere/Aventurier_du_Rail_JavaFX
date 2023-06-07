@@ -29,7 +29,7 @@ public class VueAutresJoueurs extends Pane {
         setPadding(new Insets(10));
         setPrefWidth(200);
         setPrefHeight(400);
-        setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+        //setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
 
         vbox = new VBox();
         vbox.setSpacing(10);

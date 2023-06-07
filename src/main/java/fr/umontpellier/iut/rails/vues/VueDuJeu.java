@@ -205,6 +205,11 @@ public class VueDuJeu extends BorderPane {
 
         joueurCourantVBox.setAlignment(Pos.TOP_CENTER);
 
+        // Création des marges
+        /*setMargin(plateau, new Insets(20));
+        setMargin(joueurCourantVBox, new Insets(20));*/
+        setPadding(new Insets(30,50,0,50));
+
         setCenter(plateau);
         setBottom(instructionAutreJoueursCarteVisible);
         BorderPane.setAlignment(joueurCourantVBox,Pos.CENTER_LEFT);
