@@ -135,6 +135,7 @@ public class RailsIHM extends Application {
             event.consume();
         });
         primaryStage.initStyle(StageStyle.TRANSPARENT);
+        primaryStage.getIcons().add(new Image("images/wagon-rond.png"));
 
         jeu.finDePartieProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue){

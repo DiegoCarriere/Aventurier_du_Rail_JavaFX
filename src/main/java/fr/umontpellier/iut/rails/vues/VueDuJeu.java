@@ -53,7 +53,6 @@ public class VueDuJeu extends BorderPane {
         instructionAutreJoueursCarteVisible = new BorderPane();
         clickableHbox = new FlowPane();
         clickableHbox.setAlignment(Pos.CENTER);
-        //clickableHbox.setSpacing(10);
         clickableHbox.setVgap(10);
         clickableHbox.setHgap(10);
         clickableHbox.setPadding(new Insets(0,0,90,0));
