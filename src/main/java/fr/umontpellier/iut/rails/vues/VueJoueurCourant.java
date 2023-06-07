@@ -5,13 +5,17 @@ import fr.umontpellier.iut.rails.IDestination;
 import fr.umontpellier.iut.rails.IJeu;
 import fr.umontpellier.iut.rails.IJoueur;
 import fr.umontpellier.iut.rails.mecanique.Joueur;
+import fr.umontpellier.iut.rails.mecanique.data.CarteTransport;
 import fr.umontpellier.iut.rails.mecanique.data.Couleur;
 import fr.umontpellier.iut.rails.mecanique.data.Destination;
+import javafx.collections.ListChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Box;
@@ -153,6 +157,10 @@ public class VueJoueurCourant extends VBox {
                 vueCarte.setNbCartesLabel();
                 cartesTransportGrid.add(vueCarte, col, row);
 
+                vueCarte.setOnMouseClicked((MouseEvent e) -> {
+                    ((VueDuJeu) getScene().getRoot()).getJeu().uneCarteDuJoueurEstJouee(vueCarte.getCarteTransport());
+                });
+
                 col++;
                 if (col >= 3) {
                     col = 0;
@@ -161,7 +169,6 @@ public class VueJoueurCourant extends VBox {
             }
 
             getChildren().add(cartesTransportGrid);
-
 
             HBox infoHBox = new HBox(pionsWagonHBox, pionsBateauHBox, portsRestantsHBox);
             infoHBox.setAlignment(Pos.BOTTOM_CENTER);
