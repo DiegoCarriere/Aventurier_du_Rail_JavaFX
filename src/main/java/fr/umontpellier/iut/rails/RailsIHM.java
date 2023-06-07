@@ -73,6 +73,7 @@ public class RailsIHM extends Application {
         buttonsBox.setAlignment(Pos.TOP_RIGHT);
         buttonsBox.setSpacing(10);
 
+
         // Création du bouton "Croix"
         Button closeButton = new Button("Croix");
         closeButton.setOnAction(e -> {
