@@ -64,9 +64,9 @@ public class VueJoueurCourant extends VBox {
                 default:
                     couleurFX = Color.WHITE;
             }
-
-            setBackground(new Background(new BackgroundFill(couleurFX, null, null)));
             StackPane stackPane = new StackPane();
+            stackPane.setBackground(new Background(new BackgroundFill(couleurFX, null, null)));
+
 
             // avatar
             ImageView avatar = new ImageView();

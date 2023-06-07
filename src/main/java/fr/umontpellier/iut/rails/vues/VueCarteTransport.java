@@ -68,17 +68,7 @@ public class VueCarteTransport extends StackPane {
         this.getChildren().add(nbCarteLabel);
         StackPane.setAlignment(nbCarteLabel,Pos.TOP_RIGHT);
 
-        this.setOnMouseEntered(mouseEvent -> {
-            DropShadow ds = new DropShadow();
-            ds.setOffsetY(3.0f);
-            ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
-
-            this.setEffect(ds);
-        });
-        this.setOnMouseExited(mouseEvent -> {
-            this.setEffect(null);
-        });
-
+        VueDuJeu.effetHoverShadow(this);
     }
 
     public ICarteTransport getCarteTransport() {
