@@ -6,6 +6,7 @@ import javafx.collections.ListChangeListener;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -96,6 +97,14 @@ public class VueDuJeu extends BorderPane {
             joueurCourantVBox = new VueJoueurCourant(newJoueur);
             setRight(joueurCourantVBox);
 
+            newJoueur.cartesTransportProperty().addListener((ListChangeListener<ICarteTransport>) change -> {
+                while (change.next()){
+                    if(change.wasAdded()) {
+                        System.out.println("fefefe");
+                    }
+                }
+            });
+
             // autres joueurs
             List<IJoueur> liste = new ArrayList<>(jeu.getJoueurs());
             liste.remove(newJoueur);
@@ -128,16 +137,24 @@ public class VueDuJeu extends BorderPane {
                         //on l'ajoute aux carteVisible
                         VueCarteTransport vueCarteTransport = new VueCarteTransport(carteTransport, 1);
                         clickableHbox.getChildren().add(vueCarteTransport);
+                        vueCarteTransport.setDisable(false);
 
 
                         //init de si elle est choisie
                         vueCarteTransport.setOnMouseClicked((MouseEvent e) -> {
+
                             ((VueDuJeu) getScene().getRoot()).getJeu().uneCarteTransportAEteChoisie(carteTransport);
+                            clickableHbox.getChildren().remove(vueCarteTransport);
+                            for(Node vueCarteTransport1 : clickableHbox.getChildren()) {
+                                vueCarteTransport1.setDisable(true);
+                            }
                         });
                     }
                 }
             }
         });
+
+
 
         /*
         imageView.setOnMouseClicked((MouseEvent e) -> {
