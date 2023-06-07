@@ -20,13 +20,9 @@ import java.util.List;
  * On y définit les bindings sur le joueur courant, ainsi que le listener à exécuter lorsque ce joueur change
  */
 public class VueAutresJoueurs extends Pane {
-    private List<IJoueur> joueurs;
     private VBox vbox;
-    private boolean infoEstAffiche;
 
     public VueAutresJoueurs(List<IJoueur> joueurs, IJeu jeu) {
-        infoEstAffiche = false;
-        this.joueurs = joueurs;
         setPadding(new Insets(10));
         setPrefWidth(200);
         setPrefHeight(400);
