@@ -174,16 +174,20 @@ public class VueJoueurCourant extends BorderPane {
         Map<ICarteTransport, Integer> cartesParCarte = new TreeMap<>();
 
         for (ICarteTransport carte : cartesTransport) {
-            if (!carte.estJoker()) {
+            //if (!carte.estJoker()) {
                 // vérifie si la carte existe déjà dans la map
                 boolean existe = false;
                 for (Map.Entry<ICarteTransport, Integer> entry : cartesParCarte.entrySet()) {
                     ICarteTransport carteExistante = entry.getKey();
-                    if ((carteExistante.getStringCouleur().equals(carte.getStringCouleur()) &&
-                            ( (carteExistante.estBateau() && carte.estBateau()) || (carteExistante.estWagon() && carte.estWagon()) && !carteExistante.estDouble() && !carte.estDouble()))
-                            || (carteExistante.getStringCouleur().equals(carte.getStringCouleur()) &&
-                            ( (carteExistante.estBateau() && carte.estBateau()) || (carteExistante.estWagon() && carte.estWagon()) && carteExistante.estDouble() && carte.estDouble()))) {
-                        // la carte existe on incrémente
+                    if (carteExistante.getStringCouleur().equals(carte.getStringCouleur()) &&
+                        Boolean.compare(carteExistante.estDouble(),carte.estDouble()) == 0 &&
+                            (
+                            Boolean.compare(carteExistante.estBateau(),carte.estBateau()) == 0 ||
+                            Boolean.compare(carteExistante.estWagon(),carte.estWagon()) == 0 ||
+                            Boolean.compare(carteExistante.estJoker(),carte.estJoker()) == 0
+                            )
+                    ) {
+                        //alors la carte existe on incrémente
                         int nbCartes = entry.getValue();
                         entry.setValue(nbCartes + 1);
                         existe = true;
@@ -195,7 +199,7 @@ public class VueJoueurCourant extends BorderPane {
                     // si elle y est pas deja, on ajoute
                     cartesParCarte.put(carte, 1);
                 }
-            }
+          // }
         }
 
         int col = 0;
