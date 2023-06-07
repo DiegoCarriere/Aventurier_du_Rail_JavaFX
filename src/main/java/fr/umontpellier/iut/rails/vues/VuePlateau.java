@@ -17,6 +17,7 @@ import javafx.stage.Screen;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Cette classe présente les routes et les villes sur le plateau.
@@ -42,12 +43,13 @@ public class VuePlateau extends Pane {
     }
 
     EventHandler<MouseEvent> choixRoute = event -> {
-        Route r = (Route) event.getSource();
-        ((VueDuJeu) getScene().getRoot()).getJeu().uneRouteAEteChoisie(r.getNom());
+        Rectangle r = (Rectangle) event.getSource();
+        ((VueDuJeu) getScene().getRoot()).getJeu().uneRouteAEteChoisie(r.getId());
     };
 
     EventHandler<MouseEvent> choixPort = event -> {
-        System.out.println("On a cliqué sur un port");
+        Circle c = (Circle) event.getSource();
+        ((VueDuJeu) getScene().getRoot()).getJeu().unPortAEteChoisi(c.getId());
     };
 
     public void creerBindings() {

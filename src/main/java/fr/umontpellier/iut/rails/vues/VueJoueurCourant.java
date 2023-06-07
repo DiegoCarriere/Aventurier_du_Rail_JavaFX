@@ -75,7 +75,7 @@ public class VueJoueurCourant extends VBox {
             // score
             score = new Label("Score: " + j.getScore());
             score.setStyle("-fx-font-size: 18px;");
-            score.setPadding(new Insets(5,5,5,500));
+            score.setPadding(new Insets(5,5,5,300));
             stackPane.getChildren().addAll(avatar, nomJoueur, score);
 
             StackPane.setAlignment(avatar,Pos.CENTER);
