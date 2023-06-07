@@ -27,8 +27,6 @@ public class VueResultats extends Pane {
 
     public VueResultats(RailsIHM ihm) {
 
-        Stage stage = new Stage();
-
         Label labelRes = new Label("Résultats du jeu");
 
         GridPane gridPaneScore = new GridPane();
@@ -46,10 +44,8 @@ public class VueResultats extends Pane {
             Platform.exit();
         });
 
-        VBox root = new VBox(labelRes,gridPaneScore,quitterBouton);
+        this.getChildren().add(new VBox(labelRes,gridPaneScore,quitterBouton));
 
-        stage.setScene(new Scene(root));
-        stage.show();
     }
 
 }
