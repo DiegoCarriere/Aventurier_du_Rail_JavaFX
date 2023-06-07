@@ -7,6 +7,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -146,6 +147,32 @@ public class VueDuJeu extends BorderPane {
         });
 
          */
+
+        TextField textfield = new TextField();
+        jeu.saisieNbPionsWagonAutoriseeProperty().addListener((observableValue, ancienneValeur, nouvelleValeur) -> {
+            if (nouvelleValeur){
+                clickableHbox.getChildren().add(textfield);
+                textfield.setOnAction(event -> {
+                    String entree = textfield.getText();
+                    try {
+                        int nombrePions = Integer.parseInt(entree);
+                        if (nombrePions >= 10 && nombrePions <= 25) {
+                            String nbPionsChoisis = Integer.toString(nombrePions);
+                            jeu.leNombreDePionsSouhaiteAEteRenseigne(nbPionsChoisis);
+                        } else {
+                            textfield.clear();
+                        }
+                    } catch (NumberFormatException e) {
+                        textfield.clear();
+                    }
+                });
+            } else{
+                if (clickableHbox.getChildren().contains(textfield)){
+                    clickableHbox.getChildren().remove(textfield);
+                }
+            }
+
+        });
 
 
 
