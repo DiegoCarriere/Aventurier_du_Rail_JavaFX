@@ -62,18 +62,14 @@ public class VueAutresJoueurs extends Pane {
         Image avatarImage = new Image(getClass().getResourceAsStream(imagePath));
         avatarImageView.setImage(avatarImage);
 
-        hbox.setOnMouseClicked(mouseEvent -> {
-           if(!infoEstAffiche){
-               afficherInfos(joueur);
-               infoEstAffiche = false;
-           } else {
-               masquerInfos();
-               infoEstAffiche = true;
-           }
+        hbox.setOnMousePressed(mouseEvent -> {
+            afficherInfos(joueur);
+        });
+        hbox.setOnMouseReleased(mouseDragEvent -> {
+            masquerInfos();
         });
 
         Label nomLabel = new Label(joueur.getNom());
-        nomLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold");
         hbox.setBackground(new Background(new BackgroundFill(couleurFX, CornerRadii.EMPTY, Insets.EMPTY)));
 
         hbox.getChildren().addAll(avatarImageView, nomLabel);

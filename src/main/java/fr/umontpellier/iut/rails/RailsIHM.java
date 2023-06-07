@@ -34,7 +34,7 @@ public class RailsIHM extends Application {
     private Jeu jeu;
 
     private final boolean avecVueChoixJoueurs = false;
-    private final boolean avecResultat = false;
+    private final boolean avecResultat = true;
 
     @Override
     public void start(Stage primaryStage) {
@@ -160,8 +160,10 @@ public class RailsIHM extends Application {
                 primaryStage = new Stage();
                 primaryStage.setScene(new Scene(new VueResultats(this)));
                 primaryStage.show();
+            } else {
+                Platform.exit();
             }
-            Platform.exit();
+
         }
     }
 
