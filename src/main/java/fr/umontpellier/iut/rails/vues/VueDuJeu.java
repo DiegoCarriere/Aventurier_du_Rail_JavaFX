@@ -1,6 +1,8 @@
 package fr.umontpellier.iut.rails.vues;
 
 import fr.umontpellier.iut.rails.*;
+import javafx.animation.Interpolator;
+import javafx.animation.TranslateTransition;
 import javafx.collections.ListChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -13,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,6 +51,7 @@ public class VueDuJeu extends BorderPane {
         clickableHbox = new HBox();
         clickableHbox.setAlignment(Pos.CENTER);
         clickableHbox.setSpacing(10);
+        clickableHbox.setPadding(new Insets(0,0,90,0));
         instructionAutreJoueursCarteVisible.setLeft(clickableHbox);
 
         /** pioches */
@@ -147,12 +151,17 @@ public class VueDuJeu extends BorderPane {
             while (change.next()) {
                 if (change.wasAdded()) {
                     clickableHbox.getChildren().clear();
+                    int compteur = 0;
                     for (ICarteTransport carteTransport : jeu.cartesTransportVisiblesProperty()) {
 
                         //on l'ajoute aux carteVisible
                         VueCarteTransport vueCarteTransport = new VueCarteTransport(carteTransport, 1);
                         clickableHbox.getChildren().add(vueCarteTransport);
                         vueCarteTransport.setDisable(false);
+
+                        //animation
+                        vueCarteTransport.setAnimation(compteur, jeu.cartesTransportVisiblesProperty().size());
+                        compteur ++;
 
 
                         //init de si elle est choisie
@@ -198,6 +207,7 @@ public class VueDuJeu extends BorderPane {
 
         Label instruction = new Label();
         instruction.setPadding(new Insets(10,0,0,10));
+        instruction.setStyle("-fx-font-size: 25px;");
         instruction.setAlignment(Pos.TOP_CENTER);
         instruction.textProperty().bind(jeu.instructionProperty());
         instructionAutreJoueursCarteVisible.setTop(instruction);

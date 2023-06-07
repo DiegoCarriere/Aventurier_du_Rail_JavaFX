@@ -43,6 +43,11 @@ Rectangle {
     -fx-border-width: 2;
 }
 
+.menu {
+    -fx-background-color: transparent;
+    -fx-fill: transparent;
+}
+
 
 
 

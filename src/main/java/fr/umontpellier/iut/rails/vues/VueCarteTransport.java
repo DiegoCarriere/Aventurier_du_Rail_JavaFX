@@ -1,6 +1,8 @@
 package fr.umontpellier.iut.rails.vues;
 
 import fr.umontpellier.iut.rails.ICarteTransport;
+import javafx.animation.Interpolator;
+import javafx.animation.TranslateTransition;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -10,6 +12,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
+
+import java.util.Random;
 
 /**
  * Cette classe représente la vue d'une carte Transport.
@@ -20,6 +25,7 @@ public class VueCarteTransport extends StackPane {
 
     private final ICarteTransport carteTransport;
     private Label nbCarteLabel;
+    private ImageView imageView;
 
 
     public VueCarteTransport(ICarteTransport carteT, int nbCartes) {
@@ -45,7 +51,7 @@ public class VueCarteTransport extends StackPane {
 
         /** création de l'image*/
         Image imageCarteFace = new Image(getClass().getResource(reelNom).toExternalForm());
-        ImageView imageView = new ImageView(imageCarteFace);
+        imageView = new ImageView(imageCarteFace);
         imageView.setFitWidth(150);
         imageView.setFitHeight(100);
 
@@ -78,6 +84,32 @@ public class VueCarteTransport extends StackPane {
     public void setNbCartesLabel(){
         nbCarteLabel.setVisible(true);
     }
+
+    public void setAnimation(int indiceActuel, int nombreTotalCartes) {
+        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), imageView);
+
+        double amplitude = 10.0; // Amplitude verticale de la vague
+        double offsetY = -10.0; // Décalage vertical de la vague
+
+        double averageAmplitude = amplitude * 0.5; // Amplitude moyenne pour réduire l'intensité
+
+        double startX = -((nombreTotalCartes - 1) / 2.0); // Valeur de départ horizontale
+
+        double positionX = startX + indiceActuel;
+        double startY = averageAmplitude * Math.sin(positionX * (2 * Math.PI / nombreTotalCartes)) + offsetY;
+
+        translateTransition.setFromY(startY);
+        translateTransition.setToY(offsetY);
+        translateTransition.setCycleCount(TranslateTransition.INDEFINITE);
+        translateTransition.setAutoReverse(true);
+        translateTransition.setInterpolator(Interpolator.SPLINE(0.5, 0.1, 0.3, 1.0));
+        translateTransition.play();
+    }
+
+
+
+
+
 
 
 
