@@ -1,12 +1,7 @@
 package fr.umontpellier.iut.rails.vues;
 
 import fr.umontpellier.iut.rails.IDestination;
-import fr.umontpellier.iut.rails.mecanique.data.Ville;
 import javafx.scene.control.Button;
-import javafx.scene.control.MenuItem;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 
 /**
  * Cette classe représente la vue d'une carte Destination.
@@ -29,7 +24,7 @@ public class VueDestination extends Button {
                 nomVilles.append(" / ");
             }
         }
-        VueDuJeu.effetHoverShadow(this);
+        VueDuJeu.effetHover(this);
 
         this.setText(nomVilles.toString());
     }

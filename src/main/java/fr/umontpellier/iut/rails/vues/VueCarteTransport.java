@@ -4,12 +4,9 @@ import fr.umontpellier.iut.rails.ICarteTransport;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
@@ -74,7 +71,7 @@ public class VueCarteTransport extends StackPane {
         this.getChildren().add(nbCarteLabel);
         StackPane.setAlignment(nbCarteLabel,Pos.TOP_RIGHT);
 
-        VueDuJeu.effetHoverShadow(this);
+        VueDuJeu.effetHover(this);
     }
 
     public ICarteTransport getCarteTransport() {

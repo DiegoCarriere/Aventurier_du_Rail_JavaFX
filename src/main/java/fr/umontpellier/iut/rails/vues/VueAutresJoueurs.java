@@ -4,18 +4,13 @@ import fr.umontpellier.iut.rails.IJeu;
 import fr.umontpellier.iut.rails.IJoueur;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -41,20 +36,11 @@ public class VueAutresJoueurs extends Pane {
         for (IJoueur joueur : joueurs) {
             if (joueur != null ) {
                 HBox hbox = createJoueurHBox(joueur);
-                VueDuJeu.effetHoverShadow(hbox);
+                VueDuJeu.effetHover(hbox);
                 vbox.getChildren().add(hbox);
                 hbox.setPadding(new Insets(10,10,10,10));
             }
         }
-
-        // bouton passer
-        Button passer = new Button("Passer");
-        VueDuJeu.effetHoverShadow(passer);
-        passer.setStyle("-fx-font-size: 20px; -fx-font-weight: bold");
-        passer.setOnAction(actionEvent -> {
-            jeu.passerAEteChoisi();
-        });
-        vbox.getChildren().add(passer);
 
         getChildren().add(vbox);
     }
