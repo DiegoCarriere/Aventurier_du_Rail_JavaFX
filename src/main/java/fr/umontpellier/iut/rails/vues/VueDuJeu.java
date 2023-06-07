@@ -1,19 +1,18 @@
 package fr.umontpellier.iut.rails.vues;
 
 import fr.umontpellier.iut.rails.*;
-import fr.umontpellier.iut.rails.mecanique.Joueur;
 import javafx.collections.ListChangeListener;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,7 +125,22 @@ public class VueDuJeu extends BorderPane {
                 if (change.wasAdded()) {
                     clickableHbox.getChildren().clear();
                     for (IDestination destination : jeu.destinationsInitialesProperty()) {
-                        clickableHbox.getChildren().add( new VueDestination(destination));
+
+                        //on l'ajoute aux destinations
+                        VueDestination vueDestination = new VueDestination(destination);
+                        clickableHbox.getChildren().add(vueDestination);
+
+                        //init de si elle est choisie
+                        vueDestination.setOnMouseClicked(mouseEvent -> {
+                            ((VueDuJeu) getScene().getRoot()).getJeu().uneDestinationAEteChoisie(destination);
+                            clickableHbox.getChildren().remove(vueDestination);
+                        });
+                        vueDestination.setOnMouseEntered(mouseEvent -> {
+                            shadowOn(vueDestination);
+                        });
+                        vueDestination.setOnMouseExited(mouseEvent -> {
+                            shadowOff(vueDestination);
+                        });
                     }
                 }
             }
@@ -146,12 +160,17 @@ public class VueDuJeu extends BorderPane {
 
                         //init de si elle est choisie
                         vueCarteTransport.setOnMouseClicked((MouseEvent e) -> {
-
                             ((VueDuJeu) getScene().getRoot()).getJeu().uneCarteTransportAEteChoisie(carteTransport);
                             clickableHbox.getChildren().remove(vueCarteTransport);
                             for(Node vueCarteTransport1 : clickableHbox.getChildren()) {
                                 vueCarteTransport1.setDisable(true);
                             }
+                        });
+                        vueCarteTransport.setOnMouseEntered(mouseEvent -> {
+                            shadowOn(vueCarteTransport);
+                        });
+                        vueCarteTransport.setOnMouseExited(mouseEvent -> {
+                            shadowOff(vueCarteTransport);
                         });
                     }
                 }
@@ -249,6 +268,17 @@ public class VueDuJeu extends BorderPane {
             }
         }
         System.out.println(infos + "\n");
+    }
+
+    private static void shadowOn(Node n){
+        DropShadow ds = new DropShadow();
+        ds.setOffsetY(3.0f);
+        ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
+
+        n.setEffect(ds);
+    }
+    private static void shadowOff(Node n){
+        n.setEffect(null);
     }
 
 }
