@@ -204,17 +204,43 @@ public class VueJoueurCourant extends BorderPane {
 
         int col = 0;
         int row = 0;
+        List<ICarteTransport> copieListe = new ArrayList<>(cartesTransport);
+        List<ICarteTransport> copieListe2 = new ArrayList<>(copieListe);
         for (Map.Entry<ICarteTransport, Integer> entree : cartesParCarte.entrySet()) {
             ICarteTransport carte = entree.getKey();
             int nbCartes = entree.getValue();
 
-            VueCarteTransport vueCarte = new VueCarteTransport(carte, nbCartes);
-            vueCarte.setNbCartesLabel();
-            cartesTransportGrid.add(vueCarte, col, row);
+            StackPane stack = new StackPane();
 
-            vueCarte.setOnMouseClicked((MouseEvent e) -> {
-                ((VueDuJeu) getScene().getRoot()).getJeu().uneCarteDuJoueurEstJouee(vueCarte.getCarteTransport());
-            });
+            for (int i = nbCartes; i > 0; i--){
+                for (ICarteTransport cartecopie : copieListe){
+                    if (cartecopie.getStringCouleur().equals(carte.getStringCouleur()) &&
+                            Boolean.compare(cartecopie.estDouble(),carte.estDouble()) == 0 &&
+                            (
+                                    Boolean.compare(cartecopie.estBateau(),carte.estBateau()) == 0 ||
+                                            Boolean.compare(cartecopie.estWagon(),carte.estWagon()) == 0 ||
+                                            Boolean.compare(cartecopie.estJoker(),carte.estJoker()) == 0
+                            )
+                    ) {
+                        VueCarteTransport vueCarte = new VueCarteTransport(cartecopie, i);
+                        copieListe2.remove(cartecopie);
+                        vueCarte.setOnMouseClicked((MouseEvent e) -> {
+                            ((VueDuJeu) getScene().getRoot()).getJeu().uneCarteDuJoueurEstJouee(vueCarte.getCarteTransport());
+                            if (joueur.cartesTransportPoseesProperty().contains(vueCarte.getCarteTransport())){
+                                stack.getChildren().remove(vueCarte);
+                            }
+                        });
+                        vueCarte.setNbCartesLabel();
+                        stack.getChildren().add(0,vueCarte);
+                    }
+                }
+
+
+
+
+            }
+            copieListe = new ArrayList<>(copieListe2);
+            cartesTransportGrid.add(stack, col, row);
 
             col++;
             if (col >= 3) {
@@ -224,6 +250,5 @@ public class VueJoueurCourant extends BorderPane {
         }
         return cartesTransportGrid;
     }
-
 
 }
