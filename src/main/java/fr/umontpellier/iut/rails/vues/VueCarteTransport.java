@@ -3,12 +3,14 @@ package fr.umontpellier.iut.rails.vues;
 import fr.umontpellier.iut.rails.ICarteTransport;
 import javafx.animation.Interpolator;
 import javafx.animation.TranslateTransition;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.util.Duration;
 
 import java.util.Random;
@@ -57,15 +59,21 @@ public class VueCarteTransport extends StackPane {
         nbCarteLabel = new Label(String.valueOf(nbCartes));
         nbCarteLabel.setStyle(
                 "-fx-text-fill: black;" +
-                        "-fx-padding: 6px;" +
-                        "-fx-font-size: 16px;" +
-                        "-fx-font-weight: bold;"
+                        //"-fx-padding: 1px;" +
+                        "-fx-font-size: 20px;" +
+                        "-fx-font-weight: bold;" +
+                        "-fx-alignment: center"
         );
 
-        CornerRadii cornerRadii = new CornerRadii(30);
-        BackgroundFill backgroundFill = new BackgroundFill(Color.WHITE, cornerRadii, null);
+        CornerRadii cornerRadii = new CornerRadii(20);
+        BackgroundFill backgroundFill = new BackgroundFill(Color.rgb(255, 212, 128), cornerRadii, null);
         Background background = new Background(backgroundFill);
+
+        Border border = new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(2)));
+        nbCarteLabel.setBorder(border);
+
         nbCarteLabel.setBackground(background);
+        nbCarteLabel.setPrefWidth(30);
 
         nbCarteLabel.setVisible(false);
         this.getChildren().add(nbCarteLabel);
@@ -85,12 +93,12 @@ public class VueCarteTransport extends StackPane {
     public void setAnimation(int indiceActuel, int nombreTotalCartes) {
         TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), imageView);
 
-        double amplitude = 10.0; // Amplitude verticale de la vague
-        double offsetY = -10.0; // Décalage vertical de la vague
+        double amplitude = 10.0;
+        double offsetY = -10.0;
 
-        double averageAmplitude = amplitude * 0.5; // Amplitude moyenne pour réduire l'intensité
+        double averageAmplitude = amplitude * 0.5;
 
-        double startX = -((nombreTotalCartes - 1) / 2.0); // Valeur de départ horizontale
+        double startX = -((nombreTotalCartes - 1) / 2.0);
 
         double positionX = startX + indiceActuel;
         double startY = averageAmplitude * Math.sin(positionX * (2 * Math.PI / nombreTotalCartes)) + offsetY;
