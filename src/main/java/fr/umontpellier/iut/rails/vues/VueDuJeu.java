@@ -40,6 +40,8 @@ public class VueDuJeu extends BorderPane {
     private Pane vueAutresJoueurs;
     private FlowPane clickableHbox;
 
+    private Label instruction;
+
 
     public VueDuJeu(IJeu jeu) {
 
@@ -219,7 +221,7 @@ public class VueDuJeu extends BorderPane {
                     String entree = textfield.getText();
                     try {
                         int nombrePions = Integer.parseInt(entree);
-                        if (nombrePions >= 10 && nombrePions <= 25) {
+                        if (nombrePions >= 0 && nombrePions <= 60) {
                             String nbPionsChoisis = Integer.toString(nombrePions);
                             jeu.leNombreDePionsSouhaiteAEteRenseigne(nbPionsChoisis);
                         }
@@ -235,12 +237,88 @@ public class VueDuJeu extends BorderPane {
                 if (clickableHbox.getChildren().contains(textfield)){
                     clickableHbox.getChildren().remove(textfield);
                 }
+                clickableHbox.getChildren().clear();
+                int compteur = 0;
+                for (ICarteTransport carteTransport : jeu.cartesTransportVisiblesProperty()) {
+
+                    //on l'ajoute aux carteVisible
+                    VueCarteTransport vueCarteTransport = new VueCarteTransport(carteTransport, 1);
+                    clickableHbox.getChildren().add(vueCarteTransport);
+                    vueCarteTransport.setDisable(false);
+
+                    //animation
+                    vueCarteTransport.setAnimation(compteur, jeu.cartesTransportVisiblesProperty().size());
+                    compteur ++;
+
+
+                    //init de si elle est choisie
+                    vueCarteTransport.setOnMouseClicked((MouseEvent e) -> {
+                        ((VueDuJeu) getScene().getRoot()).getJeu().uneCarteTransportAEteChoisie(carteTransport);
+                        clickableHbox.getChildren().remove(vueCarteTransport);
+                        for(Node vueCarteTransport1 : clickableHbox.getChildren()) {
+                            vueCarteTransport1.setDisable(true);
+                        }
+
+                    });
+                }
+            }
+
+        });
+
+        jeu.saisieNbPionsBateauAutoriseeProperty().addListener((observableValue, ancienneValeur, nouvelleValeur) -> {
+            if (nouvelleValeur){
+                clickableHbox.getChildren().clear();
+                clickableHbox.getChildren().add(textfield);
+                textfield.setOnAction(event -> {
+                    String entree = textfield.getText();
+                    try {
+                        int nombrePions = Integer.parseInt(entree);
+                        if (nombrePions >= 0 && nombrePions <= 60) {
+                            String nbPionsChoisis = Integer.toString(nombrePions);
+                            jeu.leNombreDePionsSouhaiteAEteRenseigne(nbPionsChoisis);
+                        }
+
+                    } catch (NumberFormatException e){
+                        System.out.println(e.getMessage());
+                    }
+                    finally {
+                        textfield.clear();
+                    }
+                });
+            } else{
+                if (clickableHbox.getChildren().contains(textfield)){
+                    clickableHbox.getChildren().remove(textfield);
+                }
+                clickableHbox.getChildren().clear();
+                int compteur = 0;
+                for (ICarteTransport carteTransport : jeu.cartesTransportVisiblesProperty()) {
+
+                    //on l'ajoute aux carteVisible
+                    VueCarteTransport vueCarteTransport = new VueCarteTransport(carteTransport, 1);
+                    clickableHbox.getChildren().add(vueCarteTransport);
+                    vueCarteTransport.setDisable(false);
+
+                    //animation
+                    vueCarteTransport.setAnimation(compteur, jeu.cartesTransportVisiblesProperty().size());
+                    compteur ++;
+
+
+                    //init de si elle est choisie
+                    vueCarteTransport.setOnMouseClicked((MouseEvent e) -> {
+                        ((VueDuJeu) getScene().getRoot()).getJeu().uneCarteTransportAEteChoisie(carteTransport);
+                        clickableHbox.getChildren().remove(vueCarteTransport);
+                        for(Node vueCarteTransport1 : clickableHbox.getChildren()) {
+                            vueCarteTransport1.setDisable(true);
+                        }
+
+                    });
+                }
             }
 
         });
 
 
-        Label instruction = new Label();
+        instruction = new Label();
         instruction.setPadding(new Insets(10,0,0,10));
         instruction.setStyle("-fx-font-size: 25px;");
         instruction.setAlignment(Pos.TOP_CENTER);
