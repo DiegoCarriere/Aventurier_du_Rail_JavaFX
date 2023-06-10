@@ -117,7 +117,7 @@ public class VueJoueurCourant extends BorderPane {
 
             joueur.cartesTransportProperty().addListener((ListChangeListener<ICarteTransport>) change -> {
                 while (change.next()){
-                    if(change.wasAdded()){
+                    if(change.wasAdded() || change.wasRemoved()){
                         cartesTransportGrid = initCartes(change.getList());
                         this.setCenter(cartesTransportGrid);
                     }
@@ -164,6 +164,7 @@ public class VueJoueurCourant extends BorderPane {
 
         return hbox;
     }
+
 
     private GridPane initCartes(List<? extends ICarteTransport> cartesTransport){
         GridPane cartesTransportGrid = new GridPane();

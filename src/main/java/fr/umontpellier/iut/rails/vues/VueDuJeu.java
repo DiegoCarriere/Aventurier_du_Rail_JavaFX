@@ -1,16 +1,11 @@
 package fr.umontpellier.iut.rails.vues;
 
 import fr.umontpellier.iut.rails.*;
-import javafx.animation.Interpolator;
-import javafx.animation.TranslateTransition;
 import javafx.collections.ListChangeListener;
-import javafx.event.EventTarget;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -18,7 +13,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,7 +32,7 @@ public class VueDuJeu extends BorderPane {
     private final IJeu jeu;
     private VuePlateau plateau;
 
-    private BorderPane joueurCourant;
+    private BorderPane joueurCourantVBox;
 
     private BorderPane instructionAutreJoueursCarteVisible;
     private Pane vueAutresJoueurs;
@@ -49,8 +43,8 @@ public class VueDuJeu extends BorderPane {
 
         this.jeu = jeu;
         plateau = new VuePlateau();
-        joueurCourant = new BorderPane();
-        setRight(joueurCourant);
+        joueurCourantVBox = new BorderPane();
+        setRight(joueurCourantVBox);
         instructionAutreJoueursCarteVisible = new BorderPane();
         clickableHbox = new FlowPane();
         clickableHbox.setAlignment(Pos.CENTER);
@@ -106,11 +100,34 @@ public class VueDuJeu extends BorderPane {
                 new HBox(piochePionsBateau, piochePionsWagon)
         );
 
+        /**cartes utilisées en temps reel quand choix port et route*/
+        for(IJoueur j : jeu.getJoueurs()) {
+            j.cartesTransportPoseesProperty().addListener((ListChangeListener<ICarteTransport>) change -> {
+                while (change.next()){
+                    if(change.wasRemoved()) {
+                        joueurCourantVBox = new VueJoueurCourant(j);
+                    }
+                }
+            });
+        }
+
+        /**route posées en temps reel quand choix route*/
+        for(IRoute r : jeu.getRoutes()){
+            r.proprietaireProperty().addListener((observable, oldValue, newValue) -> {
+                switch (newValue.getCouleur()){
+                    case BLEU: break;
+                    case ROUGE: break;
+                    case ROSE: break;
+                    case VERT: break;
+                    case JAUNE: break;
+                }
+            });
+        }
 
         jeu.joueurCourantProperty().addListener((observableValue, oldJoueur, newJoueur) -> {
 
-            joueurCourant = new VueJoueurCourant(newJoueur);
-            setRight(joueurCourant);
+            joueurCourantVBox = new VueJoueurCourant(newJoueur);
+            setRight(joueurCourantVBox);
 
             // autres joueurs
             List<IJoueur> liste = new ArrayList<>(jeu.getJoueurs());
@@ -164,10 +181,11 @@ public class VueDuJeu extends BorderPane {
                         //init de si elle est choisie
                         vueCarteTransport.setOnMouseClicked((MouseEvent e) -> {
                             ((VueDuJeu) getScene().getRoot()).getJeu().uneCarteTransportAEteChoisie(carteTransport);
-                            clickableHbox.getChildren().remove(vueCarteTransport);
-                            for(Node vueCarteTransport1 : clickableHbox.getChildren()) {
-                                vueCarteTransport1.setDisable(true);
-                            }
+                                clickableHbox.getChildren().remove(vueCarteTransport);
+                                for(Node vueCarteTransport1 : clickableHbox.getChildren()) {
+                                    vueCarteTransport1.setDisable(true);
+                                }
+
                         });
                     }
                 }
@@ -204,6 +222,8 @@ public class VueDuJeu extends BorderPane {
         });
 
 
+
+
         Label instruction = new Label();
         instruction.setPadding(new Insets(10,0,0,10));
         instruction.setStyle("-fx-font-size: 25px;");
@@ -217,7 +237,7 @@ public class VueDuJeu extends BorderPane {
 
         setCenter(plateau);
         setBottom(instructionAutreJoueursCarteVisible);
-        BorderPane.setAlignment(joueurCourant,Pos.CENTER_LEFT);
+        BorderPane.setAlignment(joueurCourantVBox,Pos.CENTER_LEFT);
         //BorderPane.setMargin(labelEtBouton, new Insets(20, 10, 400, 100));
     }
 
@@ -229,10 +249,10 @@ public class VueDuJeu extends BorderPane {
 
         plateau.creerBindings();
 
-        joueurCourant.prefWidthProperty().bind(getScene().widthProperty().subtract(plateau.widthProperty()));
-        joueurCourant.prefHeightProperty().bind(plateau.heightProperty());
+        joueurCourantVBox.prefWidthProperty().bind(getScene().widthProperty().subtract(plateau.widthProperty()));
+        joueurCourantVBox.prefHeightProperty().bind(plateau.heightProperty());
 
-        joueurCourant.maxHeightProperty().bind(plateau.heightProperty());
+        joueurCourantVBox.maxHeightProperty().bind(plateau.heightProperty());
 
         clickableHbox.prefWidthProperty().bind(plateau.widthProperty());
 
