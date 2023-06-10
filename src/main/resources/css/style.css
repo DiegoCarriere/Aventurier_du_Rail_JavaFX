@@ -49,6 +49,24 @@ Rectangle {
     -fx-fill: transparent;
 }
 
+.list-view {
+    -fx-font-family: 'IM Fell English SC';
+    -fx-background-color: transparent;
+    -fx-font-size: 20px;
+}
+
+.list-cell {
+    -fx-background-color: transparent;
+    /*-fx-border-color: black;*/
+}
+
+.text-field {
+    -fx-font-family: 'IM Fell English SC';
+    -fx-font-size: 25px;
+    -fx-alignment: center;
+    -fx-pref-width: 100px;
+}
+
 
 
 

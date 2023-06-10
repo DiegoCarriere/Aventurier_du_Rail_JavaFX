@@ -70,19 +70,17 @@ public class VueChoixJoueurs extends Stage {
         buttonsBox.setSpacing(10);
 
 
-        // Création du bouton "Croix"
+        // bouton "Croix"
         Button closeButton = new Button("❌");
         closeButton.setStyle("-fx-font-size: 15px;");
         closeButton.setOnAction(e -> {
-            // Code à exécuter lorsque le bouton "Croix" est cliqué
             close();
         });
 
-        // Création du bouton "Plein écran"
+        //  Plein écran
         Button fullscreenButton = new Button("⬛");
         fullscreenButton.setStyle("-fx-font-size: 15px;");
         fullscreenButton.setOnAction(e -> {
-            // Code à exécuter lorsque le bouton "Plein écran" est cliqué
             if (isFullScreen()) {
                 setFullScreen(false);
             } else {
@@ -91,19 +89,18 @@ public class VueChoixJoueurs extends Stage {
         });
 
 
-        // Création du bouton "Réduire"
+        // Réduire
         Button minimizeButton = new Button("_");
         minimizeButton.setStyle("-fx-font-size: 15px;");
         minimizeButton.setOnAction(e -> {
-            // Code à exécuter lorsque le bouton "Réduire" est cliqué
             setIconified(true);
         });
 
-        // Ajout des boutons à la HBox
+
         buttonsBox.setPadding(new Insets(0,0,5,0));
         buttonsBox.getChildren().addAll(minimizeButton, fullscreenButton, closeButton);
 
-        // Ajout de la HBox à la vue du jeu
+
         buttonsBox.setPadding(new Insets(0,0,20,0));
         root2.setTop(buttonsBox);
         initStyle(StageStyle.TRANSPARENT);

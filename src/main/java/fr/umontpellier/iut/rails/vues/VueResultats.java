@@ -21,6 +21,9 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * Cette classe affiche les scores en fin de partie.
@@ -45,8 +48,15 @@ public class VueResultats extends VBox {
         gridPaneScore.setVgap(10);
         gridPaneScore.setHgap(10);
         gridPaneScore.setAlignment(Pos.CENTER);
-        int row = 0;
-        for (Joueur joueur : ihm.getJeu().getJoueurs()) {
+
+        List<Joueur> joueurs = ihm.getJeu().getJoueurs();
+
+        // Trie les joueurs par score dans l'ordre décroissant
+        joueurs.sort(Comparator.comparingInt(Joueur::getScore).reversed());
+
+        int ligne = 0;
+        int meilleurScore = joueurs.get(0).getScore();
+        for (Joueur joueur : joueurs) {
             IJoueur.CouleurJoueur couleurJoueur = joueur.getCouleur();
             Color couleurFX;
 
@@ -79,14 +89,24 @@ public class VueResultats extends VBox {
             Label score = new Label(String.valueOf(joueur.getScore()));
             score.setFont(Font.font("Arial", FontWeight.BOLD, 16));
 
-            stackPane.getChildren().add(avatar);
-            GridPane.setConstraints(stackPane, 0, row);
-
-            GridPane.setConstraints(nomJoueur, 1, row);
-            GridPane.setConstraints(score, 2, row);
+            GridPane.setConstraints(stackPane, 0, ligne);
+            GridPane.setConstraints(nomJoueur, 1, ligne);
+            GridPane.setConstraints(score, 2, ligne);
 
             gridPaneScore.getChildren().addAll(stackPane, nomJoueur, score);
-            row++;
+
+            // verifie si le joueur a le meilleur score et ajoute la médaille
+            if (joueur.getScore() == meilleurScore) {
+                ImageView medaille = new ImageView(new Image("/images/medaille.png"));
+                medaille.setFitHeight(20);
+                medaille.setFitWidth(20);
+                GridPane.setConstraints(medaille, 3, ligne);
+                gridPaneScore.getChildren().add(medaille);
+            }
+
+            stackPane.getChildren().add(avatar);
+
+            ligne++;
         }
 
         getChildren().addAll(labelRes, gridPaneScore);
