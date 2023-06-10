@@ -2,8 +2,10 @@ package fr.umontpellier.iut.rails.vues;
 
 import fr.umontpellier.iut.rails.*;
 import javafx.collections.ListChangeListener;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -115,16 +117,25 @@ public class VueDuJeu extends BorderPane {
         /**route posées en temps reel quand choix route*/
         for(IRoute r : jeu.getRoutes()){
             r.proprietaireProperty().addListener((observable, oldValue, newValue) -> {
-                if(newValue != null) {
-                    Image image = new Image("images/wagons/image-wagon-" + newValue.getCouleur() + ".png");
 
-                    for(DonneesGraphiques.DonneesSegments segment : DonneesGraphiques.routes.get(r.getNom())) {
-                        ImageView wagon = new ImageView(image);
-                        plateau.getChildren().add(wagon);
-                        //Pane.layoutInArea(wagon,);
-                        wagon.setLayoutX(segment.getXHautGauche());
-                        wagon.setRotate(segment.getAngle());
-                    }
+                System.out.println("prise");
+                Image image = new Image("images/wagons/image-wagon-" + newValue.getCouleur() + ".png");
+                System.out.println("couleuir : " +newValue.getCouleur());
+
+                for(DonneesGraphiques.DonneesSegments segment : DonneesGraphiques.routes.get(r.getNom())) {
+                    System.out.println(segment.getXHautGauche() + " " + segment.getYHautGauche() + " " + segment.getAngle());
+
+
+                    ImageView wagon = new ImageView(image);
+                    plateau.getChildren().add(wagon);
+
+                    /** sa marche pas*/
+
+                    wagon.setLayoutX(segment.getXHautGauche() * 0.81 * (plateau.getWidth() / getScene().getWidth()));
+                    wagon.setLayoutY(segment.getYHautGauche() * 0.70 * (plateau.getHeight() / getScene().getHeight()));
+
+                    wagon.setRotate(segment.getAngle());
+                    wagon.setScaleX(0.2); wagon.setScaleY(0.2);
                 }
             });
         }
