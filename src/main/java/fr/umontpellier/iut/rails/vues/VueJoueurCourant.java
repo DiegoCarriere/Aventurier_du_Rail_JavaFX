@@ -165,6 +165,9 @@ public class VueJoueurCourant extends BorderPane {
         return hbox;
     }
 
+    public void setCartesTransportGrid(){
+        cartesTransportGrid = initCartes(joueur.getCartesTransport());
+    }
 
     private GridPane initCartes(List<? extends ICarteTransport> cartesTransport){
         GridPane cartesTransportGrid = new GridPane();
