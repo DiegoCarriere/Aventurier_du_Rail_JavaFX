@@ -169,7 +169,7 @@ public class VueJoueurCourant extends BorderPane {
         cartesTransportGrid = initCartes(joueur.getCartesTransport());
     }
 
-    private GridPane initCartes(List<? extends ICarteTransport> cartesTransport){
+    /*private GridPane initCartes(List<? extends ICarteTransport> cartesTransport){
         GridPane cartesTransportGrid = new GridPane();
         cartesTransportGrid.setHgap(10);
         cartesTransportGrid.setVgap(10);
@@ -253,6 +253,71 @@ public class VueJoueurCourant extends BorderPane {
             }
         }
         return cartesTransportGrid;
+    }*/
+
+    private GridPane initCartes(List<? extends ICarteTransport> cartesTransport) {
+        GridPane cartesTransportGrid = new GridPane();
+        cartesTransportGrid.setHgap(10);
+        cartesTransportGrid.setVgap(10);
+        cartesTransportGrid.setAlignment(Pos.CENTER);
+
+        Map<String, Map<Boolean, Map<Boolean, List<VueCarteTransport>>>> cartesParGroupe = new HashMap<>();
+
+        for (ICarteTransport carte : cartesTransport) {
+            String couleur = carte.getStringCouleur();
+            boolean estDouble = carte.estDouble();
+            boolean estWagon = carte.estWagon();
+
+            cartesParGroupe.computeIfAbsent(couleur, k -> new HashMap<>())
+                    .computeIfAbsent(estDouble, k -> new HashMap<>())
+                    .computeIfAbsent(estWagon, k -> new ArrayList<>())
+                    .add(new VueCarteTransport(carte, 0)); // L'indice initial est défini à 0
+        }
+
+        int col = 0;
+        int row = 0;
+        for (Map.Entry<String, Map<Boolean, Map<Boolean, List<VueCarteTransport>>>> entryCouleur : cartesParGroupe.entrySet()) {
+            for (Map.Entry<Boolean, Map<Boolean, List<VueCarteTransport>>> entryDouble : entryCouleur.getValue().entrySet()) {
+                for (Map.Entry<Boolean, List<VueCarteTransport>> entryWagon : entryDouble.getValue().entrySet()) {
+                    List<VueCarteTransport> cartes = entryWagon.getValue();
+                    Collections.reverse(cartes); // Inverser l'ordre des cartes
+
+                    StackPane stackPane = new StackPane();
+                    stackPane.setPadding(new Insets(5));
+
+                    int index = 1;
+                    for (VueCarteTransport vueCarte : cartes) {
+                        vueCarte.setNbCartesLabel(index);
+                        stackPane.getChildren().add(vueCarte);
+                        index++;
+                    }
+
+
+                    stackPane.setOnMouseClicked(e -> {
+                        VueCarteTransport vueCarte = (VueCarteTransport) stackPane.getChildren().get(stackPane.getChildren().size() - 1);
+                        ICarteTransport carteTransport = vueCarte.getCarteTransport();
+                        ((VueDuJeu) getScene().getRoot()).getJeu().uneCarteDuJoueurEstJouee(carteTransport);
+                        if (joueur.cartesTransportPoseesProperty().contains(carteTransport)){
+                            stackPane.getChildren().remove(vueCarte);
+                        }
+
+                    });
+
+                    cartesTransportGrid.add(stackPane, col, row);
+
+                    col++;
+                    if (col >= 3) {
+                        col = 0;
+                        row++;
+                    }
+                }
+            }
+        }
+
+        return cartesTransportGrid;
     }
+
+
+
 
 }

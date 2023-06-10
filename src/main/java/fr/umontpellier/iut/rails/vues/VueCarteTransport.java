@@ -86,8 +86,9 @@ public class VueCarteTransport extends StackPane {
         return carteTransport;
     }
 
-    public void setNbCartesLabel(){
+    public void setNbCartesLabel(int indice){
         nbCarteLabel.setVisible(true);
+        nbCarteLabel.setText(String.valueOf(indice));
     }
 
     public void setAnimation(int indiceActuel, int nombreTotalCartes) {
