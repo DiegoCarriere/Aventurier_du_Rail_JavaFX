@@ -157,6 +157,32 @@ public class VueDuJeu extends BorderPane {
 
             consolInfo(newJoueur);
 
+            //refresh cartes transport
+            clickableHbox.getChildren().clear();
+            int compteur = 0;
+            for (ICarteTransport carteTransport : jeu.cartesTransportVisiblesProperty()) {
+
+                //on l'ajoute aux carteVisible
+                VueCarteTransport vueCarteTransport = new VueCarteTransport(carteTransport, 1);
+                clickableHbox.getChildren().add(vueCarteTransport);
+                vueCarteTransport.setDisable(false);
+
+                //animation
+                vueCarteTransport.setAnimation(compteur, jeu.cartesTransportVisiblesProperty().size());
+                compteur ++;
+
+
+                //init de si elle est choisie
+                vueCarteTransport.setOnMouseClicked((MouseEvent e) -> {
+                    ((VueDuJeu) getScene().getRoot()).getJeu().uneCarteTransportAEteChoisie(carteTransport);
+                    clickableHbox.getChildren().remove(vueCarteTransport);
+                    for(Node vueCarteTransport1 : clickableHbox.getChildren()) {
+                        vueCarteTransport1.setDisable(true);
+                    }
+
+                });
+            }
+
         });
 
 
