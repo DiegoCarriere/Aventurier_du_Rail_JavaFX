@@ -2,10 +2,8 @@ package fr.umontpellier.iut.rails.vues;
 
 import fr.umontpellier.iut.rails.*;
 import javafx.collections.ListChangeListener;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -120,12 +118,12 @@ public class VueDuJeu extends BorderPane {
         for(IRoute r : jeu.getRoutes()){
             r.proprietaireProperty().addListener((observable, oldValue, newValue) -> {
 
-                System.out.println("prise");
+
                 Image image = new Image("images/wagons/image-wagon-" + newValue.getCouleur() + ".png");
-                System.out.println("couleuir : " +newValue.getCouleur());
+                System.out.println("prise : " +newValue.getCouleur());
 
                 for(DonneesGraphiques.DonneesSegments segment : DonneesGraphiques.routes.get(r.getNom())) {
-                    System.out.println(segment.getXHautGauche() + " " + segment.getYHautGauche() + " " + segment.getAngle());
+                    System.out.println(segment.getXHautGauche() + " et " + segment.getYHautGauche() + " et " + segment.getAngle());
 
 
                     ImageView wagon = new ImageView(image);
@@ -133,11 +131,11 @@ public class VueDuJeu extends BorderPane {
 
                     /** sa marche pas*/
 
-                    wagon.setLayoutX(segment.getXHautGauche() * 0.81 * (plateau.getWidth() / getScene().getWidth()));
-                    wagon.setLayoutY(segment.getYHautGauche() * 0.70 * (plateau.getHeight() / getScene().getHeight()));
+                    wagon.setLayoutX(segment.getXHautGauche()* 0.8 * 0.9 * (plateau.getWidth() / getScene().getWidth()) + plateau.getLayoutX());
+                    wagon.setLayoutY(segment.getYHautGauche()* 0.7 * 0.9 * (plateau.getHeight() / getScene().getHeight())+ plateau.getLayoutY());
 
                     wagon.setRotate(segment.getAngle());
-                    wagon.setScaleX(0.2); wagon.setScaleY(0.2);
+                    wagon.setScaleX(0.3); wagon.setScaleY(0.3);
                 }
             });
         }
@@ -427,12 +425,15 @@ public class VueDuJeu extends BorderPane {
         });
     }
 
-    public void clearClickableHbox(){
-        if (!instruction.getText().toLowerCase().contains("pas")) {
-            for (Node n : clickableHbox.getChildren()){
-                n.setDisable(true);
+    public void disableClickable(){
+        if(!jeu.jeuEnPreparationProperty().get()){
+            if (!instruction.getText().toLowerCase().contains("pas")) {
+                for (Node n : clickableHbox.getChildren()){
+                    n.setDisable(true);
+                }
             }
         }
+
 
     }
 }

@@ -1,8 +1,6 @@
 package fr.umontpellier.iut.rails.vues;
 
-import fr.umontpellier.iut.rails.IJeu;
 import fr.umontpellier.iut.rails.IRoute;
-import fr.umontpellier.iut.rails.mecanique.Route;
 import javafx.beans.binding.DoubleBinding;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -10,7 +8,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
@@ -18,7 +15,6 @@ import javafx.stage.Screen;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Cette classe présente les routes et les villes sur le plateau.
@@ -46,13 +42,13 @@ public class VuePlateau extends Pane {
     EventHandler<MouseEvent> choixRoute = event -> {
         Rectangle r = (Rectangle) event.getSource();
         ((VueDuJeu) getScene().getRoot()).getJeu().uneRouteAEteChoisie(r.getId());
-        ((VueDuJeu) getScene().getRoot()).clearClickableHbox();
+        ((VueDuJeu) getScene().getRoot()).disableClickable();
     };
 
     EventHandler<MouseEvent> choixPort = event -> {
         Circle c = (Circle) event.getSource();
         ((VueDuJeu) getScene().getRoot()).getJeu().unPortAEteChoisi(c.getId());
-        ((VueDuJeu) getScene().getRoot()).clearClickableHbox();
+        ((VueDuJeu) getScene().getRoot()).disableClickable();
     };
 
     public void creerBindings() {
