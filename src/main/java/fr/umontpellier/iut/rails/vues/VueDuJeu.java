@@ -1,6 +1,8 @@
 package fr.umontpellier.iut.rails.vues;
 
 import fr.umontpellier.iut.rails.*;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ListChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -13,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -114,33 +117,6 @@ public class VueDuJeu extends BorderPane {
             });
         }
 
-        /**route posées en temps reel quand choix route*/
-        for(IRoute r : jeu.getRoutes()){
-            r.proprietaireProperty().addListener((observable, oldValue, newValue) -> {
-
-
-                Image image = new Image("images/wagons/image-wagon-" + newValue.getCouleur() + ".png");
-                System.out.println("prise : " +newValue.getCouleur());
-
-                for(DonneesGraphiques.DonneesSegments segment : DonneesGraphiques.routes.get(r.getNom())) {
-                    System.out.println(segment.getXHautGauche() + " et " + segment.getYHautGauche() + " et " + segment.getAngle());
-
-
-                    ImageView wagon = new ImageView(image);
-                    plateau.getChildren().add(wagon);
-
-                    /** sa marche pas*/
-
-                    wagon.setLayoutX(segment.getXHautGauche()* 0.8 * 0.9 * (plateau.getWidth() / getScene().getWidth()) + plateau.getLayoutX());
-                    wagon.setLayoutY(segment.getYHautGauche()* 0.7 * 0.9 * (plateau.getHeight() / getScene().getHeight())+ plateau.getLayoutY());
-
-                    wagon.setRotate(segment.getAngle());
-                    wagon.setScaleX(0.3); wagon.setScaleY(0.3);
-                }
-            });
-        }
-
-
 
         jeu.joueurCourantProperty().addListener((observableValue, oldJoueur, newJoueur) -> {
 
@@ -182,9 +158,7 @@ public class VueDuJeu extends BorderPane {
             }
 
         });
-
-
-
+        
         jeu.destinationsInitialesProperty().addListener((ListChangeListener<IDestination>) change -> {
             while (change.next()) {
                 if (change.wasAdded()) {
@@ -360,11 +334,6 @@ public class VueDuJeu extends BorderPane {
     }
 
     public void creerBindings() {
-        plateau.setLayoutX(0);
-        plateau.setLayoutY(0);
-        plateau.prefWidthProperty().bind(getScene().widthProperty().multiply(0.85));
-        plateau.prefHeightProperty().bind(getScene().heightProperty().multiply(0.85));
-
         plateau.creerBindings();
 
         joueurCourantBox.prefWidthProperty().bind(getScene().widthProperty().subtract(plateau.widthProperty()));
@@ -381,8 +350,6 @@ public class VueDuJeu extends BorderPane {
     public IJeu getJeu() {
         return jeu;
     }
-
-    //EventHandler<? super MouseEvent> actionPasserParDefaut = (mouseEvent -> getJeu().passerAEteChoisi());
 
     private void consolInfo(IJoueur newJoueur){
         StringBuilder infos = new StringBuilder("/---/ " + newJoueur.getNom() + " /---/\n");

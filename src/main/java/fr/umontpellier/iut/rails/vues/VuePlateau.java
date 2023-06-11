@@ -1,13 +1,17 @@
 package fr.umontpellier.iut.rails.vues;
 
+import fr.umontpellier.iut.rails.IJoueur;
 import fr.umontpellier.iut.rails.IRoute;
 import javafx.beans.binding.DoubleBinding;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
@@ -71,6 +75,7 @@ public class VuePlateau extends Pane {
 
     private void ajouterRoutes() {
         List<? extends IRoute> listeRoutes = ((VueDuJeu) getScene().getRoot()).getJeu().getRoutes();
+        ArrayList<Rectangle> rectanglesRoutes = new ArrayList<>();
         for (String nomRoute : DonneesGraphiques.routes.keySet()) {
             ArrayList<DonneesGraphiques.DonneesSegments> segmentsRoute = DonneesGraphiques.routes.get(nomRoute);
             IRoute route = listeRoutes.stream().filter(r -> r.getNom().equals(nomRoute)).findAny().orElse(null);
@@ -81,6 +86,24 @@ public class VuePlateau extends Pane {
                 getChildren().add(rectangleSegment);
                 rectangleSegment.setOnMouseClicked(choixRoute);
                 bindRectangle(rectangleSegment, unSegment.getXHautGauche(), unSegment.getYHautGauche());
+                rectanglesRoutes.add(rectangleSegment);
+            }
+            if(route != null) {
+                route.proprietaireProperty().addListener((observable, oldValue, newValue) -> {
+                    List<Rectangle> rectangles = rectanglesRoutes.stream().filter(rectangle -> rectangle.getId().equals(route.getNom())).toList();
+                    String couleurFX;
+                    switch (newValue.getCouleur()) {
+                        case JAUNE: couleurFX = "#FFFF00"; break;
+                        case ROUGE: couleurFX = "#FF0000"; break;
+                        case BLEU: couleurFX = "#0000FF";break;
+                        case VERT: couleurFX = "#008000";break;
+                        case ROSE: couleurFX ="#FF007F";break;
+                        default: couleurFX = "#000000";
+                    }
+                    for(Rectangle rectangle : rectangles){
+                        rectangle.setFill(Paint.valueOf(couleurFX));
+                    }
+                });
             }
         }
     }
