@@ -46,11 +46,13 @@ public class VuePlateau extends Pane {
     EventHandler<MouseEvent> choixRoute = event -> {
         Rectangle r = (Rectangle) event.getSource();
         ((VueDuJeu) getScene().getRoot()).getJeu().uneRouteAEteChoisie(r.getId());
+        ((VueDuJeu) getScene().getRoot()).clearClickableHbox();
     };
 
     EventHandler<MouseEvent> choixPort = event -> {
         Circle c = (Circle) event.getSource();
         ((VueDuJeu) getScene().getRoot()).getJeu().unPortAEteChoisi(c.getId());
+        ((VueDuJeu) getScene().getRoot()).clearClickableHbox();
     };
 
     public void creerBindings() {

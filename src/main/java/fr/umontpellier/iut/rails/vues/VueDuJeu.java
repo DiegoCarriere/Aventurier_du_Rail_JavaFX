@@ -426,4 +426,11 @@ public class VueDuJeu extends BorderPane {
             n.setEffect(null);
         });
     }
+
+    public void clearClickableHbox(){
+        if (!instruction.getText().toLowerCase().contains("pas")) {
+            clickableHbox.getChildren().clear();
+        }
+
+    }
 }
