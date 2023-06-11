@@ -429,7 +429,9 @@ public class VueDuJeu extends BorderPane {
 
     public void clearClickableHbox(){
         if (!instruction.getText().toLowerCase().contains("pas")) {
-            clickableHbox.getChildren().clear();
+            for (Node n : clickableHbox.getChildren()){
+                n.setDisable(true);
+            }
         }
 
     }
